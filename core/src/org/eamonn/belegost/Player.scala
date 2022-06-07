@@ -4,10 +4,13 @@ import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost.scenes.{Entity, Game}
-import org.eamonn.belegost.util.Vec2
+import org.eamonn.belegost.util.{Delta, Location}
 
-case class Player(var location: Vec2, var destination: Vec2, var game: Game)
-    extends Entity {
+case class Player(
+    var location: Location,
+    var destination: Location,
+    var game: Game
+) extends Entity {
   def draw(batch: PolygonSpriteBatch): Unit = {
     batch.setColor(Color.GREEN)
     batch.draw(
@@ -23,18 +26,18 @@ case class Player(var location: Vec2, var destination: Vec2, var game: Game)
     location = destination
   }
 
-  def setDestination: Vec2 = {
+  def setDestination: Location = {
     if (game.keysPressed.contains(19)) {
-      location.add(Vec2(0, 1))
+      location + Delta(0, 1)
 
     } else if (game.keysPressed.contains(20)) {
-      location.add(Vec2(0, -1))
+      location + (Delta(0, -1))
 
     } else if (game.keysPressed.contains(21)) {
-      location.add(Vec2(-1, 0))
+      location + (Delta(-1, 0))
 
     } else if (game.keysPressed.contains(22)) {
-      location.add(Vec2(1, 0))
+      location + (Delta(1, 0))
 
     } else {
       location

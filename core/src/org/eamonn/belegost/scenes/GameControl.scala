@@ -2,7 +2,7 @@ package org.eamonn.belegost.scenes
 
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.InputAdapter
-import org.eamonn.belegost.util.Vec2
+import org.eamonn.belegost.util.Location
 
 class GameControl(game: Game) extends InputAdapter {
   override def keyDown(keycode: Int): Boolean = {
