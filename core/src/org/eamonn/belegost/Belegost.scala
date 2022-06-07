@@ -38,7 +38,7 @@ class Belegost extends ApplicationAdapter {
   override def render(): Unit = {
     val delta = Gdx.graphics.getDeltaTime
     scene.update(delta) foreach setScene
-    ScreenUtils.clear(.8f, .8f, 0.6f, 1)
+    ScreenUtils.clear(0f, 0f, 0f, 1)
     batch.begin()
     scene.render(batch)
     batch.end()
