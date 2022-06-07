@@ -1,4 +1,4 @@
-package org.eamonn.belegost.scenes
+package org.eamonn.belegost
 
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost.util.Location

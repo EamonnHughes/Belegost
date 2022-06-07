@@ -4,13 +4,22 @@ import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost.util.Location
-import org.eamonn.belegost.{Belegost, Geometry, Player, Room, Scene}
+import org.eamonn.belegost.{
+  Belegost,
+  Click,
+  Entity,
+  Geometry,
+  Player,
+  Room,
+  Scene
+}
 import sun.security.ec.point.ProjectivePoint.Mutable
 
 import scala.collection.mutable
 
 class Game extends Scene {
   var keysPressed = List.empty[Int]
+  var mouseButtonsPressed = mutable.Map.empty[Int, Click]
   var quit = false
   var roomList = List[Room](Room(Location(2, 2), 5, 5))
   var player = Player(Location(3, 3), Location(3, 3), this)

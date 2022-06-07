@@ -1,5 +1,5 @@
 package org.eamonn.belegost
-import org.eamonn.belegost.scenes.{Entity, Game}
+import org.eamonn.belegost.scenes.Game
 import org.eamonn.belegost.util.Location
 
 import scala.collection.mutable
