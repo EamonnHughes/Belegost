@@ -54,7 +54,7 @@ class Belegost extends ApplicationAdapter {
 object Belegost {
   implicit val garbage: GarbageCan = new GarbageCan
 
-  val screenUnit = (Geometry.ScreenWidth min Geometry.ScreenHeight) / 20
+  val screenUnit = (Geometry.ScreenWidth min Geometry.ScreenHeight) / 50
   var Square: TextureWrapper = _
 
   var sound: Sound = _

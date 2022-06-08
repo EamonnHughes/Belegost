@@ -20,7 +20,7 @@ import scala.collection.mutable
 class Game extends Scene {
   var keysPressed = List.empty[Int]
   var quit = false
-  var roomList = List[Room](Room(Location(2, 2), 5, 5))
+  var roomList = List[Room](Room(Location(2, 2), 15, 15))
   var player = Player(Location(3, 3), Location(3, 3), this)
   var everything = List.empty[Entity]
   override def init(): InputAdapter = new GameControl(this)
