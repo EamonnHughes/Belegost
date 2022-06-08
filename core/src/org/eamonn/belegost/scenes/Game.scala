@@ -24,10 +24,14 @@ class Game extends Scene {
   var player = Player(Location(3, 3), Location(3, 3), this)
   var everything = List.empty[Entity]
   override def init(): InputAdapter = new GameControl(this)
-
+  var tick = 0.2f
   override def update(delta: Float): Option[Scene] = {
-    player.update(delta)
-    everything = List(player)
+    tick -= delta
+    if (tick <= 0) {
+      player.update(delta)
+      everything = List(player)
+      tick = 0.2f
+    }
     if (quit) {
       Some(new Home)
     } else {
