@@ -1,5 +1,5 @@
 package org.eamonn.belegost.util
-case class Location(x: Float, y: Float) {
+case class Location(x: Int, y: Int) {
   def findAdjacents: List[Location] = {
     val adj = List(
       Location(x, y - 1),
@@ -25,7 +25,7 @@ case class Location(x: Float, y: Float) {
   }
 }
 
-case class Delta(dx: Float, dy: Float) {
+case class Delta(dx: Int, dy: Int) {
   def rotate: Delta = {
     if (dx == 0) Delta(dy, 0)
     else Delta(0, -dx)

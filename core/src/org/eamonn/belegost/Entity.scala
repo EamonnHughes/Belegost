@@ -8,5 +8,5 @@ trait Entity {
   var destination: Location
   def draw(batch: PolygonSpriteBatch): Unit
   def update(delta: Float): Unit
-  def setDestination: Location
+  def computeDestination: Location
 }

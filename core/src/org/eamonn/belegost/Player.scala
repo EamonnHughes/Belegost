@@ -13,6 +13,7 @@ case class Player(
 ) extends Entity {
 
   var pathToDest = Option.empty[Path]
+  var clickedDest: Location = location
   def draw(batch: PolygonSpriteBatch): Unit = {
     batch.setColor(Color.GREEN)
     batch.draw(
@@ -24,7 +25,12 @@ case class Player(
     )
   }
   def update(delta: Float): Unit = {
-    destination = setDestination
+
+    println(destination)
+    destination = computeDestination
+    println(destination)
+    navTo
+
     for {
       path <- pathToDest
     } {
@@ -34,10 +40,16 @@ case class Player(
       pathToDest = path.tail
     }
   }
+  def navTo: Unit = {
+    if (game.roomList.exists(room => room.isInRoom(destination))) {
+      pathToDest = Navigation
+        .findPath(destination, location, game)
+        .flatMap(path => path.tail)
+    } else { destination = location }
+  }
+  def computeDestination: Location = {
 
-  def setDestination: Location = {
-
-    if(){}else if(game.keysPressed.nonEmpty){ if (game.keysPressed.contains(19)) {
+    if (game.keysPressed.contains(19)) {
       location + Delta(0, 1)
 
     } else if (game.keysPressed.contains(20)) {
@@ -50,8 +62,8 @@ case class Player(
       location + (Delta(1, 0))
 
     } else {
-      location
-    }}
-
+      destination
+    }
   }
+
 }

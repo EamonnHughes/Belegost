@@ -2,7 +2,7 @@ package org.eamonn.belegost.scenes
 
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.InputAdapter
-import org.eamonn.belegost.{Click, Geometry}
+import org.eamonn.belegost.{Belegost, Click, Geometry}
 import org.eamonn.belegost.util.Location
 
 class GameControl(game: Game) extends InputAdapter {
@@ -12,14 +12,13 @@ class GameControl(game: Game) extends InputAdapter {
       pointer: Int,
       button: Int
   ): Boolean = {
-    game.mouseButtonsPressed.put(
-      pointer,
-      Click(
-        button,
-        Location(screenX, Geometry.ScreenHeight - screenY),
-        Location(screenX, Geometry.ScreenHeight - screenY)
+    println(s"$screenX / $screenY / $button")
+    if (button == 1) {
+      game.player.destination = Location(
+        (screenX / Belegost.screenUnit).toInt,
+        ((Geometry.ScreenHeight - screenY) / Belegost.screenUnit).toInt
       )
-    )
+    }
 
     true
   }
@@ -29,7 +28,6 @@ class GameControl(game: Game) extends InputAdapter {
       pointer: Int,
       button: Int
   ): Boolean = {
-    game.mouseButtonsPressed.remove(pointer)
     true
   }
 

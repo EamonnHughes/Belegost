@@ -19,7 +19,6 @@ import scala.collection.mutable
 
 class Game extends Scene {
   var keysPressed = List.empty[Int]
-  var mouseButtonsPressed = mutable.Map.empty[Int, Click]
   var quit = false
   var roomList = List[Room](Room(Location(2, 2), 5, 5))
   var player = Player(Location(3, 3), Location(3, 3), this)
@@ -37,6 +36,7 @@ class Game extends Scene {
   }
 
   override def render(batch: PolygonSpriteBatch): Unit = {
+    roomList.foreach(room => room.draw(batch))
 
     player.draw(batch)
   }
