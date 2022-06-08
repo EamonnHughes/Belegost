@@ -13,9 +13,8 @@ case class Enemy(
   var pathToDest = Option.empty[Path]
 
   def draw(batch: PolygonSpriteBatch): Unit = {
-    batch.setColor(Color.RED)
     batch.draw(
-      Belegost.Square,
+      Belegost.Orc,
       location.x * Belegost.screenUnit,
       location.y * Belegost.screenUnit,
       Belegost.screenUnit,

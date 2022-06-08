@@ -23,6 +23,9 @@ class Belegost extends ApplicationAdapter {
     batch = garbage.add(new PolygonSpriteBatch())
 
     Belegost.Square = TextureWrapper.load("Square.png")
+    Belegost.Player = TextureWrapper.load("Player.png")
+    Belegost.Wall = TextureWrapper.load("Wall.png")
+    Belegost.Orc = TextureWrapper.load("Orc.png")
 
 //    CarnDum.sound = CarnDum.loadSound("triangle.mp3")
 
@@ -56,6 +59,9 @@ object Belegost {
 
   val screenUnit = (Geometry.ScreenWidth min Geometry.ScreenHeight) / 50
   var Square: TextureWrapper = _
+  var Player: TextureWrapper = _
+  var Wall: TextureWrapper = _
+  var Orc: TextureWrapper = _
 
   var sound: Sound = _
 

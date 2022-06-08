@@ -16,9 +16,8 @@ case class Player(
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
   def draw(batch: PolygonSpriteBatch): Unit = {
-    batch.setColor(Color.GREEN)
     batch.draw(
-      Belegost.Square,
+      Belegost.Player,
       location.x * Belegost.screenUnit,
       location.y * Belegost.screenUnit,
       Belegost.screenUnit,

@@ -21,7 +21,11 @@ import scala.collection.mutable
 class Game extends Scene {
   var keysPressed = List.empty[Int]
   var quit = false
-  var roomList = List[Room](Room(Location(2, 2), 15, 15))
+  var roomList = List[Room](
+    Room(Location(2, 2), 15, 15, this),
+    Room(Location(17, 4), 3, 1, this),
+    Room(Location(20, 2), 15, 15, this)
+  )
   var player = Player(Location(3, 3), Location(3, 3), this)
   var enemies = List.empty[Enemy]
   var everything = List.empty[Entity]
