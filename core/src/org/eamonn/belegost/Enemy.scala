@@ -1,22 +1,19 @@
 package org.eamonn.belegost
 
-import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost.scenes.Game
-import org.eamonn.belegost.util.{Delta, Location}
+import org.eamonn.belegost.util.Location
 
-case class Player(
+case class Enemy(
     var location: Location,
     var destination: Location,
     var game: Game
 ) extends Entity {
-  var moved = false
-
   var pathToDest = Option.empty[Path]
-  var clickedDest: Location = location
+
   def draw(batch: PolygonSpriteBatch): Unit = {
-    batch.setColor(Color.GREEN)
+    batch.setColor(Color.RED)
     batch.draw(
       Belegost.Square,
       location.x * Belegost.screenUnit,
@@ -26,8 +23,6 @@ case class Player(
     )
   }
   def update(delta: Float): Unit = {
-    val prevdest = location
-
     destination = computeDestination
     navTo
 
@@ -37,10 +32,8 @@ case class Player(
       val nextLoc = path.getHead
 
       location = nextLoc
-
       pathToDest = path.tail
     }
-    if (location != prevdest) moved = true
   }
   def navTo: Unit = {
     if (game.roomList.exists(room => room.isInRoom(destination))) {
@@ -50,22 +43,6 @@ case class Player(
     } else { destination = location }
   }
   def computeDestination: Location = {
-
-    if (game.keysPressed.contains(19)) {
-      location + Delta(0, 1)
-
-    } else if (game.keysPressed.contains(20)) {
-      location + (Delta(0, -1))
-
-    } else if (game.keysPressed.contains(21)) {
-      location + (Delta(-1, 0))
-
-    } else if (game.keysPressed.contains(22)) {
-      location + (Delta(1, 0))
-
-    } else {
-      destination
-    }
+    game.player.location
   }
-
 }

@@ -12,7 +12,6 @@ class GameControl(game: Game) extends InputAdapter {
       pointer: Int,
       button: Int
   ): Boolean = {
-    println(s"$screenX / $screenY / $button")
     if (button == 1) {
       game.player.destination = Location(
         (screenX / Belegost.screenUnit).toInt,

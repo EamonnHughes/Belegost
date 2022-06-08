@@ -7,6 +7,7 @@ import org.eamonn.belegost.util.Location
 import org.eamonn.belegost.{
   Belegost,
   Click,
+  Enemy,
   Entity,
   Geometry,
   Player,
@@ -22,16 +23,24 @@ class Game extends Scene {
   var quit = false
   var roomList = List[Room](Room(Location(2, 2), 15, 15))
   var player = Player(Location(3, 3), Location(3, 3), this)
+  var enemies = List.empty[Enemy]
   var everything = List.empty[Entity]
   override def init(): InputAdapter = new GameControl(this)
   var tick = 0.2f
   override def update(delta: Float): Option[Scene] = {
-    tick -= delta
-    if (tick <= 0) {
-      player.update(delta)
-      everything = List(player)
-      tick = 0.2f
+    if (enemies.length < 1) {
+      enemies = Enemy(Location(10, 10), Location(10, 10), this) :: enemies
     }
+    if (player.moved) {
+      tick -= delta
+    } else { player.update(delta) }
+    if (tick <= 0) {
+      tick = 0.2f
+      enemies.foreach(enemy => enemy.update(delta))
+
+      player.moved = false
+    }
+    everything = player :: enemies
     if (quit) {
       Some(new Home)
     } else {
@@ -42,7 +51,7 @@ class Game extends Scene {
   override def render(batch: PolygonSpriteBatch): Unit = {
     roomList.foreach(room => room.draw(batch))
 
-    player.draw(batch)
+    everything.foreach(thing => thing.draw(batch))
   }
   def findEntity(location: Location): Entity = { // nulls
     everything.find(thing => thing.location == location).orNull
