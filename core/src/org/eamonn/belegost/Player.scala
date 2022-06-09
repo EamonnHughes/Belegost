@@ -5,11 +5,13 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost.scenes.Game
 import org.eamonn.belegost.util.{Delta, Location}
+import org.graalvm.compiler.word.Word
 
 case class Player(
     var location: Location,
     var destination: Location,
-    var game: Game
+    var game: Game,
+    var health: Int
 ) extends Entity {
   var moved = false
 
@@ -34,12 +36,18 @@ case class Player(
       path <- pathToDest
     } {
       val nextLoc = path.getHead
+      game.enemies.foreach(enemy => {
+        if (enemy.location == nextLoc) {
+          enemy.health -= 1
+        } else {
 
-      location = nextLoc
+          location = nextLoc
 
-      pathToDest = path.tail
+          pathToDest = path.tail
+        }
+      })
+      if (location != prevdest) moved = true
     }
-    if (location != prevdest) moved = true
   }
   def navTo: Unit = {
     if (game.roomList.exists(room => room.isInRoom(destination))) {

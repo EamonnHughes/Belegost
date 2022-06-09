@@ -8,7 +8,8 @@ import org.eamonn.belegost.util.Location
 case class Enemy(
     var location: Location,
     var destination: Location,
-    var game: Game
+    var game: Game,
+    var health: Int
 ) extends Entity {
   var pathToDest = Option.empty[Path]
 
@@ -22,6 +23,9 @@ case class Enemy(
     )
   }
   def update(delta: Float): Unit = {
+    if (health <= 0) {
+      game.enemies = game.enemies.filterNot(enemy => enemy == this)
+    }
     destination = computeDestination
     navTo
 
@@ -29,9 +33,13 @@ case class Enemy(
       path <- pathToDest
     } {
       val nextLoc = path.getHead
+      if (game.player.location == nextLoc) {
+        game.player.health -= 1
+      } else {
 
-      location = nextLoc
-      pathToDest = path.tail
+        location = nextLoc
+        pathToDest = path.tail
+      }
     }
   }
   def navTo: Unit = {

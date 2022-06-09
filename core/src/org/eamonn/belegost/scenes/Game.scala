@@ -26,14 +26,14 @@ class Game extends Scene {
     Room(Location(17, 4), 3, 1, this),
     Room(Location(20, 2), 15, 15, this)
   )
-  var player = Player(Location(3, 3), Location(3, 3), this)
+  var player = Player(Location(3, 3), Location(3, 3), this, 10)
   var enemies = List.empty[Enemy]
   var everything = List.empty[Entity]
   override def init(): InputAdapter = new GameControl(this)
   var tick = 0.2f
   override def update(delta: Float): Option[Scene] = {
     if (enemies.length < 1) {
-      enemies = Enemy(Location(10, 10), Location(10, 10), this) :: enemies
+      enemies = Enemy(Location(10, 10), Location(10, 10), this, 10) :: enemies
     }
     if (player.moved) {
       tick -= delta
