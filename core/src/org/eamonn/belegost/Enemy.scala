@@ -25,6 +25,7 @@ case class Enemy(
   def update(delta: Float): Unit = {
     if (health <= 0) {
       game.enemies = game.enemies.filterNot(enemy => enemy == this)
+
     }
     destination = computeDestination
     navTo

@@ -39,6 +39,8 @@ case class Player(
       game.enemies.foreach(enemy => {
         if (enemy.location == nextLoc) {
           enemy.health -= 1
+          moved = true
+          destination = location
         } else {
 
           location = nextLoc
