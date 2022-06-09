@@ -51,10 +51,22 @@ case class Player(
   def computeDestination: Location = {
 
     if (game.keysPressed.contains(19)) {
-      location + Delta(0, 1)
+      if (game.keysPressed.contains(22)) {
+        location + Delta(1, 1)
+      } else if (game.keysPressed.contains(21)) {
+        location + Delta(-1, 1)
+      } else {
+        location + Delta(0, 1)
+      }
 
     } else if (game.keysPressed.contains(20)) {
-      location + (Delta(0, -1))
+      if (game.keysPressed.contains(22)) {
+        location + Delta(1, -1)
+      } else if (game.keysPressed.contains(21)) {
+        location + Delta(-1, -1)
+      } else {
+        location + Delta(0, -1)
+      }
 
     } else if (game.keysPressed.contains(21)) {
       location + (Delta(-1, 0))
