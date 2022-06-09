@@ -12,14 +12,24 @@ case class Enemy(
     var health: Int
 ) extends Entity {
   var pathToDest = Option.empty[Path]
+  val maxHealth = health
 
   def draw(batch: PolygonSpriteBatch): Unit = {
+    batch.setColor(Color.WHITE)
     batch.draw(
       Belegost.Orc,
       location.x * Belegost.screenUnit,
       location.y * Belegost.screenUnit,
       Belegost.screenUnit,
       Belegost.screenUnit
+    )
+    batch.setColor(1, 0, 0, 0.5f)
+    batch.draw(
+      Belegost.Square,
+      location.x * Belegost.screenUnit,
+      (location.y + 1) * Belegost.screenUnit,
+      (health.toFloat / maxHealth.toFloat) * Belegost.screenUnit,
+      Belegost.screenUnit / 10
     )
   }
   def update(delta: Float): Unit = {

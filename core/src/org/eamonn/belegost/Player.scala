@@ -14,16 +14,26 @@ case class Player(
     var health: Int
 ) extends Entity {
   var moved = false
+  var maxHealth = health
 
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
   def draw(batch: PolygonSpriteBatch): Unit = {
+    batch.setColor(Color.WHITE)
     batch.draw(
       Belegost.Player,
       location.x * Belegost.screenUnit,
       location.y * Belegost.screenUnit,
       Belegost.screenUnit,
       Belegost.screenUnit
+    )
+    batch.setColor(1, 0, 0, 0.5f)
+    batch.draw(
+      Belegost.Square,
+      location.x * Belegost.screenUnit,
+      (location.y + 1) * Belegost.screenUnit,
+      (health.toFloat / maxHealth.toFloat) * Belegost.screenUnit,
+      Belegost.screenUnit / 10
     )
   }
   def update(delta: Float): Unit = {
