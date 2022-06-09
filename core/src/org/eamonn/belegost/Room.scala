@@ -8,15 +8,16 @@ import org.eamonn.belegost.util.Location
 case class Room(location: Location, width: Int, height: Int, var game: Game) {
   def draw(batch: PolygonSpriteBatch): Unit = {
     batch.setColor(Color.GRAY)
-    batch.draw(
-      Belegost.Square,
-      location.x * Belegost.screenUnit,
-      location.y * Belegost.screenUnit,
-      width * Belegost.screenUnit,
-      height * Belegost.screenUnit
-    )
+
     for (dWidth <- 0 until width) {
       for (dHeight <- 0 until height) {
+        batch.draw(
+          Belegost.Floor,
+          (dWidth + location.x) * Belegost.screenUnit,
+          (dHeight + location.y) * Belegost.screenUnit,
+          Belegost.screenUnit,
+          Belegost.screenUnit
+        )
         Location(dWidth + location.x, dHeight + location.y).findAdjacents
           .foreach(wLoc => {
             if (!game.roomList.exists(room => room.isInRoom(wLoc))) {
