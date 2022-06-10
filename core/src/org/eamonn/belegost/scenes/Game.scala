@@ -45,7 +45,7 @@ class Game extends Scene {
       player.moved = false
     }
     everything = player :: enemies
-    if (quit) {
+    if (quit || player.health <= 0) {
       Some(new Home)
     } else {
       None
