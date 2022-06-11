@@ -64,11 +64,11 @@ case class Player(
   def update(delta: Float): Unit = {
     val prevdest = location
     if (!moved && game.keysPressed.contains(Keys.U) && inInventory) {
-      inventory.headOption.foreach(head => {
-        head._2.use
-        inventory = inventory.filterNot(it => it == head)
-        if (head._1 > 1) {
-          inventory = (head._1 - 1, head._2) :: inventory
+      inventory.headOption.foreach({ case (count, item) =>
+        item.use
+        inventory = inventory.tail
+        if (count > 1) {
+          inventory = (count - 1, item) :: inventory
         }
       })
       moved = true
