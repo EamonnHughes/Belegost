@@ -15,7 +15,7 @@ case class Player(
 ) extends Entity {
   var moved = false
   var maxHealth = health
-  var inventory = List.empty[Item]
+  var inventory = List[Item](HealthPotion(game))
 
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
@@ -50,28 +50,33 @@ case class Player(
   var inInventory = false
   def update(delta: Float): Unit = {
     val prevdest = location
-
-    destination = computeDestination
-    navTo
-
-    for {
-      path <- pathToDest
-    } {
-      val nextLoc = path.getHead
-      game.enemies.foreach(enemy => {
-        if (enemy.location == nextLoc) {
-          enemy.health -= 1
-          moved = true
-          destination = location
-        } else {
-
-          location = nextLoc
-
-          pathToDest = path.tail
-        }
-      })
-      if (location != prevdest) moved = true
+    if (!moved && game.keysPressed.contains(Keys.U) && inInventory) {
+      inventory.headOption.foreach(head => head.use)
+      moved = true
     }
+    if (!moved) {
+      destination = computeDestination
+      navTo
+      for {
+        path <- pathToDest
+      } {
+        val nextLoc = path.getHead
+        game.enemies.foreach(enemy => {
+          if (enemy.location == nextLoc) {
+            enemy.health -= 1
+            moved = true
+            destination = location
+          } else {
+
+            location = nextLoc
+
+            pathToDest = path.tail
+          }
+        })
+        if (location != prevdest) moved = true
+      }
+    }
+
   }
   def navTo: Unit = {
     if (game.roomList.exists(room => room.isInRoom(destination))) {

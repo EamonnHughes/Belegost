@@ -1,3 +1,5 @@
 package org.eamonn.belegost
 
-trait Item {}
+trait Item {
+  def use: Unit
+}
