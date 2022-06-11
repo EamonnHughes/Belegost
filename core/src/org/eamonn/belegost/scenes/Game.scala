@@ -16,7 +16,7 @@ import org.eamonn.belegost.{
   Room,
   Scene
 }
-a
+
 import sun.security.ec.point.ProjectivePoint.Mutable
 
 import scala.collection.mutable
