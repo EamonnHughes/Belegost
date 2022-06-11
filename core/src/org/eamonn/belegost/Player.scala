@@ -15,7 +15,7 @@ case class Player(
 ) extends Entity {
   var moved = false
   var maxHealth = health
-  var inventory = List[Item](HealthPotion(game))
+  var inventory = List[(Int, Item, Int)]((5, HealthPotion(game), 1))
 
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
@@ -41,17 +41,32 @@ case class Player(
       batch.draw(
         Belegost.Square,
         Belegost.screenUnit,
-        Geometry.ScreenHeight - Belegost.screenUnit * (inventory.length + 1),
+        Geometry.ScreenHeight - Belegost.screenUnit * ((inventory.length + 1) max 2),
         Geometry.ScreenWidth - Belegost.screenUnit * 2,
-        Belegost.screenUnit * inventory.length
+        Belegost.screenUnit * (inventory.length max 1)
       )
+      inventory.foreach(item => {
+        Text.smallFont.setColor(Color.BLACK)
+        Text.smallFont.draw(
+          batch,
+          "x" + item._1 + "   " + item._2.name,
+          Belegost.screenUnit * 2,
+          Geometry.ScreenHeight - Belegost.screenUnit * (item._3 * 1.1f)
+        )
+      })
     }
   }
   var inInventory = false
   def update(delta: Float): Unit = {
     val prevdest = location
     if (!moved && game.keysPressed.contains(Keys.U) && inInventory) {
-      inventory.headOption.foreach(head => head.use)
+      inventory.headOption.foreach(head => {
+        head._2.use
+        inventory = inventory.filterNot(it => it == head)
+        if (head._1 > 1) {
+          inventory = (head._1 - 1, head._2, head._3) :: inventory
+        }
+      })
       moved = true
     }
     if (!moved) {
