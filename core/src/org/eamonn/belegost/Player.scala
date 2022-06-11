@@ -15,7 +15,11 @@ case class Player(
 ) extends Entity {
   var moved = false
   var maxHealth = health
-  var inventory = List[(Int, Item, Int)]((5, HealthPotion(game), 1))
+  var inventory = List[(Int, Item)](
+    (5, HealthPotion(game)),
+    (4, HealthPotion(game)),
+    (3, HealthPotion(game))
+  )
 
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
@@ -45,13 +49,13 @@ case class Player(
         Geometry.ScreenWidth - Belegost.screenUnit * 2,
         Belegost.screenUnit * (inventory.length max 1)
       )
-      inventory.foreach(item => {
+      inventory.zipWithIndex.foreach({ case (item, index) =>
         Text.smallFont.setColor(Color.BLACK)
         Text.smallFont.draw(
           batch,
           "x" + item._1 + "   " + item._2.name,
           Belegost.screenUnit * 2,
-          Geometry.ScreenHeight - Belegost.screenUnit * (item._3 * 1.1f)
+          Geometry.ScreenHeight - Belegost.screenUnit * (index + 1) + Text.smallFont.getDescent
         )
       })
     }
@@ -64,7 +68,7 @@ case class Player(
         head._2.use
         inventory = inventory.filterNot(it => it == head)
         if (head._1 > 1) {
-          inventory = (head._1 - 1, head._2, head._3) :: inventory
+          inventory = (head._1 - 1, head._2) :: inventory
         }
       })
       moved = true
