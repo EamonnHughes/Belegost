@@ -10,6 +10,8 @@ import org.eamonn.belegost.{
   Enemy,
   Entity,
   Geometry,
+  HealthPickup,
+  PickUp,
   Player,
   Room,
   Scene
@@ -21,6 +23,7 @@ import scala.collection.mutable
 class Game extends Scene {
   var keysPressed = List.empty[Int]
   var quit = false
+  var pickups = List[PickUp](HealthPickup(Location(24, 5), this))
   var roomList = List[Room](
     Room(Location(2, 2), 15, 15, this),
     Room(Location(17, 4), 3, 1, this),
@@ -56,6 +59,7 @@ class Game extends Scene {
     roomList.foreach(room => room.draw(batch))
 
     everything.foreach(thing => thing.draw(batch))
+    pickups.foreach(pUp => pUp.draw(batch))
   }
   def findEntity(location: Location): Entity = { // nulls
     everything.find(thing => thing.location == location).orNull

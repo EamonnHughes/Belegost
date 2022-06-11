@@ -62,6 +62,12 @@ case class Player(
   }
   var inInventory = false
   def update(delta: Float): Unit = {
+    game.pickups.foreach(pUp => {
+      if (location == pUp.location) {
+        game.pickups = game.pickups.filterNot(f => f eq pUp)
+        inventory = ((1, pUp.corresponding) :: inventory.reverse).reverse
+      }
+    })
     val prevdest = location
     if (!moved && game.keysPressed.contains(Keys.U) && inInventory) {
       inventory.headOption.foreach({ case (count, item) =>
