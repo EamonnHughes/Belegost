@@ -32,6 +32,9 @@ class GameControl(game: Game) extends InputAdapter {
 
   override def keyDown(keycode: Int): Boolean = {
     game.keysPressed = keycode :: game.keysPressed
+    if (keycode == Keys.I) {
+      game.player.inInventory = !game.player.inInventory
+    }
 
     true
   }

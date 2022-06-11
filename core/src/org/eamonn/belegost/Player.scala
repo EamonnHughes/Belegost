@@ -15,6 +15,7 @@ case class Player(
 ) extends Entity {
   var moved = false
   var maxHealth = health
+  var inventory = List.empty[Item]
 
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
@@ -35,7 +36,18 @@ case class Player(
       (health.toFloat / maxHealth.toFloat) * Belegost.screenUnit,
       Belegost.screenUnit / 10
     )
+    if (inInventory) {
+      batch.setColor(Color.WHITE)
+      batch.draw(
+        Belegost.Square,
+        Belegost.screenUnit,
+        Geometry.ScreenHeight - Belegost.screenUnit * (inventory.length + 1),
+        Geometry.ScreenWidth - Belegost.screenUnit * 2,
+        Belegost.screenUnit * inventory.length
+      )
+    }
   }
+  var inInventory = false
   def update(delta: Float): Unit = {
     val prevdest = location
 
