@@ -3,6 +3,7 @@ package org.eamonn.belegost
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import org.eamonn.belegost.equipment.Helmet
 import org.eamonn.belegost.items.{EmptyBottle, HealthPotion, Item}
 import org.eamonn.belegost.scenes.Game
 import org.eamonn.belegost.util.{Delta, Location}
@@ -22,7 +23,7 @@ case class Player(
     (40, HealthPotion(game))
   )
   var currentInventoryItem = 0
-
+  var helmet: Option[Helmet] = None
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
   def draw(batch: PolygonSpriteBatch): Unit = {
@@ -43,33 +44,7 @@ case class Player(
       Belegost.screenUnit / 10
     )
     if (inInventory) {
-      batch.setColor(Color.WHITE)
-      batch.draw(
-        Belegost.Square,
-        Belegost.screenUnit,
-        Geometry.ScreenHeight - Belegost.screenUnit * ((inventory.length + 1) max 2),
-        Geometry.ScreenWidth - Belegost.screenUnit * 2,
-        Belegost.screenUnit * (inventory.length max 1)
-      )
-      if (inventory.nonEmpty) {
-        batch.setColor(Color.RED)
-        batch.draw(
-          Belegost.Square,
-          Belegost.screenUnit,
-          Geometry.ScreenHeight - Belegost.screenUnit * (currentInventoryItem + 2),
-          Geometry.ScreenWidth - Belegost.screenUnit * 2,
-          Belegost.screenUnit
-        )
-      }
-      inventory.zipWithIndex.foreach({ case (item, index) =>
-        Text.smallFont.setColor(Color.BLACK)
-        Text.smallFont.draw(
-          batch,
-          "x" + item._1 + "   " + item._2.name,
-          Belegost.screenUnit * 2,
-          Geometry.ScreenHeight - Belegost.screenUnit * (index + 1) + Text.smallFont.getDescent
-        )
-      })
+      Menu.draw(batch, this)
     }
   }
   var inInventory = false

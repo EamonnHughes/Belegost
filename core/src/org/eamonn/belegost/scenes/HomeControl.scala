@@ -1,5 +1,6 @@
 package org.eamonn.belegost.scenes
 
+import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.InputAdapter
 class HomeControl(home: Home) extends InputAdapter {
   override def touchDown(
@@ -12,4 +13,10 @@ class HomeControl(home: Home) extends InputAdapter {
     true
   }
 
+  override def keyDown(keycode: Int): Boolean = {
+    if (keycode == Keys.N) {
+      home.gameBegin = true
+    }
+    true
+  }
 }
