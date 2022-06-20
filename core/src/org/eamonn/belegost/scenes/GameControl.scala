@@ -35,6 +35,17 @@ class GameControl(game: Game) extends InputAdapter {
     if (keycode == Keys.I) {
       game.player.inInventory = !game.player.inInventory
     }
+    if (game.player.inInventory) {
+      if (keycode == Keys.UP) {
+        game.player.currentInventoryItem =
+          (game.player.currentInventoryItem - 1) max 0
+      }
+      if (keycode == Keys.DOWN) {
+
+        game.player.currentInventoryItem =
+          (game.player.currentInventoryItem + 1) min game.player.inventory.length - 1
+      }
+    }
 
     true
   }
