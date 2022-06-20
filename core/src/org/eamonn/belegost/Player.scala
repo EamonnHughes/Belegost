@@ -91,7 +91,7 @@ case class Player(
         val nextLoc = path.getHead
         game.enemies.foreach(enemy => {
           if (enemy.location == nextLoc) {
-            enemy.health -= 1
+            enemy.health -= d(4)
             moved = true
             destination = location
           } else {

@@ -9,6 +9,9 @@ import scala.concurrent.duration.FiniteDuration
 
 // Things kinda stolen from scaloi
 package object belegost {
+  def d(die: Int): Int = {
+    (Math.random() * die).toInt
+  }
 
   def compassAvailable: Boolean =
     input.isPeripheralAvailable(Peripheral.Compass)

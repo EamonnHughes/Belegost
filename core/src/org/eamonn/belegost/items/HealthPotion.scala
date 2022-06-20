@@ -1,10 +1,11 @@
 package org.eamonn.belegost.items
 
+import org.eamonn.belegost._
 import org.eamonn.belegost.scenes.Game
 
 case class HealthPotion(game: Game) extends Item {
   def use: Unit = {
-    game.player.health = game.player.health + 4 min game.player.maxHealth
+    game.player.health = game.player.health + d(6) min game.player.maxHealth
     val index = game.player.inventory.indexWhere({ case (count, item) =>
       if (item == EmptyBottle(game) && count < 40) true else false
     })
