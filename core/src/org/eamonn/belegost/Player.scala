@@ -3,7 +3,7 @@ package org.eamonn.belegost
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import org.eamonn.belegost.items.{HealthPotion, Item}
+import org.eamonn.belegost.items.{EmptyBottle, HealthPotion, Item}
 import org.eamonn.belegost.scenes.Game
 import org.eamonn.belegost.util.{Delta, Location}
 import org.graalvm.compiler.word.Word
@@ -78,14 +78,26 @@ case class Player(
   def update(delta: Float): Unit = {
     game.pickups.foreach(pUp => {
       if (location == pUp.location) {
+        val index = game.player.inventory.indexWhere({ case (count, item) =>
+          if (item == pUp.corresponding && count <= 40) true else false
+        })
+        if (index < 0) {
+
+          game.player.inventory.addOne((1, pUp.corresponding))
+        } else {
+          game.player.inventory(index) = (
+            game.player.inventory(index)._1 + 1,
+            game.player.inventory(index)._2
+          )
+        }
         game.pickups = game.pickups.filterNot(f => f eq pUp)
-        inventory.addOne((1, pUp.corresponding))
+
       }
     })
     val prevdest = location
     if (
       !moved && game.keysPressed.contains(
-        Keys.U
+        Keys.ENTER
       ) && inInventory && currentInventoryItem < inventory.length
     ) {
       val (count, item) = inventory(currentInventoryItem)
