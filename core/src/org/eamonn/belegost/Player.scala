@@ -19,9 +19,7 @@ case class Player(
   var moved = false
   var maxHealth = health
   var inventory = mutable.ListBuffer[(Int, Item)](
-    (5, HealthPotion(game)),
-    (4, items.HealthPotion(game)),
-    (3, items.HealthPotion(game))
+    (40, HealthPotion(game))
   )
   var currentInventoryItem = 0
 
@@ -79,7 +77,7 @@ case class Player(
     game.pickups.foreach(pUp => {
       if (location == pUp.location) {
         val index = game.player.inventory.indexWhere({ case (count, item) =>
-          if (item == pUp.corresponding && count <= 40) true else false
+          if (item == pUp.corresponding && count < 40) true else false
         })
         if (index < 0) {
 
