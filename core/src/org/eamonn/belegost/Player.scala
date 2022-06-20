@@ -3,6 +3,7 @@ package org.eamonn.belegost
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import org.eamonn.belegost.items.{HealthPotion, Item}
 import org.eamonn.belegost.scenes.Game
 import org.eamonn.belegost.util.{Delta, Location}
 import org.graalvm.compiler.word.Word
@@ -19,8 +20,8 @@ case class Player(
   var maxHealth = health
   var inventory = mutable.ListBuffer[(Int, Item)](
     (5, HealthPotion(game)),
-    (4, HealthPotion(game)),
-    (3, HealthPotion(game))
+    (4, items.HealthPotion(game)),
+    (3, items.HealthPotion(game))
   )
   var currentInventoryItem = 0
 

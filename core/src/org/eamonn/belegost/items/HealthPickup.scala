@@ -1,9 +1,10 @@
-package org.eamonn.belegost
+package org.eamonn.belegost.items
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost.scenes.Game
 import org.eamonn.belegost.util.Location
+import org.eamonn.belegost.{Belegost, items}
 
 case class HealthPickup(var location: Location, game: Game) extends PickUp {
   def draw(batch: PolygonSpriteBatch): Unit = {
@@ -16,5 +17,5 @@ case class HealthPickup(var location: Location, game: Game) extends PickUp {
       Belegost.screenUnit
     )
   }
-  var corresponding: Item = HealthPotion(game)
+  var corresponding: Item = items.HealthPotion(game)
 }

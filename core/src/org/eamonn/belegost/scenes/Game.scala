@@ -3,6 +3,7 @@ package org.eamonn.belegost.scenes
 import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import org.eamonn.belegost.items.{HealthPickup, PickUp}
 import org.eamonn.belegost.util.Location
 import org.eamonn.belegost.{
   Belegost,
@@ -10,13 +11,10 @@ import org.eamonn.belegost.{
   Enemy,
   Entity,
   Geometry,
-  HealthPickup,
-  PickUp,
   Player,
   Room,
   Scene
 }
-
 import sun.security.ec.point.ProjectivePoint.Mutable
 
 import scala.collection.mutable
