@@ -3,7 +3,7 @@ package org.eamonn.belegost
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import org.eamonn.belegost.equipment.Helmet
+import org.eamonn.belegost.equipment.{BodyArmor, Boots, Cloak, Gloves, Helmet}
 import org.eamonn.belegost.items.{EmptyBottle, HealthPotion, Item}
 import org.eamonn.belegost.scenes.Game
 import org.eamonn.belegost.util.{Delta, Location}
@@ -21,10 +21,18 @@ case class Player(
   var maxHealth = health
   var inventory = mutable.ListBuffer[(Int, Item)](
     (40, HealthPotion(game)),
-    (1, Helmet(game))
+    (1, Helmet(game)),
+    (1, BodyArmor(game)),
+    (1, Gloves(game)),
+    (1, Boots(game)),
+    (1, Cloak(game))
   )
   var currentInventoryItem = 0
   var helmet: Option[Helmet] = None
+  var bodyArmor: Option[BodyArmor] = None
+  var gloves: Option[Gloves] = None
+  var boots: Option[Boots] = None
+  var cloak: Option[Cloak] = None
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
   def draw(batch: PolygonSpriteBatch): Unit = {

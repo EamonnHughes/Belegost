@@ -53,9 +53,81 @@ object Menu {
       Text.smallFont.setColor(Color.BLACK)
       Text.smallFont.draw(
         batch,
-        "Helmet: None}",
+        "Helmet: None",
         Belegost.screenUnit * 2,
         Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 1) + Text.smallFont.getDescent
+      )
+    }
+    player.bodyArmor.foreach(body => {
+      Text.smallFont.setColor(Color.BLACK)
+      Text.smallFont.draw(
+        batch,
+        s"Armor: ${body.name}",
+        Belegost.screenUnit * 2,
+        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 2) + Text.smallFont.getDescent
+      )
+    })
+    if (player.bodyArmor.isEmpty) {
+      Text.smallFont.setColor(Color.BLACK)
+      Text.smallFont.draw(
+        batch,
+        "Armor: None",
+        Belegost.screenUnit * 2,
+        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 2) + Text.smallFont.getDescent
+      )
+    }
+    player.gloves.foreach(glove => {
+      Text.smallFont.setColor(Color.BLACK)
+      Text.smallFont.draw(
+        batch,
+        s"Gloves: ${glove.name}",
+        Belegost.screenUnit * 2,
+        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 3) + Text.smallFont.getDescent
+      )
+    })
+    if (player.gloves.isEmpty) {
+      Text.smallFont.setColor(Color.BLACK)
+      Text.smallFont.draw(
+        batch,
+        "Gloves: None",
+        Belegost.screenUnit * 2,
+        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 3) + Text.smallFont.getDescent
+      )
+    }
+    player.boots.foreach(boot => {
+      Text.smallFont.setColor(Color.BLACK)
+      Text.smallFont.draw(
+        batch,
+        s"Boots: ${boot.name}",
+        Belegost.screenUnit * 2,
+        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 4) + Text.smallFont.getDescent
+      )
+    })
+    if (player.boots.isEmpty) {
+      Text.smallFont.setColor(Color.BLACK)
+      Text.smallFont.draw(
+        batch,
+        "Boots: None",
+        Belegost.screenUnit * 2,
+        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 4) + Text.smallFont.getDescent
+      )
+    }
+    player.cloak.foreach(cloak => {
+      Text.smallFont.setColor(Color.BLACK)
+      Text.smallFont.draw(
+        batch,
+        s"Cloak: ${cloak.name}",
+        Belegost.screenUnit * 2,
+        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 5) + Text.smallFont.getDescent
+      )
+    })
+    if (player.cloak.isEmpty) {
+      Text.smallFont.setColor(Color.BLACK)
+      Text.smallFont.draw(
+        batch,
+        "Cloak: None",
+        Belegost.screenUnit * 2,
+        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 5) + Text.smallFont.getDescent
       )
     }
   }

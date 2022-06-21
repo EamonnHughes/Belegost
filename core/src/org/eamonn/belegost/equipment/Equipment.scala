@@ -11,8 +11,8 @@ sealed trait ArmorType {
   var mod: Int
 }
 object ArmorType {
-  case object LeatherSkullcap extends ArmorType {
-    val name = "Leather Skullcap"
+  case object Leather extends ArmorType {
+    val name = "Leather"
     var mod = 1
   }
 }
