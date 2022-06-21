@@ -49,6 +49,10 @@ case class Player(
   }
   var inInventory = false
   def update(delta: Float): Unit = {
+    if (
+      game.keysPressed
+        .contains(Keys.SPACE) || game.keysPressed.contains(Keys.ENTER)
+    ) { moved = true }
     game.pickups.foreach(pUp => {
       if (location == pUp.location) {
         val index = game.player.inventory.indexWhere({ case (count, item) =>
