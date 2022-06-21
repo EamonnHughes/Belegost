@@ -3,7 +3,6 @@ package org.eamonn.belegost.equipment
 import org.eamonn.belegost.items.Item
 
 trait Equipment extends Item {
-  val modifier: Int
   def use: Unit
   var name: String
 }

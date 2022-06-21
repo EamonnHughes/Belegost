@@ -20,7 +20,8 @@ case class Player(
   var moved = false
   var maxHealth = health
   var inventory = mutable.ListBuffer[(Int, Item)](
-    (40, HealthPotion(game))
+    (40, HealthPotion(game)),
+    (1, Helmet(game))
   )
   var currentInventoryItem = 0
   var helmet: Option[Helmet] = None
@@ -44,14 +45,14 @@ case class Player(
       Belegost.screenUnit / 10
     )
     if (inInventory) {
-      Menu.draw(batch, this)
+      Menu.drawInventory(batch, this)
     }
   }
   var inInventory = false
   def update(delta: Float): Unit = {
     if (
       game.keysPressed
-        .contains(Keys.SPACE) || game.keysPressed.contains(Keys.ENTER)
+        .contains(Keys.SPACE)
     ) { moved = true }
     game.pickups.foreach(pUp => {
       if (location == pUp.location) {

@@ -4,9 +4,8 @@ import org.eamonn.belegost.scenes.Game
 
 case class Helmet(game: Game) extends Equipment {
 
-  val modifier = aType.mod
-  val aType = ArmorType.LeatherSkullcap
-  var name = s"${aType.name} (+ $modifier)"
+  val aType: ArmorType = ArmorType.LeatherSkullcap
+  var name = s"${aType.name} (+ ${aType.mod})"
   def use: Unit = {
     game.player.helmet = Some(this)
   }
