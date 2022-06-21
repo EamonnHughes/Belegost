@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 
 object Menu {
+  def drawStats(batch: PolygonSpriteBatch, player: Player): Unit = {}
   def drawInventory(batch: PolygonSpriteBatch, player: Player): Unit = {
     batch.setColor(Color.WHITE)
     batch.draw(

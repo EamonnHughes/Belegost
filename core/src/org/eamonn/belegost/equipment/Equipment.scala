@@ -5,6 +5,7 @@ import org.eamonn.belegost.items.Item
 trait Equipment extends Item {
   def use: Unit
   var name: String
+  var mod: Int
 }
 sealed trait ArmorType {
   val name: String

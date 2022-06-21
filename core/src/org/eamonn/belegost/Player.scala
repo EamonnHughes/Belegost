@@ -3,7 +3,14 @@ package org.eamonn.belegost
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import org.eamonn.belegost.equipment.{BodyArmor, Boots, Cloak, Gloves, Helmet}
+import org.eamonn.belegost.equipment.{
+  BodyArmor,
+  Boots,
+  Cloak,
+  Equipment,
+  Gloves,
+  Helmet
+}
 import org.eamonn.belegost.items.{EmptyBottle, HealthPotion, Item}
 import org.eamonn.belegost.scenes.Game
 import org.eamonn.belegost.util.{Delta, Location}
@@ -17,6 +24,21 @@ case class Player(
     var game: Game,
     var health: Int
 ) extends Entity {
+  var strength: Int = 12
+  var dexterity: Int = 12
+  var constitution: Int = 12
+  var intelligence: Int = 12
+  var wisdom: Int = 12
+  var charisma: Int = 12
+  var baseAC = 10
+  def armorClass = baseAC + acMod
+  def acMod: Int = {
+    var eqBonus = 0
+    equipped.foreach(equip => {
+      eqBonus += equip.mod
+    })
+    eqBonus
+  }
   var moved = false
   var maxHealth = health
   var inventory = mutable.ListBuffer[(Int, Item)](
@@ -27,6 +49,9 @@ case class Player(
     (1, Boots(game)),
     (1, Cloak(game))
   )
+  def equipped: List[Equipment] = {
+    helmet.toList ::: bodyArmor.toList ::: gloves.toList ::: boots.toList ::: cloak.toList
+  }
   var currentInventoryItem = 0
   var helmet: Option[Helmet] = None
   var bodyArmor: Option[BodyArmor] = None
@@ -36,6 +61,7 @@ case class Player(
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
   def draw(batch: PolygonSpriteBatch): Unit = {
+    Menu.drawStats(batch, this)
     batch.setColor(Color.WHITE)
     batch.draw(
       Belegost.Player,
