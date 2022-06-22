@@ -11,6 +11,7 @@ import org.eamonn.belegost.{
   Enemy,
   Entity,
   Geometry,
+  Menu,
   Player,
   Room,
   Scene
@@ -24,9 +25,7 @@ class Game extends Scene {
   var quit = false
   var pickups = List[PickUp](HealthPickup(Location(24, 5), this))
   var roomList = List[Room](
-    Room(Location(2, 2), 15, 15, this),
-    Room(Location(17, 4), 3, 1, this),
-    Room(Location(20, 2), 15, 15, this)
+    Room(Location(-15, -15), 50, 50, this)
   )
   var player = Player(Location(3, 3), Location(3, 3), this, 10)
   var enemies = List.empty[Enemy]
@@ -34,10 +33,18 @@ class Game extends Scene {
   override def init(): InputAdapter = new GameControl(this)
   var tick = 0.2f
   override def update(delta: Float): Option[Scene] = {
-    Belegost.translationX =
-      Belegost.screenUnit.toInt * ((Geometry.ScreenWidth / 2 / Belegost.screenUnit).toInt - player.location.x)
-    Belegost.translationY =
-      Belegost.screenUnit.toInt * ((Geometry.ScreenHeight / 2 / Belegost.screenUnit).toInt - player.location.y)
+    if (
+      player.location.x < -Belegost.translationX + 7 || player.location.x > -Belegost.translationX + (Geometry.ScreenWidth / Belegost.screenUnit) - 7
+    ) {
+      Belegost.translationX =
+        ((Geometry.ScreenWidth / 2 / Belegost.screenUnit).toInt - player.location.x)
+    }
+    if (
+      player.location.y < -Belegost.translationY + 7 || player.location.y > -Belegost.translationY + (Geometry.ScreenHeight / Belegost.screenUnit) - 7
+    ) {
+      Belegost.translationY =
+        ((Geometry.ScreenHeight / 2 / Belegost.screenUnit).toInt - player.location.y)
+    }
     if (enemies.length < 1) {
       enemies = Enemy(Location(10, 10), Location(10, 10), this, 10) :: enemies
     }
@@ -60,14 +67,18 @@ class Game extends Scene {
 
   override def render(batch: PolygonSpriteBatch): Unit = {
     batch.getTransformMatrix.setToTranslation(
-      Belegost.translationX,
-      Belegost.translationY,
+      Belegost.translationX * Belegost.screenUnit,
+      Belegost.translationY * Belegost.screenUnit,
       0
     )
     roomList.foreach(room => room.draw(batch))
 
     everything.foreach(thing => thing.draw(batch))
     pickups.foreach(pUp => pUp.draw(batch))
+    if (player.inInventory) {
+      Menu.drawInventory(batch, player)
+    }
+    Menu.drawStats(batch, player)
   }
   def findEntity(location: Location): Entity = { // nulls
     everything.find(thing => thing.location == location).orNull

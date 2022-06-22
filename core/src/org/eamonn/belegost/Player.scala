@@ -61,7 +61,7 @@ case class Player(
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
   def draw(batch: PolygonSpriteBatch): Unit = {
-    Menu.drawStats(batch, this)
+
     batch.setColor(Color.WHITE)
     batch.draw(
       Belegost.Player,
@@ -78,9 +78,6 @@ case class Player(
       (health.toFloat / maxHealth.toFloat) * Belegost.screenUnit,
       Belegost.screenUnit / 10
     )
-    if (inInventory) {
-      Menu.drawInventory(batch, this)
-    }
   }
   var inInventory = false
   def update(delta: Float): Unit = {

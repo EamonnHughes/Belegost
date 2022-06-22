@@ -14,8 +14,8 @@ class GameControl(game: Game) extends InputAdapter {
   ): Boolean = {
     if (button == 1) {
       game.player.destination = Location(
-        (screenX / Belegost.screenUnit).toInt,
-        ((Geometry.ScreenHeight - screenY) / Belegost.screenUnit).toInt
+        (screenX / Belegost.screenUnit).toInt - Belegost.translationX,
+        ((Geometry.ScreenHeight - screenY) / Belegost.screenUnit).toInt - Belegost.translationY
       )
     }
 

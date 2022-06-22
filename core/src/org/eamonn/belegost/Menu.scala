@@ -9,8 +9,8 @@ object Menu {
     batch.setColor(Color.WHITE)
     batch.draw(
       Belegost.Square,
-      Belegost.screenUnit,
-      Geometry.ScreenHeight - Belegost.screenUnit * ((player.inventory.length + 6)),
+      -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit,
+      -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * ((player.inventory.length + 6)),
       Geometry.ScreenWidth - Belegost.screenUnit * 2,
       Belegost.screenUnit * (player.inventory.length + 5)
     )
@@ -18,16 +18,16 @@ object Menu {
       batch.setColor(Color.RED)
       batch.draw(
         Belegost.Square,
-        Belegost.screenUnit,
-        Geometry.ScreenHeight - Belegost.screenUnit * (player.currentInventoryItem + 2),
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.currentInventoryItem + 2),
         Geometry.ScreenWidth - Belegost.screenUnit * 2,
         Belegost.screenUnit
       )
       batch.setColor(Color.BLACK)
       batch.draw(
         Belegost.Square,
-        Belegost.screenUnit,
-        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 1),
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 1),
         Geometry.ScreenWidth - Belegost.screenUnit * 2,
         Belegost.screenUnit / 20
       )
@@ -37,8 +37,8 @@ object Menu {
       Text.smallFont.draw(
         batch,
         "x" + item._1 + "   " + item._2.name,
-        Belegost.screenUnit * 2,
-        Geometry.ScreenHeight - Belegost.screenUnit * (index + 1) + Text.smallFont.getDescent
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (index + 1) + Text.smallFont.getDescent
       )
     })
     player.helmet.foreach(helm => {
@@ -46,8 +46,8 @@ object Menu {
       Text.smallFont.draw(
         batch,
         s"Helmet: ${helm.name}",
-        Belegost.screenUnit * 2,
-        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 1) + Text.smallFont.getDescent
+        (-Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        (-Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 1) + Text.smallFont.getDescent
       )
     })
     if (player.helmet.isEmpty) {
@@ -55,8 +55,8 @@ object Menu {
       Text.smallFont.draw(
         batch,
         "Helmet: None",
-        Belegost.screenUnit * 2,
-        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 1) + Text.smallFont.getDescent
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 1) + Text.smallFont.getDescent
       )
     }
     player.bodyArmor.foreach(body => {
@@ -64,8 +64,8 @@ object Menu {
       Text.smallFont.draw(
         batch,
         s"Armor: ${body.name}",
-        Belegost.screenUnit * 2,
-        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 2) + Text.smallFont.getDescent
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 2) + Text.smallFont.getDescent
       )
     })
     if (player.bodyArmor.isEmpty) {
@@ -73,8 +73,8 @@ object Menu {
       Text.smallFont.draw(
         batch,
         "Armor: None",
-        Belegost.screenUnit * 2,
-        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 2) + Text.smallFont.getDescent
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 2) + Text.smallFont.getDescent
       )
     }
     player.gloves.foreach(glove => {
@@ -82,8 +82,8 @@ object Menu {
       Text.smallFont.draw(
         batch,
         s"Gloves: ${glove.name}",
-        Belegost.screenUnit * 2,
-        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 3) + Text.smallFont.getDescent
+        (-Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        (-Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 3) + Text.smallFont.getDescent
       )
     })
     if (player.gloves.isEmpty) {
@@ -91,8 +91,8 @@ object Menu {
       Text.smallFont.draw(
         batch,
         "Gloves: None",
-        Belegost.screenUnit * 2,
-        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 3) + Text.smallFont.getDescent
+        (-Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        (-Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 3) + Text.smallFont.getDescent
       )
     }
     player.boots.foreach(boot => {
@@ -100,8 +100,8 @@ object Menu {
       Text.smallFont.draw(
         batch,
         s"Boots: ${boot.name}",
-        Belegost.screenUnit * 2,
-        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 4) + Text.smallFont.getDescent
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 4) + Text.smallFont.getDescent
       )
     })
     if (player.boots.isEmpty) {
@@ -109,8 +109,8 @@ object Menu {
       Text.smallFont.draw(
         batch,
         "Boots: None",
-        Belegost.screenUnit * 2,
-        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 4) + Text.smallFont.getDescent
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 4) + Text.smallFont.getDescent
       )
     }
     player.cloak.foreach(cloak => {
@@ -118,8 +118,8 @@ object Menu {
       Text.smallFont.draw(
         batch,
         s"Cloak: ${cloak.name}",
-        Belegost.screenUnit * 2,
-        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 5) + Text.smallFont.getDescent
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 5) + Text.smallFont.getDescent
       )
     })
     if (player.cloak.isEmpty) {
@@ -127,8 +127,8 @@ object Menu {
       Text.smallFont.draw(
         batch,
         "Cloak: None",
-        Belegost.screenUnit * 2,
-        Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 5) + Text.smallFont.getDescent
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 5) + Text.smallFont.getDescent
       )
     }
   }
