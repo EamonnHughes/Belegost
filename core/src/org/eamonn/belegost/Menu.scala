@@ -4,7 +4,23 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 
 object Menu {
-  def drawStats(batch: PolygonSpriteBatch, player: Player): Unit = {}
+  def drawStats(batch: PolygonSpriteBatch, player: Player): Unit = {
+    batch.setColor(Color.WHITE)
+    batch.draw(
+      Belegost.Square,
+      -(Belegost.translationX) * Belegost.screenUnit,
+      -(Belegost.translationY) * Belegost.screenUnit + Belegost.screenUnit,
+      Belegost.screenUnit * 8,
+      Belegost.screenUnit * 20
+    )
+    Text.smallFont.setColor(Color.BLACK)
+    Text.smallFont.draw(
+      batch,
+      s"level: ${player.level} \n next: ${player.nextXP - player.XPvalue} \n str: ${player.strength}\n dex: ${player.dexterity}\n con: ${player.constitution} \n int: ${player.intelligence}\n wis: ${player.wisdom} \n cha: ${player.charisma}",
+      -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit,
+      -(Belegost.translationY) * Belegost.screenUnit + Belegost.screenUnit * 10
+    )
+  }
   def drawInventory(batch: PolygonSpriteBatch, player: Player): Unit = {
     batch.setColor(Color.WHITE)
     batch.draw(
