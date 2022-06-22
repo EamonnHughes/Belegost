@@ -13,6 +13,8 @@ case class Enemy(
 ) extends Entity {
   var pathToDest = Option.empty[Path]
   val maxHealth = health
+  def armorClass = 12
+  def speed = 1
 
   def draw(batch: PolygonSpriteBatch): Unit = {
     batch.setColor(Color.WHITE)
@@ -45,7 +47,10 @@ case class Enemy(
     } {
       val nextLoc = path.getHead
       if (game.player.location == nextLoc) {
-        game.player.health -= 1
+        for (i <- 0 until speed) {
+
+          if (d(20) > game.player.armorClass) game.player.health -= d(4)
+        }
       } else if (!game.enemies.exists(enemy => enemy.location == nextLoc)) {
 
         location = nextLoc

@@ -24,6 +24,7 @@ case class Player(
     var game: Game,
     var health: Int
 ) extends Entity {
+  def speed = 2
   var strength: Int = 12
   var dexterity: Int = 12
   var constitution: Int = 12
@@ -128,7 +129,9 @@ case class Player(
         val nextLoc = path.getHead
         game.enemies.foreach(enemy => {
           if (enemy.location == nextLoc) {
-            enemy.health -= d(4)
+            for (i <- 0 until speed) {
+              if (d(20) > enemy.armorClass) enemy.health -= d(4)
+            }
             attackedEnemy = true
             destination = location
           }
