@@ -6,15 +6,14 @@ import com.badlogic.gdx.graphics.Color
 
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.FiniteDuration
+import scala.util.Random
 
 // Things kinda stolen from scaloi
 package object belegost {
-  def d(die: Int): Int = {
-    (Math.random() * die).ceil.toInt
-  }
+  def d(die: Int): Int = Random.nextInt(die) + 1
   def d(nOd: Int, die: Int): Int = {
     var amt = 0
-    for (i <- 0 until (nOd)) { amt += (Math.random() * die).ceil.toInt }
+    for (i <- 0 until (nOd)) { amt += Random.nextInt(die) + 1 }
     amt
   }
 
