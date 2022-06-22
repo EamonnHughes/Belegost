@@ -18,7 +18,7 @@ object Menu {
       batch,
       s"level: ${player.level} \n next: ${player.nextXP - player.XPvalue} \n str: ${player.strength}\n dex: ${player.dexterity}\n con: ${player.constitution} \n int: ${player.intelligence}\n wis: ${player.wisdom} \n cha: ${player.charisma}",
       -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit,
-      -(Belegost.translationY) * Belegost.screenUnit + Belegost.screenUnit * 10
+      -(Belegost.translationY) * Belegost.screenUnit + Belegost.screenUnit * 20
     )
   }
   def drawInventory(batch: PolygonSpriteBatch, player: Player): Unit = {
