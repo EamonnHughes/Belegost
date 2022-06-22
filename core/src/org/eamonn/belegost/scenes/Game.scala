@@ -34,6 +34,10 @@ class Game extends Scene {
   override def init(): InputAdapter = new GameControl(this)
   var tick = 0.2f
   override def update(delta: Float): Option[Scene] = {
+    Belegost.translationX =
+      Belegost.screenUnit.toInt * ((Geometry.ScreenWidth / 2 / Belegost.screenUnit).toInt - player.location.x)
+    Belegost.translationY =
+      Belegost.screenUnit.toInt * ((Geometry.ScreenHeight / 2 / Belegost.screenUnit).toInt - player.location.y)
     if (enemies.length < 1) {
       enemies = Enemy(Location(10, 10), Location(10, 10), this, 10) :: enemies
     }
@@ -55,6 +59,11 @@ class Game extends Scene {
   }
 
   override def render(batch: PolygonSpriteBatch): Unit = {
+    batch.getTransformMatrix.setToTranslation(
+      Belegost.translationX,
+      Belegost.translationY,
+      0
+    )
     roomList.foreach(room => room.draw(batch))
 
     everything.foreach(thing => thing.draw(batch))

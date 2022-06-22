@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.{Pixmap, Texture}
 import com.badlogic.gdx.utils.ScreenUtils
 import com.badlogic.gdx.{ApplicationAdapter, Gdx, Input}
 import org.eamonn.belegost.scenes.Home
-import org.eamonn.belegost.util.{GarbageCan, TextureWrapper}
+import org.eamonn.belegost.util.{Delta, GarbageCan, TextureWrapper}
 
 class Belegost extends ApplicationAdapter {
   import Belegost.garbage
@@ -61,8 +61,10 @@ class Belegost extends ApplicationAdapter {
 
 object Belegost {
   implicit val garbage: GarbageCan = new GarbageCan
+  var translationX = 0
+  var translationY = 0
 
-  val screenUnit = (Geometry.ScreenWidth min Geometry.ScreenHeight) / 50
+  def screenUnit = (Geometry.ScreenWidth min Geometry.ScreenHeight) / 50
   var Square: TextureWrapper = _
   var Player: TextureWrapper = _
   var Wall: TextureWrapper = _
