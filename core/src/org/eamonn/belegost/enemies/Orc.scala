@@ -1,17 +1,19 @@
-package org.eamonn.belegost
+package org.eamonn.belegost.enemies
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost.scenes.Game
 import org.eamonn.belegost.util.Location
+import org.eamonn.belegost.{Belegost, Entity, Navigation, Path, d}
 
-case class Enemy(
+case class Orc(
     var location: Location,
     var destination: Location,
     var game: Game,
     var health: Int
 ) extends Entity {
   var pathToDest = Option.empty[Path]
+  var XPvalue = 10
   val maxHealth = health
   def armorClass = 12
   def speed = 1
@@ -35,8 +37,10 @@ case class Enemy(
     )
   }
   def update(delta: Float): Unit = {
+
     if (health <= 0) {
       game.enemies = game.enemies.filterNot(enemy => enemy == this)
+      game.player.XPvalue += XPvalue
 
     }
     destination = computeDestination

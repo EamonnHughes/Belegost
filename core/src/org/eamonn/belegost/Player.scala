@@ -24,7 +24,10 @@ case class Player(
     var game: Game,
     var health: Int
 ) extends Entity {
+  var XPvalue = 0
+  var nextXP = 10
   def speed = 2
+  var level = 1
   var strength: Int = 12
   var dexterity: Int = 12
   var constitution: Int = 12
@@ -82,6 +85,11 @@ case class Player(
   }
   var inInventory = false
   def update(delta: Float): Unit = {
+    if (XPvalue >= nextXP) {
+      level += 1
+      nextXP += nextXP * 2
+    }
+    maxHealth = (level * 10) + ((constitution - 10) / 2)
     if (
       game.keysPressed
         .contains(Keys.SPACE)

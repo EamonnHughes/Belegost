@@ -6,6 +6,8 @@ import org.eamonn.belegost.util.Location
 trait Entity {
   def armorClass: Int
   def speed: Int
+  var health: Int
+  var XPvalue: Int
   var location: Location
   var destination: Location
   def draw(batch: PolygonSpriteBatch): Unit

@@ -3,12 +3,13 @@ package org.eamonn.belegost.scenes
 import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import org.eamonn.belegost
+import org.eamonn.belegost.enemies.Orc
 import org.eamonn.belegost.items.{HealthPickup, PickUp}
 import org.eamonn.belegost.util.Location
 import org.eamonn.belegost.{
   Belegost,
   Click,
-  Enemy,
   Entity,
   Geometry,
   Menu,
@@ -30,7 +31,7 @@ class Game extends Scene {
     Room(Location(-15, -15), 50, 50, this)
   )
   var player = Player(Location(3, 3), Location(3, 3), this, 10)
-  var enemies = List.empty[Enemy]
+  var enemies = List.empty[Entity]
   var everything = List.empty[Entity]
   override def init(): InputAdapter = new GameControl(this)
   var tick = 0.2f
@@ -89,7 +90,12 @@ class Game extends Scene {
     }
     if (!changingTranslationX && !changingTranslationY) {
       if (enemies.length < 1) {
-        enemies = Enemy(Location(13, 13), Location(13, 13), this, 10) :: Enemy(
+        enemies = Orc(
+          Location(13, 13),
+          Location(13, 13),
+          this,
+          10
+        ) :: belegost.enemies.Orc(
           Location(10, 10),
           Location(10, 10),
           this,
