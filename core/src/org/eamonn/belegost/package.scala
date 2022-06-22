@@ -10,11 +10,11 @@ import scala.concurrent.duration.FiniteDuration
 // Things kinda stolen from scaloi
 package object belegost {
   def d(die: Int): Int = {
-    (Math.random() * die).toInt
+    (Math.random() * die).ceil.toInt
   }
   def d(nOd: Int, die: Int): Int = {
     var amt = 0
-    for (i <- 0 until (nOd)) { amt += (Math.random() * die).toInt }
+    for (i <- 0 until (nOd)) { amt += (Math.random() * die).ceil.toInt }
     amt
   }
 

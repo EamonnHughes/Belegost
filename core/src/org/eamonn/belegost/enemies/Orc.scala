@@ -32,7 +32,7 @@ case class Orc(
       Belegost.Square,
       location.x * Belegost.screenUnit,
       (location.y + 1) * Belegost.screenUnit,
-      (health.toFloat / maxHealth.toFloat) * Belegost.screenUnit,
+      ((health.toFloat / maxHealth.toFloat) * Belegost.screenUnit) max 0,
       Belegost.screenUnit / 10
     )
   }

@@ -17,3 +17,16 @@ object ArmorType {
     var mod = 1
   }
 }
+
+sealed trait WeaponType {
+  val name: String
+  var diceNum: Int
+  var diceAmount: Int
+}
+object WeaponType {
+  case object ShortSword extends WeaponType {
+    val name = "Shortsword"
+    var diceNum = 1
+    var diceAmount = 6
+  }
+}

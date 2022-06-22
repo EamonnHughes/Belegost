@@ -16,7 +16,11 @@ object Menu {
     Text.smallFont.setColor(Color.BLACK)
     Text.smallFont.draw(
       batch,
-      s"level: ${player.level} \n next: ${player.nextXP - player.XPvalue} \n str: ${player.strength}\n dex: ${player.dexterity}\n con: ${player.constitution} \n int: ${player.intelligence}\n wis: ${player.wisdom} \n cha: ${player.charisma}",
+      s"level: ${player.level} \n next: ${player.nextXP - player.XPvalue}" +
+        s" \n str: ${player.strength}\n dex: ${player.dexterity} " +
+        s"\n con: ${player.constitution} \n int: ${player.intelligence} " +
+        s"\n wis: ${player.wisdom} \n cha: ${player.charisma} " +
+        s"\n health: ${player.health} / ${player.maxHealth} \n AC: ${player.armorClass}",
       -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit,
       -(Belegost.translationY) * Belegost.screenUnit + Belegost.screenUnit * 20
     )
@@ -26,9 +30,9 @@ object Menu {
     batch.draw(
       Belegost.Square,
       -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit,
-      -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * ((player.inventory.length + 6)),
+      -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * ((player.inventory.length + 7)),
       Geometry.ScreenWidth - Belegost.screenUnit * 2,
-      Belegost.screenUnit * (player.inventory.length + 5)
+      Belegost.screenUnit * (player.inventory.length + 6)
     )
     if (player.inventory.nonEmpty) {
       batch.setColor(Color.RED)
@@ -145,6 +149,24 @@ object Menu {
         "Cloak: None",
         -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
         -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 5) + Text.smallFont.getDescent
+      )
+    }
+    player.weapon.foreach(weapon => {
+      Text.smallFont.setColor(Color.BLACK)
+      Text.smallFont.draw(
+        batch,
+        s"Weapon: ${weapon.name}",
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 6) + Text.smallFont.getDescent
+      )
+    })
+    if (player.weapon.isEmpty) {
+      Text.smallFont.setColor(Color.BLACK)
+      Text.smallFont.draw(
+        batch,
+        "Weapon: None",
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 6) + Text.smallFont.getDescent
       )
     }
   }

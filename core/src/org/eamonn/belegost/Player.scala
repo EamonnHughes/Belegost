@@ -9,7 +9,8 @@ import org.eamonn.belegost.equipment.{
   Cloak,
   Equipment,
   Gloves,
-  Helmet
+  Helmet,
+  Weapon
 }
 import org.eamonn.belegost.items.{EmptyBottle, HealthPotion, Item}
 import org.eamonn.belegost.scenes.Game
@@ -36,6 +37,7 @@ case class Player(
   var charisma: Int = 12
   var baseAC = 10
   def armorClass = baseAC + acMod
+  var weapon: Option[Weapon] = None
   def acMod: Int = {
     var eqBonus = 0
     equipped.foreach(equip => {
@@ -51,7 +53,8 @@ case class Player(
     (1, BodyArmor(game)),
     (1, Gloves(game)),
     (1, Boots(game)),
-    (1, Cloak(game))
+    (1, Cloak(game)),
+    (1, Weapon(game))
   )
   def equipped: List[Equipment] = {
     helmet.toList ::: bodyArmor.toList ::: gloves.toList ::: boots.toList ::: cloak.toList
@@ -138,7 +141,14 @@ case class Player(
         game.enemies.foreach(enemy => {
           if (enemy.location == nextLoc) {
             for (i <- 0 until speed) {
-              if (d(20) > enemy.armorClass) enemy.health -= d(4)
+              weapon.foreach(weapon =>
+                if (d(20) + weapon.mod > enemy.armorClass) {
+                  enemy.health -= d(weapon.dNum, weapon.dAmt)
+                }
+              )
+
+              if (weapon.isEmpty)
+                if (d(20) > enemy.armorClass) enemy.health -= d(2)
             }
             attackedEnemy = true
             destination = location
