@@ -46,7 +46,7 @@ case class Enemy(
       val nextLoc = path.getHead
       if (game.player.location == nextLoc) {
         game.player.health -= 1
-      } else {
+      } else if (!game.enemies.exists(enemy => enemy.location == nextLoc)) {
 
         location = nextLoc
         pathToDest = path.tail

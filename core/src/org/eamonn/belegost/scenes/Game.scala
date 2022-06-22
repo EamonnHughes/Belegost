@@ -89,7 +89,12 @@ class Game extends Scene {
     }
     if (!changingTranslationX && !changingTranslationY) {
       if (enemies.length < 1) {
-        enemies = Enemy(Location(10, 10), Location(10, 10), this, 10) :: enemies
+        enemies = Enemy(Location(13, 13), Location(13, 13), this, 10) :: Enemy(
+          Location(10, 10),
+          Location(10, 10),
+          this,
+          10
+        ) :: enemies
       }
       if (player.moved) {
         tick -= delta

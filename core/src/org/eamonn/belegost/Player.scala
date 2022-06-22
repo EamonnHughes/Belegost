@@ -119,6 +119,7 @@ case class Player(
       moved = true
     }
     if (!moved) {
+      var attackedEnemy = false
       destination = computeDestination
       navTo
       for {
@@ -128,16 +129,17 @@ case class Player(
         game.enemies.foreach(enemy => {
           if (enemy.location == nextLoc) {
             enemy.health -= d(4)
-            moved = true
+            attackedEnemy = true
             destination = location
-          } else {
-
-            location = nextLoc
-
-            pathToDest = path.tail
           }
         })
-        if (location != prevdest) moved = true
+        if (!attackedEnemy) {
+          location = nextLoc
+
+          pathToDest = path.tail
+        }
+        if (location != prevdest || attackedEnemy) moved = true
+        attackedEnemy = false
       }
     }
 
