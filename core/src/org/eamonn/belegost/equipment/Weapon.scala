@@ -6,7 +6,7 @@ import org.eamonn.belegost.scenes.Game
 case class Weapon(game: Game) extends Equipment {
 
   val weaponType: WeaponType = WeaponType.ShortSword
-  var mod = (d(4) - 1)
+  var mod = (d(4) - 1 max 0)
   var dNum = weaponType.diceNum
   var dAmt = weaponType.diceAmount
 

@@ -131,6 +131,7 @@ class Game extends Scene {
     )
     roomList.foreach(room => room.draw(batch))
     MoneyInDungeon.foreach(Money => Money.draw(batch))
+    pickups.foreach(pickup => pickup.draw(batch))
 
     everything.foreach(thing => thing.draw(batch))
 

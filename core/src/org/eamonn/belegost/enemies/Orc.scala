@@ -2,6 +2,7 @@ package org.eamonn.belegost.enemies
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import org.eamonn.belegost.items.{HealthPickup, Money}
 import org.eamonn.belegost.scenes.Game
 import org.eamonn.belegost.util.Location
 import org.eamonn.belegost.{Belegost, Entity, Navigation, Path, d}
@@ -41,6 +42,11 @@ case class Orc(
     if (health <= 0) {
       game.enemies = game.enemies.filterNot(enemy => enemy == this)
       game.player.XPvalue += XPvalue
+      if (d(4) == 1) {
+        game.pickups = HealthPickup(location, game) :: game.pickups
+      } else if (d(3) == 1) {
+        game.MoneyInDungeon = Money(location) :: game.MoneyInDungeon
+      }
 
     }
     destination = computeDestination
