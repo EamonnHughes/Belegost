@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost
 import org.eamonn.belegost.enemies.Orc
-import org.eamonn.belegost.items.{HealthPickup, PickUp}
+import org.eamonn.belegost.items.{HealthPickup, Money, PickUp}
 import org.eamonn.belegost.util.Location
 import org.eamonn.belegost.{
   Belegost,
@@ -23,6 +23,7 @@ import scala.collection.mutable
 
 class Game extends Scene {
   var changingTranslationX = false
+  var MoneyInDungeon: List[Money] = List(Money(Location(20, 20)))
   var changingTranslationY = false
   var keysPressed = List.empty[Int]
   var quit = false
@@ -129,9 +130,10 @@ class Game extends Scene {
       0
     )
     roomList.foreach(room => room.draw(batch))
+    MoneyInDungeon.foreach(Money => Money.draw(batch))
 
     everything.foreach(thing => thing.draw(batch))
-    pickups.foreach(pUp => pUp.draw(batch))
+
     if (player.inInventory) {
       Menu.drawInventory(batch, player)
     }

@@ -20,7 +20,8 @@ object Menu {
         s" \n str: ${player.strength}\n dex: ${player.dexterity} " +
         s"\n con: ${player.constitution} \n int: ${player.intelligence} " +
         s"\n wis: ${player.wisdom} \n cha: ${player.charisma} " +
-        s"\n health: ${player.health} / ${player.maxHealth} \n AC: ${player.armorClass}",
+        s"\n health: ${player.health} / ${player.maxHealth} \n AC: ${player.armorClass} " +
+        s" \n speed: ${player.speed} \n GP: ${player.money}",
       -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit,
       -(Belegost.translationY) * Belegost.screenUnit + Belegost.screenUnit * 20
     )

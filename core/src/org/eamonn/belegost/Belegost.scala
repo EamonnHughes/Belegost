@@ -32,7 +32,9 @@ class Belegost extends ApplicationAdapter {
     Belegost.Floor2 = TextureWrapper.load("Floor2.png")
     Belegost.Floor3 = TextureWrapper.load("Floor3.png")
     Belegost.HealthPotion = TextureWrapper.load("HealthPotion.png")
-//    CarnDum.sound = CarnDum.loadSound("triangle.mp3")
+    Belegost.Money1 = TextureWrapper.load("Money1.png")
+
+    //    CarnDum.sound = CarnDum.loadSound("triangle.mp3")
 
     Text.loadFonts()
 
@@ -75,6 +77,7 @@ object Belegost {
   var Floor2: TextureWrapper = _
   var Floor3: TextureWrapper = _
   var HealthPotion: TextureWrapper = _
+  var Money1: TextureWrapper = _
 
   var sound: Sound = _
 

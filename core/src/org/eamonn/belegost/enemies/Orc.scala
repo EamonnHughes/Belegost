@@ -54,8 +54,8 @@ case class Orc(
         for (i <- 0 until speed) {
           var roll = d(20)
 
-          if (roll == 20) game.player.health -= 2 * d(6)
-          else if (roll > game.player.armorClass) game.player.health -= d(6)
+          if (roll == 20) game.player.health -= 2 * d(3)
+          else if (roll > game.player.armorClass) game.player.health -= d(3)
         }
       } else if (!game.enemies.exists(enemy => enemy.location == nextLoc)) {
 

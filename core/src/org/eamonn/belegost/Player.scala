@@ -27,7 +27,8 @@ case class Player(
 ) extends Entity {
   var XPvalue = 0
   var nextXP = 10
-  def speed = 2
+  var money = 0
+  def speed: Int = 1 max ((dexterity - 10) / 2)
   var level = 1
   var strength: Int = List(d(6), d(6), d(6), d(6)).sorted.tail.sum
   var dexterity: Int = List(d(6), d(6), d(6), d(6)).sorted.tail.sum
@@ -97,6 +98,12 @@ case class Player(
       game.keysPressed
         .contains(Keys.SPACE)
     ) { moved = true }
+    game.MoneyInDungeon.foreach(pUp => {
+      if (location == pUp.location) {
+        money += pUp.amount
+        game.MoneyInDungeon = game.MoneyInDungeon.filterNot(mId => mId eq pUp)
+      }
+    })
     game.pickups.foreach(pUp => {
       if (location == pUp.location) {
         val index = game.player.inventory.indexWhere({ case (count, item) =>
