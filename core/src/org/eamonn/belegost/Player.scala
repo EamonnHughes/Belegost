@@ -141,18 +141,30 @@ case class Player(
         game.enemies.foreach(enemy => {
           if (enemy.location == nextLoc) {
             for (i <- 0 until speed) {
-              weapon.foreach(weapon =>
-                if (d(20) + weapon.mod > enemy.armorClass) {
+              weapon.foreach(weapon => {
+                val roll = d(20)
+                if (roll == 20) {
+                  enemy.health -= (d(
+                    weapon.dNum,
+                    weapon.dAmt
+                  ) + weapon.mod + ((strength - 10) / 2)) * 2
+                } else if (roll + weapon.mod > enemy.armorClass) {
+
                   enemy.health -= d(
                     weapon.dNum,
                     weapon.dAmt
                   ) + weapon.mod + ((strength - 10) / 2)
                 }
-              )
+              })
 
-              if (weapon.isEmpty)
-                if (d(20) > enemy.armorClass)
+              if (weapon.isEmpty) {
+                val roll = d(20)
+
+                if (roll == 20) {
+                  enemy.health -= (d(2) + ((strength - 10) / 2)) * 2
+                } else if (roll > enemy.armorClass)
                   enemy.health -= d(2) + ((strength - 10) / 2)
+              }
             }
             attackedEnemy = true
             destination = location

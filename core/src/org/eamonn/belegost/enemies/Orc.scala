@@ -52,8 +52,10 @@ case class Orc(
       val nextLoc = path.getHead
       if (game.player.location == nextLoc) {
         for (i <- 0 until speed) {
+          var roll = d(20)
 
-          if (d(20) > game.player.armorClass) game.player.health -= d(4)
+          if (roll == 20) game.player.health -= 2 * d(6)
+          else if (roll > game.player.armorClass) game.player.health -= d(6)
         }
       } else if (!game.enemies.exists(enemy => enemy.location == nextLoc)) {
 
