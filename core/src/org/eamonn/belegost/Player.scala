@@ -36,7 +36,7 @@ case class Player(
   var wisdom: Int = List(d(6), d(6), d(6), d(6)).sorted.tail.sum
   var charisma: Int = List(d(6), d(6), d(6), d(6)).sorted.tail.sum
   var baseAC = 10
-  def armorClass = baseAC + acMod
+  def armorClass = baseAC + acMod + ((dexterity - 10) / 2)
   var weapon: Option[Weapon] = None
   def acMod: Int = {
     var eqBonus = 0
@@ -143,12 +143,16 @@ case class Player(
             for (i <- 0 until speed) {
               weapon.foreach(weapon =>
                 if (d(20) + weapon.mod > enemy.armorClass) {
-                  enemy.health -= d(weapon.dNum, weapon.dAmt)
+                  enemy.health -= d(
+                    weapon.dNum,
+                    weapon.dAmt
+                  ) + weapon.mod + ((strength - 10) / 2)
                 }
               )
 
               if (weapon.isEmpty)
-                if (d(20) > enemy.armorClass) enemy.health -= d(2)
+                if (d(20) > enemy.armorClass)
+                  enemy.health -= d(2) + ((strength - 10) / 2)
             }
             attackedEnemy = true
             destination = location
