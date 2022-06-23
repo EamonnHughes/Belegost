@@ -6,19 +6,26 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost.{Belegost, Geometry, Scene, Text}
 
 class CharCreation extends Scene {
-  var race = false
-  var pClass = false
+  var race: Option[playerRace] = None
+  var pClass: Option[playerClass] = None
   var done = false
   var quit = false
 
   override def init(): InputAdapter = new CharControl(this)
 
   override def update(delta: Float): Option[Scene] = {
-    if (done) Some(new Game) else if (quit) Some(new Home) else None
+    if (quit) Some(new Home)
+    else {
+      for {
+        r <- race
+        c <- pClass
+      } yield new Game(r, c)
+    }
+
   }
 
   override def render(batch: PolygonSpriteBatch): Unit = {
-    if (!race) {
+    if (race.isEmpty) {
       Text.mediumFont.setColor(Color.WHITE)
       Text.mediumFont.draw(
         batch,
@@ -26,7 +33,7 @@ class CharCreation extends Scene {
         Belegost.screenUnit,
         Geometry.ScreenHeight - Belegost.screenUnit
       )
-    } else if (!pClass) {
+    } else if (pClass.isEmpty) {
 
       Text.mediumFont.setColor(Color.WHITE)
       Text.mediumFont.draw(
@@ -45,5 +52,21 @@ class CharCreation extends Scene {
         Geometry.ScreenHeight - Belegost.screenUnit
       )
     }
+  }
+}
+sealed trait playerRace {
+  val name: String
+}
+object Races {
+  case object Human extends playerRace {
+    val name = "Human"
+  }
+}
+sealed trait playerClass {
+  val name: String
+}
+object Classes {
+  case object Fighter extends playerClass {
+    val name = "Fighter"
   }
 }

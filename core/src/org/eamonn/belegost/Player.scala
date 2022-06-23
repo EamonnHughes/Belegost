@@ -25,6 +25,8 @@ case class Player(
     var game: Game,
     var health: Int
 ) extends Entity {
+  def playerRace = game.pRace
+  def playerClass = game.pClass
   var XPvalue = 0
   var nextXP = 10
   var money = 0
