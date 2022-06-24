@@ -21,7 +21,11 @@ import sun.security.ec.point.ProjectivePoint.Mutable
 
 import scala.collection.mutable
 
-class Game(val pRace: playerRace, val pClass: playerClass) extends Scene {
+class Game(
+    val pRace: playerRace,
+    val pClass: playerClass,
+    val sStats: List[Int]
+) extends Scene {
   var changingTranslationX = false
   var MoneyInDungeon: List[Money] = List(Money(Location(20, 20)))
   var changingTranslationY = false
