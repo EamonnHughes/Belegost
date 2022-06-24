@@ -25,7 +25,8 @@ class Belegost extends ApplicationAdapter {
     batch = garbage.add(new PolygonSpriteBatch())
 
     Belegost.Square = TextureWrapper.load("Square.png")
-    Belegost.Player = TextureWrapper.load("Player.png")
+    Belegost.HumanFighterPC = TextureWrapper.load("HumanFighter.png")
+    Belegost.DwarfFighterPC = TextureWrapper.load("DwarfFighter.png")
     Belegost.Wall = TextureWrapper.load("Wall.png")
     Belegost.Wall2 = TextureWrapper.load("Wall2.png")
     Belegost.Wall3 = TextureWrapper.load("Wall3.png")
@@ -71,7 +72,8 @@ object Belegost {
 
   def screenUnit = (Geometry.ScreenWidth min Geometry.ScreenHeight) / 50
   var Square: TextureWrapper = _
-  var Player: TextureWrapper = _
+  var HumanFighterPC: TextureWrapper = _
+  var DwarfFighterPC: TextureWrapper = _
   var Wall: TextureWrapper = _
   var Wall2: TextureWrapper = _
   var Wall3: TextureWrapper = _

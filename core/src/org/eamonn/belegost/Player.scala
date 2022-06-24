@@ -13,7 +13,7 @@ import org.eamonn.belegost.equipment.{
   Weapon
 }
 import org.eamonn.belegost.items.{EmptyBottle, HealthPotion, Item}
-import org.eamonn.belegost.scenes.Game
+import org.eamonn.belegost.scenes.{Classes, Game, Races}
 import org.eamonn.belegost.util.{Delta, Location}
 import org.graalvm.compiler.word.Word
 
@@ -79,13 +79,25 @@ case class Player(
   def draw(batch: PolygonSpriteBatch): Unit = {
 
     batch.setColor(Color.WHITE)
-    batch.draw(
-      Belegost.Player,
-      location.x * Belegost.screenUnit,
-      location.y * Belegost.screenUnit,
-      Belegost.screenUnit,
-      Belegost.screenUnit
-    )
+    if (playerRace == Races.Human && playerClass == Classes.Fighter) {
+      batch.draw(
+        Belegost.HumanFighterPC,
+        location.x * Belegost.screenUnit,
+        location.y * Belegost.screenUnit,
+        Belegost.screenUnit,
+        Belegost.screenUnit
+      )
+    }
+    if (playerRace == Races.Dwarf && playerClass == Classes.Fighter) {
+      batch.draw(
+        Belegost.DwarfFighterPC,
+        location.x * Belegost.screenUnit,
+        location.y * Belegost.screenUnit,
+        Belegost.screenUnit,
+        Belegost.screenUnit
+      )
+    }
+
     batch.setColor(1, 0, 0, 0.5f)
     batch.draw(
       Belegost.Square,
