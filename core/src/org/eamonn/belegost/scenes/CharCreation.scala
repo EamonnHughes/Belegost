@@ -31,11 +31,13 @@ class CharCreation extends Scene {
   }
 
   override def render(batch: PolygonSpriteBatch): Unit = {
+    Text.mediumFont.setColor(Color.WHITE)
+
     if (race.isEmpty) {
       Text.mediumFont.setColor(Color.WHITE)
       Text.mediumFont.draw(
         batch,
-        "a: Human",
+        "a: Human \n b: Dwarf",
         Belegost.screenUnit,
         Geometry.ScreenHeight - Belegost.screenUnit
       )
@@ -72,10 +74,19 @@ class CharCreation extends Scene {
 }
 sealed trait playerRace {
   val name: String
+  val xpMod: Float
+  val statBonus: List[Int]
 }
 object Races {
   case object Human extends playerRace {
     val name = "Human"
+    val xpMod = 1
+    val statBonus = List(0, 0, 0, 0, 0, 0)
+  }
+  case object Dwarf extends playerRace {
+    val name = "Human"
+    val xpMod = 1.2f
+    val statBonus = List(2, -1, 3, -1, 1, -1)
   }
 }
 sealed trait playerClass {
