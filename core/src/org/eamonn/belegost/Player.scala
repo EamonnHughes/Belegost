@@ -22,8 +22,7 @@ import scala.collection.mutable
 case class Player(
     var location: Location,
     var destination: Location,
-    var game: Game,
-    var health: Int
+    var game: Game
 ) extends Entity {
   def playerRace = game.pRace
   def playerClass = game.pClass
@@ -33,17 +32,24 @@ case class Player(
   def speed: Int = 1 max ((dexterity - 10) / 2)
   var level = 1
   var stats = game.sStats
-  var strength: Int = stats.head + playerRace.statBonus(0)
+  var strength: Int =
+    stats.head + playerRace.statBonus(0) + playerClass.statBonus(0)
   stats = stats.tail
-  var dexterity: Int = stats.head + playerRace.statBonus(1)
+  var dexterity: Int =
+    stats.head + playerRace.statBonus(1) + playerClass.statBonus(1)
   stats = stats.tail
-  var constitution: Int = stats.head + playerRace.statBonus(2)
+  var constitution: Int =
+    stats.head + playerRace.statBonus(2) + playerClass.statBonus(2)
   stats = stats.tail
-  var intelligence: Int = stats.head + playerRace.statBonus(3)
+  var intelligence: Int =
+    stats.head + playerRace.statBonus(3) + playerClass.statBonus(3)
   stats = stats.tail
-  var wisdom: Int = stats.head + playerRace.statBonus(4)
+  var wisdom: Int =
+    stats.head + playerRace.statBonus(4) + playerClass.statBonus(4)
   stats = stats.tail
-  var charisma: Int = stats.head + playerRace.statBonus(5)
+  var charisma: Int =
+    stats.head + playerRace.statBonus(5) + playerClass.statBonus(5)
+  var health = playerClass.hitDie + ((constitution - 10) / 2)
   var baseAC = 10
   def armorClass = baseAC + acMod + ((dexterity - 10) / 2)
   var weapon: Option[Weapon] = None
@@ -111,9 +117,11 @@ case class Player(
   def update(delta: Float): Unit = {
     if (XPvalue >= nextXP) {
       level += 1
+      var hpBonus = d(playerClass.hitDie)
+      maxHealth += hpBonus + ((constitution - 10) / 2)
+      health += hpBonus + ((constitution - 10) / 2)
       nextXP += nextXP * 2
     }
-    maxHealth = (level * 10) + ((constitution - 10) / 2)
     if (
       game.keysPressed
         .contains(Keys.SPACE)

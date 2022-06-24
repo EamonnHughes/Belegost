@@ -84,16 +84,22 @@ object Races {
     val statBonus = List(0, 0, 0, 0, 0, 0)
   }
   case object Dwarf extends playerRace {
-    val name = "Human"
+    val name = "Dwarf"
     val xpMod = 1.2f
     val statBonus = List(2, -1, 3, -1, 1, -1)
   }
 }
 sealed trait playerClass {
   val name: String
+  val statBonus: List[Int]
+  val caster: Boolean
+  val hitDie: Int
 }
 object Classes {
   case object Fighter extends playerClass {
     val name = "Fighter"
+    val statBonus = List(2, 1, 1, -1, 0, 0)
+    val caster = false
+    val hitDie = 10
   }
 }

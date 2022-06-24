@@ -35,7 +35,7 @@ class Game(
   var roomList = List[Room](
     Room(Location(-15, -15), 50, 50, this)
   )
-  var player = Player(Location(3, 3), Location(3, 3), this, 10)
+  var player = Player(Location(3, 3), Location(3, 3), this)
   var enemies = List.empty[Entity]
   var everything = List.empty[Entity]
   override def init(): InputAdapter = new GameControl(this)
