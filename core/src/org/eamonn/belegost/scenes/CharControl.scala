@@ -55,6 +55,14 @@ class CharControl(charCreation: CharCreation) extends InputAdapter {
             charCreation.stats = charCreation.tStats(1) :: charCreation.stats
             charCreation.stats = charCreation.tStats(2) :: charCreation.stats
             charCreation.stats = charCreation.tStats(0) :: charCreation.stats
+          } else if (pC == Classes.Wizard) {
+
+            charCreation.stats = charCreation.tStats(3) :: charCreation.stats
+            charCreation.stats = charCreation.tStats(1) :: charCreation.stats
+            charCreation.stats = charCreation.tStats(0) :: charCreation.stats
+            charCreation.stats = charCreation.tStats(2) :: charCreation.stats
+            charCreation.stats = charCreation.tStats(4) :: charCreation.stats
+            charCreation.stats = charCreation.tStats(5) :: charCreation.stats
           } else {
             charCreation.stats = charCreation.tStats
           }
