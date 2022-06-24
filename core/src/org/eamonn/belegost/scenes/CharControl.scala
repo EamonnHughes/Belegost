@@ -37,7 +37,19 @@ class CharControl(charCreation: CharCreation) extends InputAdapter {
         }
       }
       if (keycode == Keys.Y) {
-        charCreation.stats = charCreation.tStats
+        charCreation.pClass.foreach(pC => {
+          charCreation.tStats = charCreation.tStats.sorted.reverse
+          if (pC == Classes.Fighter) {
+            charCreation.stats = charCreation.tStats(3) :: charCreation.stats
+            charCreation.stats = charCreation.tStats(4) :: charCreation.stats
+            charCreation.stats = charCreation.tStats(5) :: charCreation.stats
+            charCreation.stats = charCreation.tStats(1) :: charCreation.stats
+            charCreation.stats = charCreation.tStats(2) :: charCreation.stats
+            charCreation.stats = charCreation.tStats(0) :: charCreation.stats
+          } else {
+            charCreation.stats = charCreation.tStats
+          }
+        })
       }
     } else {
 
