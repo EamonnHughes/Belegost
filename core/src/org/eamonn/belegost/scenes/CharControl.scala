@@ -3,8 +3,8 @@ package org.eamonn.belegost.scenes
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.InputAdapter
 import org.eamonn.belegost.d
-import org.eamonn.belegost.scenes.Classes.Fighter
-import org.eamonn.belegost.scenes.Races.{Dwarf, Human}
+import org.eamonn.belegost.scenes.Classes.{Fighter, Wizard}
+import org.eamonn.belegost.scenes.Races.{Dwarf, Elf, Human}
 class CharControl(charCreation: CharCreation) extends InputAdapter {
   override def touchDown(
       screenX: Int,
@@ -25,10 +25,16 @@ class CharControl(charCreation: CharCreation) extends InputAdapter {
       if (keycode == Keys.B) {
         charCreation.race = Some(Dwarf)
       }
+      if (keycode == Keys.C) {
+        charCreation.race = Some(Elf)
+      }
     } else if (charCreation.pClass.isEmpty) {
 
       if (keycode == Keys.A) {
         charCreation.pClass = Some(Fighter)
+      }
+      if (keycode == Keys.B) {
+        charCreation.pClass = Some(Wizard)
       }
     } else if (charCreation.stats.isEmpty) {
 
