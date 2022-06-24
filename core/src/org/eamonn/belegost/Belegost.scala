@@ -5,8 +5,10 @@ import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Pixmap.Format
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.graphics.{Pixmap, Texture}
+import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.utils.ScreenUtils
 import com.badlogic.gdx.{ApplicationAdapter, Gdx, Input}
+import org.eamonn.belegost.Belegost.{translationX, translationY}
 import org.eamonn.belegost.scenes.Home
 import org.eamonn.belegost.util.{Delta, GarbageCan, TextureWrapper}
 
@@ -46,6 +48,7 @@ class Belegost extends ApplicationAdapter {
     scene.update(delta) foreach setScene
     ScreenUtils.clear(0f, 0f, 0f, 1)
     batch.begin()
+    batch.getTransformMatrix.setToTranslation(translationX, translationY, 0)
     scene.render(batch)
     batch.end()
   }
