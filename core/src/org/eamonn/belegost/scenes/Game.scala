@@ -146,9 +146,12 @@ class Game(
 
     everything.foreach(thing => thing.draw(batch))
 
-    if (player.inInventory) {
+    if (player.inSpellList) {
+      Menu.drawSpellBook(batch, player)
+    } else if (player.inInventory) {
       Menu.drawInventory(batch, player)
     }
+
     Menu.drawStats(batch, player)
   }
   def findEntity(location: Location): Entity = { // nulls

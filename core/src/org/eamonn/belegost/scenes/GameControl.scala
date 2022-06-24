@@ -37,8 +37,7 @@ class GameControl(game: Game) extends InputAdapter {
       game.player.inInventory = !game.player.inInventory
     }
     if (keycode == Keys.M && game.player.playerClass.caster) {
-      game.casting = FireBolt :: game.casting
-      game.player.moved = true
+      game.player.inSpellList = !game.player.inSpellList
     }
     if (game.player.inInventory) {
       if (keycode == Keys.UP) {
@@ -51,7 +50,25 @@ class GameControl(game: Game) extends InputAdapter {
           (game.player.currentInventoryItem + 1) min game.player.inventory.length - 1
       }
     }
+    if (game.player.inSpellList) {
+      if (keycode == Keys.UP) {
+        game.player.currentSpell = (game.player.currentSpell - 1) max 0
+      }
+      if (keycode == Keys.DOWN) {
 
+        game.player.currentSpell =
+          (game.player.currentSpell + 1) min game.player.spellList.length - 1
+      }
+      if (keycode == Keys.ENTER) {
+        game.casting =
+          game.player.spellList(game.player.currentSpell) :: game.casting
+        game.player.spellSlots -= game.player
+          .spellList(game.player.currentSpell)
+          .cost
+        game.player.moved = true
+        game.player.inSpellList = false
+      }
+    }
     true
   }
 

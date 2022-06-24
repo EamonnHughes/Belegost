@@ -3,6 +3,7 @@ package org.eamonn.belegost
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
+import org.eamonn.belegost.Classes.FireBolt
 import org.eamonn.belegost.equipment.{
   BodyArmor,
   Boots,
@@ -53,6 +54,11 @@ case class Player(
   var baseAC = 10
   var maxSS = ((level / 2) + ((intelligence - 10) / 2)) max 2
   var spellSlots = maxSS
+  var inSpellList = false
+  var spellList: List[Spells] = List.empty
+  if (playerClass.caster) {
+    spellList = List(FireBolt)
+  }
   def armorClass = baseAC + acMod + ((dexterity - 10) / 2)
   var weapon: Option[Weapon] = None
   def acMod: Int = {
@@ -77,6 +83,7 @@ case class Player(
     helmet.toList ::: bodyArmor.toList ::: gloves.toList ::: boots.toList ::: cloak.toList
   }
   var currentInventoryItem = 0
+  var currentSpell = 0
   var helmet: Option[Helmet] = None
   var bodyArmor: Option[BodyArmor] = None
   var gloves: Option[Gloves] = None
