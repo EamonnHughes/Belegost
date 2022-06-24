@@ -23,7 +23,6 @@ case class Room(location: Location, width: Int, height: Int, var game: Game) {
           if (dWidth % 7 != 0 || dHeight % 5 != 0) { 0 }
           else { 2 }
         }
-        batch.setColor(.4f, .4f, .4f, 1)
         batch.draw(
           floorTexes(floorT),
           (dWidth + location.x) * Belegost.screenUnit,
