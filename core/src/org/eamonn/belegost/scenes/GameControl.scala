@@ -60,13 +60,19 @@ class GameControl(game: Game) extends InputAdapter {
           (game.player.currentSpell + 1) min game.player.spellList.length - 1
       }
       if (keycode == Keys.ENTER) {
-        game.casting =
-          game.player.spellList(game.player.currentSpell) :: game.casting
-        game.player.spellSlots -= game.player
-          .spellList(game.player.currentSpell)
-          .cost
-        game.player.moved = true
-        game.player.inSpellList = false
+        if (
+          game.player.spellSlots - game.player
+            .spellList(game.player.currentSpell)
+            .cost >= 0
+        ) {
+          game.casting =
+            game.player.spellList(game.player.currentSpell) :: game.casting
+          game.player.spellSlots -= game.player
+            .spellList(game.player.currentSpell)
+            .cost
+          game.player.moved = true
+          game.player.inSpellList = false
+        }
       }
     }
     true
