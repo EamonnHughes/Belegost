@@ -51,6 +51,8 @@ case class Player(
     stats.head + playerRace.statBonus(5) + playerClass.statBonus(5)
   var health = playerClass.hitDie + ((constitution - 10) / 2)
   var baseAC = 10
+  var maxSS = ((level / 2) + ((intelligence - 10) / 2)) max 2
+  var spellSlots = maxSS
   def armorClass = baseAC + acMod + ((dexterity - 10) / 2)
   var weapon: Option[Weapon] = None
   def acMod: Int = {
