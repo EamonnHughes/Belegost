@@ -27,6 +27,10 @@ class Belegost extends ApplicationAdapter {
     Belegost.Square = TextureWrapper.load("Square.png")
     Belegost.HumanFighterPC = TextureWrapper.load("HumanFighter.png")
     Belegost.DwarfFighterPC = TextureWrapper.load("DwarfFighter.png")
+    Belegost.ElfFighterPC = TextureWrapper.load("ElfFighter.png")
+    Belegost.HumanWizardPC = TextureWrapper.load("HumanWizard.png")
+    Belegost.DwarfWizardPC = TextureWrapper.load("DwarfWizard.png")
+    Belegost.ElfWizardPC = TextureWrapper.load("ElfWizard.png")
     Belegost.Wall = TextureWrapper.load("Wall.png")
     Belegost.Wall2 = TextureWrapper.load("Wall2.png")
     Belegost.Wall3 = TextureWrapper.load("Wall3.png")
@@ -74,6 +78,10 @@ object Belegost {
   var Square: TextureWrapper = _
   var HumanFighterPC: TextureWrapper = _
   var DwarfFighterPC: TextureWrapper = _
+  var ElfFighterPC: TextureWrapper = _
+  var HumanWizardPC: TextureWrapper = _
+  var DwarfWizardPC: TextureWrapper = _
+  var ElfWizardPC: TextureWrapper = _
   var Wall: TextureWrapper = _
   var Wall2: TextureWrapper = _
   var Wall3: TextureWrapper = _

@@ -85,23 +85,62 @@ case class Player(
   def draw(batch: PolygonSpriteBatch): Unit = {
 
     batch.setColor(Color.WHITE)
-    if (playerRace == Races.Human && playerClass == Classes.Fighter) {
-      batch.draw(
-        Belegost.HumanFighterPC,
-        location.x * Belegost.screenUnit,
-        location.y * Belegost.screenUnit,
-        Belegost.screenUnit,
-        Belegost.screenUnit
-      )
+    if (playerRace == Races.Human) {
+      if (playerClass == Classes.Fighter) {
+        batch.draw(
+          Belegost.HumanFighterPC,
+          location.x * Belegost.screenUnit,
+          location.y * Belegost.screenUnit,
+          Belegost.screenUnit,
+          Belegost.screenUnit
+        )
+      } else if (playerClass == Classes.Wizard) {
+        batch.draw(
+          Belegost.HumanWizardPC,
+          location.x * Belegost.screenUnit,
+          location.y * Belegost.screenUnit,
+          Belegost.screenUnit,
+          Belegost.screenUnit
+        )
+      }
     }
-    if (playerRace == Races.Dwarf && playerClass == Classes.Fighter) {
-      batch.draw(
-        Belegost.DwarfFighterPC,
-        location.x * Belegost.screenUnit,
-        location.y * Belegost.screenUnit,
-        Belegost.screenUnit,
-        Belegost.screenUnit
-      )
+    if (playerRace == Races.Dwarf) {
+      if (playerClass == Classes.Fighter) {
+        batch.draw(
+          Belegost.DwarfFighterPC,
+          location.x * Belegost.screenUnit,
+          location.y * Belegost.screenUnit,
+          Belegost.screenUnit,
+          Belegost.screenUnit
+        )
+      } else if (playerClass == Classes.Wizard) {
+        batch.draw(
+          Belegost.DwarfWizardPC,
+          location.x * Belegost.screenUnit,
+          location.y * Belegost.screenUnit,
+          Belegost.screenUnit,
+          Belegost.screenUnit
+        )
+      }
+    }
+    if (playerRace == Races.Elf) {
+      if (playerClass == Classes.Fighter) {
+        batch.draw(
+          Belegost.ElfFighterPC,
+          location.x * Belegost.screenUnit,
+          location.y * Belegost.screenUnit,
+          Belegost.screenUnit,
+          Belegost.screenUnit
+        )
+      } else if (playerClass == Classes.Wizard) {
+        batch.draw(
+          Belegost.ElfWizardPC,
+          location.x * Belegost.screenUnit,
+          location.y * Belegost.screenUnit,
+          Belegost.screenUnit,
+          Belegost.screenUnit
+        )
+      }
     }
 
     batch.setColor(1, 0, 0, 0.5f)
