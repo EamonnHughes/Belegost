@@ -38,6 +38,8 @@ class Game(
   var roomList = List[Room](
     Room(Location(-15, -15), 50, 50, this)
   )
+  var healthTimer = 5
+  var spellSlotTimer = 5
   var player = Player(Location(3, 3), Location(3, 3), this)
   var enemies = List.empty[Entity]
   var everything = List.empty[Entity]
@@ -121,6 +123,20 @@ class Game(
         if (tick <= 0) {
           tick = 0.2f
           enemies.foreach(enemy => enemy.update(delta))
+          if (player.health < player.maxHealth) {
+            healthTimer -= 1
+            if (healthTimer <= 0) {
+              player.health = (player.health + 1) min player.maxHealth
+              healthTimer = 5
+            }
+          }
+          if (player.spellSlots < player.maxSS) {
+            spellSlotTimer -= 1
+            if (spellSlotTimer <= 0) {
+              player.spellSlots = (player.spellSlots + 1) min player.maxSS
+              spellSlotTimer = 5
+            }
+          }
 
           player.moved = false
         }
