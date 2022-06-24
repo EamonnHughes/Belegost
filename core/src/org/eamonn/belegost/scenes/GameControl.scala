@@ -2,6 +2,7 @@ package org.eamonn.belegost.scenes
 
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.InputAdapter
+import org.eamonn.belegost.Classes.FireBolt
 import org.eamonn.belegost.{Belegost, Click, Geometry}
 import org.eamonn.belegost.util.Location
 
@@ -34,6 +35,10 @@ class GameControl(game: Game) extends InputAdapter {
     game.keysPressed = keycode :: game.keysPressed
     if (keycode == Keys.I) {
       game.player.inInventory = !game.player.inInventory
+    }
+    if (keycode == Keys.M && game.player.playerClass.caster) {
+      game.casting = FireBolt :: game.casting
+      game.player.moved = true
     }
     if (game.player.inInventory) {
       if (keycode == Keys.UP) {

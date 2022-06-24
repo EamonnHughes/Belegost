@@ -37,7 +37,7 @@ class CharCreation extends Scene {
       Text.mediumFont.setColor(Color.WHITE)
       Text.mediumFont.draw(
         batch,
-        "a: Human \n b: Dwarf",
+        "a: Human \n b: Dwarf \n c: Elf",
         Belegost.screenUnit,
         Geometry.ScreenHeight - Belegost.screenUnit
       )
@@ -46,7 +46,7 @@ class CharCreation extends Scene {
       Text.mediumFont.setColor(Color.WHITE)
       Text.mediumFont.draw(
         batch,
-        "a: Fighter",
+        "a: Fighter \n b: Wizard",
         Belegost.screenUnit,
         Geometry.ScreenHeight - Belegost.screenUnit
       )
@@ -88,6 +88,11 @@ object Races {
     val xpMod = 1.2f
     val statBonus = List(2, -1, 3, -1, 1, -1)
   }
+  case object Elf extends playerRace {
+    val name = "Elf"
+    val xpMod = 1.5f
+    val statBonus = List(-2, 1, -3, 4, 2, 1)
+  }
 }
 sealed trait playerClass {
   val name: String
@@ -101,5 +106,11 @@ object Classes {
     val statBonus = List(2, 1, 1, -1, 0, 0)
     val caster = false
     val hitDie = 10
+  }
+  case object Wizard extends playerClass {
+    val name = "Wizard"
+    val statBonus = List(-1, -1, -1, 3, 2, 1)
+    val caster = true
+    val hitDie = 5
   }
 }

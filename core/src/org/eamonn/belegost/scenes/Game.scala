@@ -15,7 +15,9 @@ import org.eamonn.belegost.{
   Menu,
   Player,
   Room,
-  Scene
+  Scene,
+  Spell,
+  Spells
 }
 import sun.security.ec.point.ProjectivePoint.Mutable
 
@@ -31,6 +33,7 @@ class Game(
   var changingTranslationY = false
   var keysPressed = List.empty[Int]
   var quit = false
+  var casting = List.empty[Spells]
   var pickups = List[PickUp](HealthPickup(Location(24, 5), this))
   var roomList = List[Room](
     Room(Location(-15, -15), 50, 50, this)
@@ -94,29 +97,33 @@ class Game(
       changeY(delta)
     }
     if (!changingTranslationX && !changingTranslationY) {
-      if (enemies.length < 1) {
-        enemies = Orc(
-          Location(13, 13),
-          Location(13, 13),
-          this,
-          10
-        ) :: belegost.enemies.Orc(
-          Location(10, 10),
-          Location(10, 10),
-          this,
-          10
-        ) :: enemies
-      }
-      if (player.moved) {
-        tick -= delta
+      if (casting.nonEmpty) {
+        casting.head.use(this)
       } else {
-        player.update(delta)
-      }
-      if (tick <= 0) {
-        tick = 0.2f
-        enemies.foreach(enemy => enemy.update(delta))
+        if (enemies.length < 1) {
+          enemies = Orc(
+            Location(13, 13),
+            Location(13, 13),
+            this,
+            10
+          ) :: belegost.enemies.Orc(
+            Location(10, 10),
+            Location(10, 10),
+            this,
+            10
+          ) :: enemies
+        }
+        if (player.moved) {
+          tick -= delta
+        } else {
+          player.update(delta)
+        }
+        if (tick <= 0) {
+          tick = 0.2f
+          enemies.foreach(enemy => enemy.update(delta))
 
-        player.moved = false
+          player.moved = false
+        }
       }
     }
     everything = player :: enemies
