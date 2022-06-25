@@ -37,7 +37,7 @@ class CharCreation extends Scene {
       Text.mediumFont.setColor(Color.WHITE)
       Text.mediumFont.draw(
         batch,
-        "a: Human \n b: Dwarf \n c: Elf",
+        " a: Human \n b: Dwarf \n c: Elf",
         Belegost.screenUnit,
         Geometry.ScreenHeight - Belegost.screenUnit
       )
@@ -46,7 +46,7 @@ class CharCreation extends Scene {
       Text.mediumFont.setColor(Color.WHITE)
       Text.mediumFont.draw(
         batch,
-        "a: Fighter \n b: Wizard",
+        " a: Fighter \n b: Wizard",
         Belegost.screenUnit,
         Geometry.ScreenHeight - Belegost.screenUnit
       )
@@ -54,9 +54,9 @@ class CharCreation extends Scene {
       Text.mediumFont.setColor(Color.WHITE)
       Text.mediumFont.draw(
         batch,
-        s" ${tStats(0)} \n  ${tStats(1)} \n  ${tStats(2)} \n  ${tStats(
+        s" ${tStats(0)} \n ${tStats(1)} \n ${tStats(2)} \n ${tStats(
           3
-        )} \n  ${tStats(4)} \n  ${tStats(5)} \n r: reroll, \n y: confirm",
+        )} \n ${tStats(4)} \n ${tStats(5)} \n r: reroll, \n y: confirm",
         Belegost.screenUnit,
         Geometry.ScreenHeight - Belegost.screenUnit
       )
@@ -65,7 +65,7 @@ class CharCreation extends Scene {
       Text.mediumFont.setColor(Color.WHITE)
       Text.mediumFont.draw(
         batch,
-        "y: Begin \n n: Quit",
+        " y: Begin \n n: Quit",
         Belegost.screenUnit,
         Geometry.ScreenHeight - Belegost.screenUnit
       )
