@@ -18,12 +18,19 @@ class Home extends Scene {
   }
 
   override def render(batch: PolygonSpriteBatch): Unit = {
+    batch.draw(
+      Belegost.HomeScreen,
+      0,
+      0,
+      Geometry.ScreenWidth,
+      Geometry.ScreenHeight
+    )
     Text.mediumFont.setColor(Color.WHITE)
     Text.mediumFont.draw(
       batch,
-      "n: New Game",
-      Belegost.screenUnit,
-      Geometry.ScreenHeight - Belegost.screenUnit
+      "Press N: New Game",
+      Geometry.ScreenWidth / 2 - Belegost.screenUnit * 6,
+      Geometry.ScreenHeight / 2 - Belegost.screenUnit * 10
     )
   }
 }
