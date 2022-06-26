@@ -5,16 +5,20 @@ import org.eamonn.belegost.items.Item
 trait Equipment extends Item {
   def use: Unit
   var name: String
-  var mod: Int
+  var mod: Float
 }
 sealed trait ArmorType {
   val name: String
-  var mod: Int
+  var mod: Float
 }
 object ArmorType {
   case object Leather extends ArmorType {
     val name = "Leather"
     var mod = 1
+  }
+  case object Cloth extends ArmorType {
+    val name = "Cloth"
+    var mod = 0.5f
   }
 }
 
@@ -28,5 +32,10 @@ object WeaponType {
     val name = "Shortsword"
     var diceNum = 1
     var diceAmount = 6
+  }
+  case object Staff extends WeaponType {
+    val name = "Staff"
+    var diceNum = 2
+    var diceAmount = 2
   }
 }
