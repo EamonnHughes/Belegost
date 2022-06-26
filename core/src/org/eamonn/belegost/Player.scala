@@ -5,13 +5,15 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost.Classes.FireBolt
 import org.eamonn.belegost.equipment.{
+  ArmorType,
   BodyArmor,
   Boots,
   Cloak,
   Equipment,
   Gloves,
   Helmet,
-  Weapon
+  Weapon,
+  WeaponType
 }
 import org.eamonn.belegost.items.{EmptyBottle, HealthPotion, Item}
 import org.eamonn.belegost.scenes.{Classes, Game, Races}
@@ -66,19 +68,25 @@ case class Player(
     equipped.foreach(equip => {
       eqBonus += equip.mod
     })
-    eqBonus
+    eqBonus.toInt
   }
   var moved = false
   var maxHealth = health
   var inventory = mutable.ListBuffer[(Int, Item)](
-    (40, HealthPotion(game)),
-    (1, Helmet(game)),
-    (1, BodyArmor(game)),
-    (1, Gloves(game)),
-    (1, Boots(game)),
-    (1, Cloak(game)),
-    (1, Weapon(game))
+    (40, HealthPotion(game))
   )
+  if (playerClass == Classes.Fighter) {
+    inventory = inventory.addAll(
+      mutable.ListBuffer[(Int, Item)](
+        (1, Helmet(game, ArmorType.Leather)),
+        (1, BodyArmor(game, ArmorType.Leather)),
+        (1, Gloves(game, ArmorType.Leather)),
+        (1, Boots(game, ArmorType.Leather)),
+        (1, Cloak(game, ArmorType.Leather)),
+        (1, Weapon(game, WeaponType.ShortSword))
+      )
+    )
+  }
   def equipped: List[Equipment] = {
     helmet.toList ::: bodyArmor.toList ::: gloves.toList ::: boots.toList ::: cloak.toList
   }
