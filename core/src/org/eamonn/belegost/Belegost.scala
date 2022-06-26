@@ -75,7 +75,7 @@ object Belegost {
   var translationX = 0
   var translationY = 0
 
-  def screenUnit = (Geometry.ScreenWidth min Geometry.ScreenHeight) / 50
+  def screenUnit = (Geometry.ScreenWidth min Geometry.ScreenHeight) / 40
   var Square: TextureWrapper = _
   var HumanFighterPC: TextureWrapper = _
   var DwarfFighterPC: TextureWrapper = _
