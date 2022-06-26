@@ -64,7 +64,7 @@ case class Player(
   def armorClass = baseAC + acMod + ((dexterity - 10) / 2)
   var weapon: Option[Weapon] = None
   def acMod: Int = {
-    var eqBonus = 0
+    var eqBonus: Float = 0
     equipped.foreach(equip => {
       eqBonus += equip.mod
     })
@@ -84,6 +84,17 @@ case class Player(
         (1, Boots(game, ArmorType.Leather)),
         (1, Cloak(game, ArmorType.Leather)),
         (1, Weapon(game, WeaponType.ShortSword))
+      )
+    )
+  } else if (playerClass == Classes.Wizard) {
+    inventory = inventory.addAll(
+      mutable.ListBuffer[(Int, Item)](
+        (1, Helmet(game, ArmorType.Cloth)),
+        (1, BodyArmor(game, ArmorType.Cloth)),
+        (1, Gloves(game, ArmorType.Cloth)),
+        (1, Boots(game, ArmorType.Cloth)),
+        (1, Cloak(game, ArmorType.Cloth)),
+        (1, Weapon(game, WeaponType.Staff))
       )
     )
   }
@@ -238,13 +249,13 @@ case class Player(
                   enemy.health -= (d(
                     weapon.dNum,
                     weapon.dAmt
-                  ) + weapon.mod + ((strength - 10) / 2)) * 2
+                  ) + weapon.mod.toInt + ((strength - 10) / 2)) * 2
                 } else if (roll + weapon.mod > enemy.armorClass) {
 
                   enemy.health -= d(
                     weapon.dNum,
                     weapon.dAmt
-                  ) + weapon.mod + ((strength - 10) / 2)
+                  ) + weapon.mod.toInt + ((strength - 10) / 2)
                 }
               })
 
