@@ -13,6 +13,15 @@ case class Location(x: Int, y: Int) {
     )
     adj
   }
+  def semiAdj: List[Location] = {
+    val adj = List(
+      Location(x, y - 1),
+      Location(x, y + 1),
+      Location(x - 1, y),
+      Location(x + 1, y)
+    )
+    adj
+  }
 
   def +(delta: Delta): Location = {
     Location(x + delta.dx, y + delta.dy)

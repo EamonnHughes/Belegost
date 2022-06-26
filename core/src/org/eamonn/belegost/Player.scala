@@ -111,8 +111,7 @@ case class Player(
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
   def draw(batch: PolygonSpriteBatch): Unit = {
-
-    batch.setColor(Color.WHITE)
+    batch.setColor(1, 1, 1, 1)
     if (playerRace == Races.Human) {
       if (playerClass == Classes.Fighter) {
         batch.draw(

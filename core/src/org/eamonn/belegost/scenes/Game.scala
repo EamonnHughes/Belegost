@@ -19,15 +19,18 @@ import org.eamonn.belegost.{
   Spell,
   Spells
 }
+import sun.jvm.hotspot.gc.z.ZGlobals
 import sun.security.ec.point.ProjectivePoint.Mutable
 
-import scala.collection.mutable
+import scala.collection.{GenMap, mutable}
 
 class Game(
     val pRace: playerRace,
     val pClass: playerClass,
     val sStats: List[Int]
 ) extends Scene {
+  val visited = mutable.Map.empty[Location, Boolean]
+  val visible = mutable.Map.empty[Location, Boolean]
   var changingTranslationX = false
   var MoneyInDungeon: List[Money] = List(Money(Location(20, 20)))
   var changingTranslationY = false
@@ -44,7 +47,7 @@ class Game(
   var enemies = List.empty[Entity]
   var everything = List.empty[Entity]
   override def init(): InputAdapter = new GameControl(this)
-  var tick = 0.2f
+  var tick = 0.13f
   def changeX(delta: Float): Unit = {
     if (
       Belegost.translationX <
@@ -78,6 +81,26 @@ class Game(
   }
 
   override def update(delta: Float): Option[Scene] = {
+    player.location.semiAdj.foreach(adj => {
+      visited.put(adj, true)
+      adj.findAdjacents.foreach(adjtwo => {
+        visited.put(adjtwo, true)
+        adjtwo.semiAdj.foreach(sem => {
+          visited.put(sem, true)
+        })
+      })
+    })
+    visible.clear()
+    player.location.semiAdj.foreach(adj => {
+      visible.put(adj, true)
+      adj.findAdjacents.foreach(adjtwo => {
+        visible.put(adjtwo, true)
+        adjtwo.semiAdj.foreach(sem => {
+          visible.put(sem, true)
+        })
+      })
+
+    })
     if (
       (
         player.location.x < -Belegost.translationX + 7 || player.location.x > -Belegost.translationX + (Geometry.ScreenWidth / Belegost.screenUnit) - 7
@@ -121,7 +144,7 @@ class Game(
           player.update(delta)
         }
         if (tick <= 0) {
-          tick = 0.2f
+          tick = 0.13f
           enemies.foreach(enemy => enemy.update(delta))
           if (player.health < player.maxHealth) {
             healthTimer -= 1
@@ -160,7 +183,47 @@ class Game(
     MoneyInDungeon.foreach(Money => Money.draw(batch))
     pickups.foreach(pickup => pickup.draw(batch))
 
-    everything.foreach(thing => thing.draw(batch))
+    everything.foreach(thing => {
+      if (visible.get(thing.location).contains(true))
+        thing.draw(batch)
+    })
+
+    for (
+      xx <-
+        0 until (Geometry.ScreenWidth / Belegost.screenUnit).toInt
+    ) {
+      for (
+        yy <-
+          0 until (Geometry.ScreenHeight / Belegost.screenUnit).toInt
+      ) {
+        val x = xx - Belegost.translationX
+        val y = yy - Belegost.translationY
+        if (
+          visible
+            .get(Location(x, y))
+            .contains(true)
+        ) {
+          batch.setColor(1, 1, 1, 0)
+        } else if (
+          visited
+            .get(Location(x, y))
+            .contains(true)
+        ) {
+
+          batch.setColor(0, 0, 0, 0.5f)
+        } else {
+          batch.setColor(0, 0, 0, 1)
+        }
+
+        batch.draw(
+          Belegost.Square,
+          x * Belegost.screenUnit,
+          y * Belegost.screenUnit,
+          Belegost.screenUnit,
+          Belegost.screenUnit
+        )
+      }
+    }
 
     if (player.inSpellList) {
       Menu.drawSpellBook(batch, player)
