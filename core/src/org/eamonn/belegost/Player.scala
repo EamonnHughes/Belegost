@@ -52,6 +52,14 @@ case class Player(
   stats = stats.tail
   var charisma: Int =
     stats.head + playerRace.statBonus(5) + playerClass.statBonus(5)
+
+  val baseStr = strength
+  val baseDex = dexterity
+  val baseCon = constitution
+  val baseInt = intelligence
+  val baseWis = wisdom
+  val baseCha = charisma
+  var enchMod = List[Int](0, 0, 0, 0, 0, 0)
   var health = playerClass.hitDie + ((constitution - 10) / 2)
   var baseAC = 10
   var maxSS = ((level / 2) + ((intelligence - 10) / 2)) max 2
@@ -181,6 +189,12 @@ case class Player(
   }
   var inInventory = false
   def update(delta: Float): Unit = {
+    strength = baseStr + enchMod(0)
+    dexterity = baseDex + enchMod(1)
+    constitution = baseCon + enchMod(2)
+    intelligence = baseInt + enchMod(3)
+    wisdom = baseWis + enchMod(4)
+    charisma = baseCha + enchMod(5)
     if (XPvalue >= nextXP) {
       level += 1
       var hpBonus = d(playerClass.hitDie)
