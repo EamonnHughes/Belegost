@@ -41,7 +41,7 @@ case class Orc(
 
     if (health <= 0) {
       game.enemies = game.enemies.filterNot(enemy => enemy == this)
-      game.player.XPvalue += XPvalue
+      game.player.XPvalue += (XPvalue * game.eeEs).toInt
       if (d(4) == 1) {
         game.pickups = HealthPickup(location, game) :: game.pickups
       } else if (d(3) == 1) {

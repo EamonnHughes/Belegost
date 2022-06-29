@@ -189,6 +189,7 @@ case class Player(
   }
   var inInventory = false
   def update(delta: Float): Unit = {
+
     strength = baseStr + enchMod(0)
     dexterity = baseDex + enchMod(1)
     constitution = baseCon + enchMod(2)

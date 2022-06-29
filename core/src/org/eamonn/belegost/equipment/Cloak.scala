@@ -1,5 +1,6 @@
 package org.eamonn.belegost.equipment
 
+import org.eamonn.belegost.enchantments.Enchantment
 import org.eamonn.belegost.scenes.Game
 
 case class Cloak(game: Game, aType: ArmorType) extends Equipment {
@@ -9,4 +10,6 @@ case class Cloak(game: Game, aType: ArmorType) extends Equipment {
   def use: Unit = {
     game.player.cloak = Some(this)
   }
+
+  var enchantments: List[Enchantment] = List.empty
 }

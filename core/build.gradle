@@ -21,4 +21,5 @@ eclipse.project.name = appName + "-core"
 
 dependencies {
     implementation 'org.scala-lang:scala-library:2.13.8'
+    implementation("org.typelevel:cats-core_2.13:2.8.0")
 }

@@ -1,3 +1,3 @@
 package org.eamonn.belegost.enchantments
 
-case class ExpMod() extends Enchantment {}
+case class ExpMod(mod: Float) extends Enchantment {}

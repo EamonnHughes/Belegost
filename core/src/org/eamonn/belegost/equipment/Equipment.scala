@@ -1,11 +1,13 @@
 package org.eamonn.belegost.equipment
 
+import org.eamonn.belegost.enchantments.Enchantment
 import org.eamonn.belegost.items.Item
 
 trait Equipment extends Item {
   def use: Unit
   var name: String
   var mod: Float
+  var enchantments: List[Enchantment]
 }
 sealed trait ArmorType {
   val name: String

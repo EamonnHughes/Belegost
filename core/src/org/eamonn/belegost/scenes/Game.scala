@@ -4,9 +4,12 @@ import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost
+import org.eamonn.belegost.enchantments.{ExpMod, StatEnchantment}
 import org.eamonn.belegost.enemies.Orc
 import org.eamonn.belegost.items.{HealthPickup, Money, PickUp}
 import org.eamonn.belegost.util.Location
+import cats.instances._
+import cats.implicits._
 import org.eamonn.belegost.{
   Belegost,
   Click,
@@ -79,8 +82,28 @@ class Game(
     }
 
   }
+  var eeEs = 1f
 
   override def update(delta: Float): Option[Scene] = {
+
+    val statEnchants = player.equipped
+      .flatMap(_.enchantments)
+      .collect({ case se: StatEnchantment =>
+        se.mod
+      })
+    val expEnchants = player.equipped
+      .flatMap(_.enchantments)
+      .collect({ case se: ExpMod =>
+        se.mod
+      })
+    eeEs = 1
+    expEnchants.foreach(eeCh => {
+      eeEs = eeEs * eeCh
+    })
+    player.enchMod = statEnchants.foldLeft(List(0, 0, 0, 0, 0, 0))((l1, l2) =>
+      l1.alignCombine(l2)
+    )
+
     player.location.semiAdj.foreach(adj => {
       visited.put(adj, true)
       adj.findAdjacents.foreach(adjtwo => {

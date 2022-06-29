@@ -17,9 +17,9 @@ object Menu {
     Text.smallFont.draw(
       batch,
       s" ${player.playerRace} ${player.playerClass} \n level: ${player.level} \n next: ${player.nextXP - player.XPvalue}" +
-        s" \n str: ${player.strength}\n dex: ${player.dexterity} " +
-        s"\n con: ${player.constitution} \n int: ${player.intelligence} " +
-        s"\n wis: ${player.wisdom} \n cha: ${player.charisma} " +
+        s" \n str: ${player.strength} (${player.baseStr})\n dex: ${player.dexterity} (${player.baseDex})" +
+        s"\n con: ${player.constitution} (${player.baseCon})\n int: ${player.intelligence} (${player.baseInt})" +
+        s"\n wis: ${player.wisdom} (${player.baseWis})\n cha: ${player.charisma} (${player.baseCha})" +
         s"\n health: ${player.health} / ${player.maxHealth} ${if (player.playerClass.caster) {
           "\n spell slots:" + player.spellSlots + s"/ ${player.maxSS}"
         } else { "" }} \n AC: ${player.armorClass} " +
