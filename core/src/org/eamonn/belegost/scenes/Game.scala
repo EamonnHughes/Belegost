@@ -42,7 +42,9 @@ class Game(
   var casting = List.empty[Spells]
   var pickups = List[PickUp](HealthPickup(Location(24, 5), this))
   var roomList = List[Room](
-    Room(Location(-15, -15), 50, 50, this)
+    Room(Location(0, 0), 25, 25, this),
+    Room(Location(25, 15), 1, 1, this),
+    Room(Location(26, 0), 20, 20, this)
   )
   var healthTimer = 5
   var spellSlotTimer = 5
@@ -103,27 +105,42 @@ class Game(
     player.enchMod = statEnchants.foldLeft(List(0, 0, 0, 0, 0, 0))((l1, l2) =>
       l1.alignCombine(l2)
     )
-
-    player.location.semiAdj.foreach(adj => {
-      visited.put(adj, true)
-      adj.findAdjacents.foreach(adjtwo => {
-        visited.put(adjtwo, true)
-        adjtwo.semiAdj.foreach(sem => {
-          visited.put(sem, true)
-        })
-      })
-    })
     visible.clear()
-    player.location.semiAdj.foreach(adj => {
-      visible.put(adj, true)
-      adj.findAdjacents.foreach(adjtwo => {
-        visible.put(adjtwo, true)
-        adjtwo.semiAdj.foreach(sem => {
-          visible.put(sem, true)
-        })
-      })
+    for (x <- 0 until (Geometry.ScreenWidth / Belegost.screenUnit).toInt) {
+      for (y <- 0 until (Geometry.ScreenHeight / Belegost.screenUnit).toInt) {
+        var nx: Int = x
+        var ny: Int = y
 
-    })
+        val dx = player.location.x - x
+        val dy = player.location.y - y
+        var primary = 0
+        var other = 0
+        var dxp = false
+        if (Math.abs(dx) > Math.abs(dy)) {
+          primary = dx
+          other = dy
+          dxp = true
+        } else {
+          primary = dy
+          other = dx
+        }
+        if (dx * dx + dy * dy <= player.lightDist * player.lightDist) {
+          for (changeP <- 1 until Math.abs(primary)) {
+            if (dxp) {
+              nx += changeP * Math.signum(dx)
+              ny += (dy / (changeP * Math.signum(dx)))
+            } else {
+              ny += changeP * Math.signum(dy)
+              nx += (dx / (changeP * Math.signum(dy)))
+            }
+
+            //        visited.put(tile, true)
+            //        visible.put(tile, true)
+          }
+        }
+      }
+    }
+
     if (
       (
         player.location.x < -Belegost.translationX + 7 || player.location.x > -Belegost.translationX + (Geometry.ScreenWidth / Belegost.screenUnit) - 7
