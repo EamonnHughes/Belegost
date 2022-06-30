@@ -127,15 +127,15 @@ class Game(
         if (dx * dx + dy * dy <= player.lightDist * player.lightDist) {
           for (changeP <- 1 until Math.abs(primary)) {
             if (dxp) {
-              nx += changeP * Math.signum(dx)
-              ny += (dy / (changeP * Math.signum(dx)))
+              nx += (changeP * Math.signum(dx)).toInt
+              ny += (dy / changeP * Math.signum(dx).toInt).toInt
             } else {
-              ny += changeP * Math.signum(dy)
-              nx += (dx / (changeP * Math.signum(dy)))
+              ny += (changeP * Math.signum(dy)).toInt
+              nx += ((dx / changeP * Math.signum(dy).toInt)).toInt
             }
-
-            //        visited.put(tile, true)
-            //        visible.put(tile, true)
+            if (roomList.exists(room => room.isInRoom(Location(nx, ny))))
+              visited.put(Location(nx, ny), true)
+            visible.put(Location(nx, ny), true)
           }
         }
       }
