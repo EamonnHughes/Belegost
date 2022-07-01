@@ -51,8 +51,11 @@ class Game(
   var player = Player(Location(3, 3), Location(3, 3), this)
   var enemies = List.empty[Entity]
   var everything = List.empty[Entity]
+
   override def init(): InputAdapter = new GameControl(this)
+
   var tick = 0.13f
+
   def changeX(delta: Float): Unit = {
     if (
       Belegost.translationX <
@@ -68,6 +71,7 @@ class Game(
       changingTranslationX = false
     }
   }
+
   def changeY(delta: Float): Unit = {
     if (
       Belegost.translationY <
@@ -84,6 +88,7 @@ class Game(
     }
 
   }
+
   var eeEs = 1f
 
   override def update(delta: Float): Option[Scene] = {
@@ -106,8 +111,17 @@ class Game(
       l1.alignCombine(l2)
     )
     visible.clear()
-    for (x <- 0 until (Geometry.ScreenWidth / Belegost.screenUnit).toInt) {
-      for (y <- 0 until (Geometry.ScreenHeight / Belegost.screenUnit).toInt) {
+    visited.put(player.location, true)
+
+    visible.put(player.location, true)
+    for (
+      x <-
+        0 until -Belegost.translationX + (Geometry.ScreenWidth / Belegost.screenUnit).toInt
+    ) {
+      for (
+        y <-
+          0 until -Belegost.translationY + (Geometry.ScreenHeight / Belegost.screenUnit).toInt
+      ) {
         var nx: Int = x
         var ny: Int = y
 
@@ -125,17 +139,25 @@ class Game(
           other = dx
         }
         if (dx * dx + dy * dy <= player.lightDist * player.lightDist) {
-          for (changeP <- 1 until Math.abs(primary)) {
+          var ok = true
+          for (changeP <- 1 to Math.abs(primary)) {
             if (dxp) {
-              nx += (changeP * Math.signum(dx)).toInt
-              ny += (dy / changeP * Math.signum(dx).toInt).toInt
+              nx = x + (changeP * Math.signum(dx)).toInt
+              ny = y + Math
+                .abs(changeP * dy / dx) * Math.signum(dy).toInt
             } else {
-              ny += (changeP * Math.signum(dy)).toInt
-              nx += ((dx / changeP * Math.signum(dy).toInt)).toInt
+              ny = y + (changeP * Math.signum(dy)).toInt
+              nx = x + Math
+                .abs(changeP * dx / dy) * Math.signum(dx).toInt
             }
-            if (roomList.exists(room => room.isInRoom(Location(nx, ny))))
-              visited.put(Location(nx, ny), true)
-            visible.put(Location(nx, ny), true)
+            if (roomList.forall(room => !room.isInRoom(Location(nx, ny)))) {
+              ok = false
+            }
+          }
+          if (ok) {
+            visited.put(Location(x, y), true)
+
+            visible.put(Location(x, y), true)
           }
         }
       }
@@ -272,7 +294,9 @@ class Game(
     }
 
     Menu.drawStats(batch, player)
+
   }
+
   def findEntity(location: Location): Entity = { // nulls
     everything.find(thing => thing.location == location).orNull
   }
