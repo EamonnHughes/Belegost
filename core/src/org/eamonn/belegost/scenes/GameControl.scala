@@ -7,6 +7,14 @@ import org.eamonn.belegost.{Belegost, Click, Geometry}
 import org.eamonn.belegost.util.Location
 
 class GameControl(game: Game) extends InputAdapter {
+
+  override def mouseMoved(screenX: Int, screenY: Int): Boolean = {
+    game.mx = (screenX / Belegost.screenUnit).toInt + Belegost.translationX
+    game.my =
+      ((Geometry.ScreenHeight.toInt - screenY) / Belegost.screenUnit).toInt + Belegost.translationY
+    true
+  }
+
   override def touchDown(
       screenX: Int,
       screenY: Int,

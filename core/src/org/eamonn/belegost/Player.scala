@@ -34,7 +34,7 @@ case class Player(
   var money = 0
   def speed: Int = 1 max ((dexterity - 10) / 2)
   var level = 1
-  def lightDist = 5
+  def lightDist = 6
   var stats = game.sStats
   var strength: Int =
     stats.head + playerRace.statBonus(0) + playerClass.statBonus(0)

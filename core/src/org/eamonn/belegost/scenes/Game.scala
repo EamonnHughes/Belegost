@@ -32,8 +32,10 @@ class Game(
     val pClass: playerClass,
     val sStats: List[Int]
 ) extends Scene {
+  var mx = 0
+  var my = 0
   val visited = mutable.Map.empty[Location, Boolean]
-  val visible = mutable.Map.empty[Location, Boolean]
+  val visible = mutable.Map.empty[Location, Float]
   var changingTranslationX = false
   var MoneyInDungeon: List[Money] = List(Money(Location(20, 20)))
   var changingTranslationY = false
@@ -113,51 +115,57 @@ class Game(
     visible.clear()
     visited.put(player.location, true)
 
-    visible.put(player.location, true)
+    val lightDistSquared = player.lightDist * player.lightDist
+
+    visible.put(player.location, 1f)
     for (
-      x <-
-        0 until -Belegost.translationX + (Geometry.ScreenWidth / Belegost.screenUnit).toInt
+      xx <-
+        0 until (Geometry.ScreenWidth / Belegost.screenUnit).toInt
     ) {
       for (
-        y <-
-          0 until -Belegost.translationY + (Geometry.ScreenHeight / Belegost.screenUnit).toInt
+        yy <-
+          0 until (Geometry.ScreenHeight / Belegost.screenUnit).toInt
       ) {
-        var nx: Int = x
-        var ny: Int = y
+        val x = xx - Belegost.translationX
+        val y = yy - Belegost.translationY
+        val loc = Location(x, y)
+        var nx: Int = player.location.x
+        var ny: Int = player.location.y
 
-        val dx = player.location.x - x
-        val dy = player.location.y - y
+        val dx = x - player.location.x
+        val dy = y - player.location.y
         var primary = 0
-        var other = 0
         var dxp = false
         if (Math.abs(dx) > Math.abs(dy)) {
           primary = dx
-          other = dy
           dxp = true
         } else {
           primary = dy
-          other = dx
         }
-        if (dx * dx + dy * dy <= player.lightDist * player.lightDist) {
+        val dist = dx * dx + dy * dy
+        if (dist <= lightDistSquared) {
           var ok = true
-          for (changeP <- 1 to Math.abs(primary)) {
+          for (changeP <- 1 until Math.abs(primary)) {
             if (dxp) {
-              nx = x + (changeP * Math.signum(dx)).toInt
-              ny = y + Math
-                .abs(changeP * dy / dx) * Math.signum(dy).toInt
+              nx = player.location.x + (changeP * Math.signum(dx)).toInt
+              ny = player.location.y + (Math
+                .abs(changeP * dy / dx) * Math.signum(dy)).toInt
             } else {
-              ny = y + (changeP * Math.signum(dy)).toInt
-              nx = x + Math
-                .abs(changeP * dx / dy) * Math.signum(dx).toInt
+              ny = player.location.y + (changeP * Math.signum(dy)).toInt
+              nx = player.location.x + (Math
+                .abs(changeP * dx / dy) * Math.signum(dx)).toInt
             }
             if (roomList.forall(room => !room.isInRoom(Location(nx, ny)))) {
               ok = false
             }
           }
           if (ok) {
-            visited.put(Location(x, y), true)
+            visited.put(loc, true)
 
-            visible.put(Location(x, y), true)
+            visible.put(
+              loc,
+              0.5f * dist / lightDistSquared
+            )
           }
         }
       }
@@ -246,7 +254,7 @@ class Game(
     pickups.foreach(pickup => pickup.draw(batch))
 
     everything.foreach(thing => {
-      if (visible.get(thing.location).contains(true))
+      if (visible.contains(thing.location))
         thing.draw(batch)
     })
 
@@ -260,22 +268,11 @@ class Game(
       ) {
         val x = xx - Belegost.translationX
         val y = yy - Belegost.translationY
-        if (
-          visible
-            .get(Location(x, y))
-            .contains(true)
-        ) {
-          batch.setColor(1, 1, 1, 0)
-        } else if (
-          visited
-            .get(Location(x, y))
-            .contains(true)
-        ) {
 
-          batch.setColor(0, 0, 0, 0.5f)
-        } else {
-          batch.setColor(0, 0, 0, 1)
-        }
+        val loc = Location(x, y)
+        val alpha =
+          visible.getOrElse(loc, if (visited.contains(loc)) 0.5f else 1f)
+        batch.setColor(0, 0, 0, alpha)
 
         batch.draw(
           Belegost.Square,
