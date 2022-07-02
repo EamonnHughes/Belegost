@@ -12,8 +12,10 @@ import org.eamonn.belegost.equipment.{
   Equipment,
   Gloves,
   Helmet,
+  LightSource,
   Weapon,
-  WeaponType
+  WeaponType,
+  lightType
 }
 import org.eamonn.belegost.items.{EmptyBottle, HealthPotion, Item}
 import org.eamonn.belegost.scenes.{Classes, Game, Races}
@@ -34,7 +36,12 @@ case class Player(
   var money = 0
   def speed: Int = 1 max ((dexterity - 10) / 2)
   var level = 1
-  def lightDist = 8
+  def lightDist: Int = {
+    lightS match {
+      case some: Some[LightSource] => some.head.output
+      case None                    => 1
+    }
+  }
   var stats = game.sStats
   var strength: Int =
     stats.head + playerRace.statBonus(0) + playerClass.statBonus(0)
@@ -91,7 +98,8 @@ case class Player(
         (1, Gloves(game, ArmorType.Leather)),
         (1, Boots(game, ArmorType.Leather)),
         (1, Cloak(game, ArmorType.Leather)),
-        (1, Weapon(game, WeaponType.ShortSword))
+        (1, Weapon(game, WeaponType.ShortSword)),
+        (1, LightSource(game, lightType.Lamp))
       )
     )
   } else if (playerClass == Classes.Wizard) {
@@ -116,6 +124,7 @@ case class Player(
   var gloves: Option[Gloves] = None
   var boots: Option[Boots] = None
   var cloak: Option[Cloak] = None
+  var lightS: Option[LightSource] = None
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
   def draw(batch: PolygonSpriteBatch): Unit = {

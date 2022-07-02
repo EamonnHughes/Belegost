@@ -23,7 +23,9 @@ object Menu {
         s"\n health: ${player.health} / ${player.maxHealth} ${if (player.playerClass.caster) {
           "\n spell slots:" + player.spellSlots + s"/ ${player.maxSS}"
         } else { "" }} \n AC: ${player.armorClass} " +
-        s" \n speed: ${player.speed} \n GP: ${player.money}",
+        s" \n speed: ${player.speed} \n GP: ${player.money} \n Light Level: ${player.lightDist} \n Fuel: ${if (player.lightS.nonEmpty) {
+          player.lightS.head.mod
+        } else "None"}",
       -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit,
       -(Belegost.translationY) * Belegost.screenUnit + Belegost.screenUnit * 20
     )

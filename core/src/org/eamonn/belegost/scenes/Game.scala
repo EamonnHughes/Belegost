@@ -220,6 +220,7 @@ class Game(
         if (tick <= 0) {
           tick = 0.13f
           enemies.foreach(enemy => enemy.update(delta))
+          player.lightS.foreach(lS => lS.decrease)
           if (player.health < player.maxHealth) {
             healthTimer -= 1
             if (healthTimer <= 0) {

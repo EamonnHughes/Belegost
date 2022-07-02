@@ -41,3 +41,14 @@ object WeaponType {
     var diceAmount = 2
   }
 }
+
+sealed trait lightType {
+  val name: String
+  var mod: Float
+}
+object lightType {
+  case object Lamp extends lightType {
+    val name = "Lamp"
+    var mod = 2000f
+  }
+}
