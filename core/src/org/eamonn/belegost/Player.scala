@@ -210,7 +210,7 @@ case class Player(
       var hpBonus = d(playerClass.hitDie)
       maxHealth += hpBonus + ((constitution - 10) / 2)
       health += hpBonus + ((constitution - 10) / 2)
-      nextXP += nextXP * 2
+      nextXP += (nextXP * 1.25).toInt
     }
     if (
       game.keysPressed
