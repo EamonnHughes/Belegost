@@ -34,7 +34,7 @@ class Game(
 ) extends Scene {
   var mx = 0
   var my = 0
-  val visited = mutable.Map.empty[Location, Boolean]
+  val visited = mutable.Map.empty[Location, Float]
   val visible = mutable.Map.empty[Location, Float]
   var changingTranslationX = false
   var MoneyInDungeon: List[Money] = List(Money(Location(20, 20)))
@@ -113,7 +113,7 @@ class Game(
       l1.alignCombine(l2)
     )
     visible.clear()
-    visited.put(player.location, true)
+    visited.put(player.location, 1f)
 
     val lightDistSquared = player.lightDist * player.lightDist
 
@@ -160,11 +160,15 @@ class Game(
             }
           }
           if (ok) {
-            visited.put(loc, true)
+            val light = dist.toFloat / lightDistSquared
+
+            visited.updateWith(loc)((current) =>
+              Some(light min current.getOrElse(1f))
+            )
 
             visible.put(
               loc,
-              0.5f * dist / lightDistSquared
+              light
             )
           }
         }
@@ -271,7 +275,10 @@ class Game(
 
         val loc = Location(x, y)
         val alpha =
-          visible.getOrElse(loc, if (visited.contains(loc)) 0.5f else 1f)
+          visible.getOrElse(
+            loc,
+            1f
+          ) min (visited.getOrElse(loc, 1f) max 0.7f)
         batch.setColor(0, 0, 0, alpha)
 
         batch.draw(
