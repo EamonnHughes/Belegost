@@ -13,6 +13,7 @@ case class LightSource(game: Game, Type: lightType) extends Equipment {
   }
   def decrease: Unit = {
     mod -= 1
+    name = s"${Type.name} (${mod})"
   }
   def output: Int = {
     if (mod >= (Type.mod / 8) * 7) { 8 }

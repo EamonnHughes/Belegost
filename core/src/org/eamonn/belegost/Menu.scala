@@ -73,9 +73,9 @@ object Menu {
     batch.draw(
       Belegost.Square,
       -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit,
-      -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * ((player.inventory.length + 7)),
+      -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * ((player.inventory.length + 8)),
       Geometry.ScreenWidth - Belegost.screenUnit * 2,
-      Belegost.screenUnit * (player.inventory.length + 6)
+      Belegost.screenUnit * (player.inventory.length + 7)
     )
     if (player.inventory.nonEmpty) {
       batch.setColor(Color.RED)
@@ -210,6 +210,24 @@ object Menu {
         "Weapon: None",
         -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
         -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 6) + Text.smallFont.getDescent
+      )
+    }
+    player.lightS.foreach(light => {
+      Text.smallFont.setColor(Color.BLACK)
+      Text.smallFont.draw(
+        batch,
+        s"Light Source: ${light.name}",
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 7) + Text.smallFont.getDescent
+      )
+    })
+    if (player.lightS.isEmpty) {
+      Text.smallFont.setColor(Color.BLACK)
+      Text.smallFont.draw(
+        batch,
+        "Light Source: None",
+        -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit * 2,
+        -(Belegost.translationY) * Belegost.screenUnit + Geometry.ScreenHeight - Belegost.screenUnit * (player.inventory.length + 7) + Text.smallFont.getDescent
       )
     }
   }
