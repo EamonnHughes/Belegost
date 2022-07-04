@@ -17,7 +17,7 @@ import org.eamonn.belegost.equipment.{
   WeaponType,
   lightType
 }
-import org.eamonn.belegost.items.{EmptyBottle, HealthPotion, Item}
+import org.eamonn.belegost.items.{EmptyBottle, Fuel, HealthPotion, Item}
 import org.eamonn.belegost.scenes.{Classes, Game, Races}
 import org.eamonn.belegost.util.{Delta, Location}
 import org.graalvm.compiler.word.Word
@@ -88,7 +88,8 @@ case class Player(
   var moved = false
   var maxHealth = health
   var inventory = mutable.ListBuffer[(Int, Item)](
-    (40, HealthPotion(game))
+    (40, HealthPotion(game)),
+    (10, Fuel(game))
   )
   if (playerClass == Classes.Fighter) {
     inventory = inventory.addAll(
@@ -110,7 +111,8 @@ case class Player(
         (1, Gloves(game, ArmorType.Cloth)),
         (1, Boots(game, ArmorType.Cloth)),
         (1, Cloak(game, ArmorType.Cloth)),
-        (1, Weapon(game, WeaponType.Staff))
+        (1, Weapon(game, WeaponType.Staff)),
+        (1, LightSource(game, lightType.Lamp))
       )
     )
   }
