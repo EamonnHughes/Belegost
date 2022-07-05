@@ -58,7 +58,7 @@ class CharCreation extends Scene {
         s" ${tStats(0)} \n ${tStats(1)} \n ${tStats(2)} \n ${tStats(
           3
         )} \n ${tStats(4)} \n ${tStats(5)} \n ${if (rolls > 0) "r: reroll"
-        else "no more rerolls"} , \n y: confirm",
+        else "no more rerolls"} \n y: confirm",
         Belegost.screenUnit,
         Geometry.ScreenHeight - Belegost.screenUnit
       )
