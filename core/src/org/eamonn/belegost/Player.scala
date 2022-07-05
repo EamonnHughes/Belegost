@@ -29,6 +29,8 @@ case class Player(
     var destination: Location,
     var game: Game
 ) extends Entity {
+  var accurateBonus = 0
+  var evasiveBonus = 0
   def playerRace = game.pRace
   def playerClass = game.pClass
   var XPvalue = 0
@@ -269,7 +271,9 @@ case class Player(
                     weapon.dNum,
                     weapon.dAmt
                   ) + weapon.mod.toInt + ((strength - 10) / 2)) * 2
-                } else if (roll + weapon.mod > enemy.armorClass) {
+                } else if (
+                  roll + weapon.mod + accurateBonus > enemy.armorClass
+                ) {
 
                   enemy.health -= d(
                     weapon.dNum,
