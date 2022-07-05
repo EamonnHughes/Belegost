@@ -12,6 +12,7 @@ class CharCreation extends Scene {
   var stats: List[Int] = List.empty
   var done = false
   var quit = false
+  var rolls = 3
   for (i <- 0 until 6) {
     tStats = d(3, 6) :: tStats
   }
@@ -56,7 +57,8 @@ class CharCreation extends Scene {
         batch,
         s" ${tStats(0)} \n ${tStats(1)} \n ${tStats(2)} \n ${tStats(
           3
-        )} \n ${tStats(4)} \n ${tStats(5)} \n r: reroll, \n y: confirm",
+        )} \n ${tStats(4)} \n ${tStats(5)} \n ${if (rolls > 0) "r: reroll"
+        else "no more rerolls"} , \n y: confirm",
         Belegost.screenUnit,
         Geometry.ScreenHeight - Belegost.screenUnit
       )

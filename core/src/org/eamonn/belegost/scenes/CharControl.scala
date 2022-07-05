@@ -38,7 +38,8 @@ class CharControl(charCreation: CharCreation) extends InputAdapter {
       }
     } else if (charCreation.stats.isEmpty) {
 
-      if (keycode == Keys.R) {
+      if (keycode == Keys.R && charCreation.rolls > 0) {
+        charCreation.rolls -= 1
         charCreation.tStats = List.empty
         for (i <- 0 until 6) {
           charCreation.tStats =
