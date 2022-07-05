@@ -20,7 +20,8 @@ import org.eamonn.belegost.{
   Room,
   Scene,
   Spell,
-  Spells
+  Spells,
+  d
 }
 import sun.jvm.hotspot.gc.z.ZGlobals
 import sun.security.ec.point.ProjectivePoint.Mutable
@@ -173,6 +174,7 @@ class Game(
           }
         }
       }
+
     }
 
     if (
@@ -241,7 +243,9 @@ class Game(
       }
     }
     everything = player :: enemies
-    if (quit || player.health <= 0) {
+    if (player.XPvalue >= player.nextXP) {
+      Some(new LevelUp(this))
+    } else if (quit || player.health <= 0) {
       Some(new Home)
     } else {
       None

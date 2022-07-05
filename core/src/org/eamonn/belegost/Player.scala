@@ -60,12 +60,12 @@ case class Player(
   stats = stats.tail
   var charisma: Int =
     stats.head + playerRace.statBonus(5) + playerClass.statBonus(5)
-  val baseStr = strength
-  val baseDex = dexterity
-  val baseCon = constitution
-  val baseInt = intelligence
-  val baseWis = wisdom
-  val baseCha = charisma
+  var baseStr = strength
+  var baseDex = dexterity
+  var baseCon = constitution
+  var baseInt = intelligence
+  var baseWis = wisdom
+  var baseCha = charisma
   var enchMod = List[Int](0, 0, 0, 0, 0, 0)
   var health = playerClass.hitDie + ((constitution - 10) / 2)
   var baseAC = 10
@@ -207,13 +207,7 @@ case class Player(
     intelligence = baseInt + enchMod(3)
     wisdom = baseWis + enchMod(4)
     charisma = baseCha + enchMod(5)
-    if (XPvalue >= nextXP) {
-      level += 1
-      var hpBonus = d(playerClass.hitDie)
-      maxHealth += hpBonus + ((constitution - 10) / 2)
-      health += hpBonus + ((constitution - 10) / 2)
-      nextXP += (nextXP * 1.25).toInt
-    }
+
     if (
       game.keysPressed
         .contains(Keys.SPACE)
