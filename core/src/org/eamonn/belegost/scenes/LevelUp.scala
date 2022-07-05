@@ -56,22 +56,23 @@ class LevelUp(gameE: Game) extends Scene {
     Text.mediumFont.setColor(Color.WHITE)
     Text.mediumFont.draw(
       batch,
-      s"Strength: ${game.player.strength} \n Dexterity: ${game.player.dexterity} \n Constitution: ${game.player.constitution} \n " +
-        s"Intelligence: ${game.player.intelligence} \n Wisdom: ${game.player.wisdom} \n Charisma: ${game.player.charisma} \n ",
+      s" Strength: ${game.player.strength} \n Dexterity: ${game.player.dexterity} \n Constitution: ${game.player.constitution} \n " +
+        s"Intelligence: ${game.player.intelligence} \n Wisdom: ${game.player.wisdom} \n Charisma: ${game.player.charisma} \n Enter to confirm",
       Geometry.ScreenWidth / 2 - Belegost.screenUnit * 6,
       Geometry.ScreenHeight - Belegost.screenUnit
     )
-
-    Text.mediumFont.draw(
-      batch,
-      s"Health Bonus: ${healthUpgrade + ((game.player.constitution - 10) / 2)}  \n ${if (hRolls > 0) "r: reroll" else "no more rerolls"}",
-      Geometry.ScreenWidth / 2 - Belegost.screenUnit * 6,
-      Geometry.ScreenHeight - Belegost.screenUnit * 8
-    )
+    if (!statUpgrading) {
+      Text.mediumFont.draw(
+        batch,
+        s" Health Bonus: ${healthUpgrade + ((game.player.constitution - 10) / 2)}  \n ${if (hRolls > 0) "r: reroll" else "no more rerolls"}  \n Enter to confirm",
+        Geometry.ScreenWidth / 2 - Belegost.screenUnit * 6,
+        Geometry.ScreenHeight - Belegost.screenUnit * 10
+      )
+    }
     if (!upgradingHealth && !statUpgrading) {
       Text.mediumFont.draw(
         batch,
-        "Press Y: Confirm Level Up",
+        " Press Y: Confirm Level Up",
         Geometry.ScreenWidth / 2 - Belegost.screenUnit * 6,
         Geometry.ScreenHeight / 2 - Belegost.screenUnit * 10
       )
