@@ -14,18 +14,18 @@ case class NavMenu(
 ) {
   var selected = 0
 
-  def up = {
+  def up() = {
     if (itList.nonEmpty) { selected = (selected - 1) max 0 }
   }
-  def down = {
+  def down() = {
     if (itList.nonEmpty) { selected = (selected + 1) min itList.length - 1 }
   }
-  def used = {
+  def used() = {
     if (itList.nonEmpty) {
-      itList(selected).use
+      itList(selected).use()
     }
   }
-  def update: Unit = {
+  def update(): Unit = {
     if (selected >= length + startDrawingAt) {
       startDrawingAt = selected
     }
@@ -36,6 +36,8 @@ case class NavMenu(
     if (selected >= itList.length) {
       selected = itList.length - 1
     }
+
+    println(s"UPDATE: $selected vs ${itList.length}")
   }
 
   var startDrawingAt = 0

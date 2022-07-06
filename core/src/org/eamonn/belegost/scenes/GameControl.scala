@@ -48,12 +48,16 @@ class GameControl(game: Game) extends InputAdapter {
       game.player.inSpellList = !game.player.inSpellList
     }
     if (game.player.inInventory && game.player.inventory.nonEmpty) {
-      if (keycode == Keys.UP) { game.player.invMenu.up }
-      if (keycode == Keys.DOWN) { game.player.invMenu.down }
+      println(
+        s"KEY: ${game.player.invMenu.selected} vs ${game.player.invMenu.itList.length}"
+      )
+      if (keycode == Keys.UP) { game.player.invMenu.up() }
+      if (keycode == Keys.DOWN) { game.player.invMenu.down() }
       if (keycode == Keys.ENTER) {
-        game.player.invMenu.used
+        game.player.invMenu.update()
+        game.player.invMenu.used()
         val (count, item) = game.player.inventory(game.player.invMenu.selected)
-        item.use
+        item.use()
         if (count > 1) {
           game.player.inventory
             .update(game.player.invMenu.selected, (count - 1, item))
@@ -61,6 +65,7 @@ class GameControl(game: Game) extends InputAdapter {
           game.player.inventory.remove(game.player.invMenu.selected)
         }
         game.player.moved = true
+        game.player.setInvMenu()
       }
     }
 

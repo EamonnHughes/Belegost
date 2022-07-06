@@ -215,17 +215,19 @@ case class Player(
     )
   }
   var inInventory = false
+  def setInvMenu(): Unit = {
+    invMenu.itList = inventory
+      .map({ case (num, ite) =>
+        menuItem(
+          s"x $num ${ite.name}",
+          () => { ite.use() }
+        )
+      })
+      .toList
+  }
   def update(delta: Float): Unit = {
-    invMenu.itList = {
-      inventory
-        .map({ case (num, ite) =>
-          menuItem(
-            s"x $num ${ite.name}",
-            () => { ite.use }
-          )
-        })
-        .toList
-    }
+
+    invMenu.update()
 
     strength = baseStr + enchMod(0)
     dexterity = baseDex + enchMod(1)
