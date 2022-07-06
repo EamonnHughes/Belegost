@@ -50,7 +50,20 @@ class GameControl(game: Game) extends InputAdapter {
     if (game.player.inInventory) {
       if (keycode == Keys.UP) { game.player.invMenu.up }
       if (keycode == Keys.DOWN) { game.player.invMenu.down }
+      if (keycode == Keys.ENTER) {
+        game.player.invMenu.used
+        val (count, item) = game.player.inventory(game.player.invMenu.selected)
+        item.use
+        if (count > 1) {
+          game.player.inventory
+            .update(game.player.invMenu.selected, (count - 1, item))
+        } else {
+          game.player.inventory.remove(game.player.invMenu.selected)
+        }
+        game.player.moved = true
+      }
     }
+
     if (game.player.inSpellList) {
       if (keycode == Keys.UP) {
         game.player.currentSpell = (game.player.currentSpell - 1) max 0

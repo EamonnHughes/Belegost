@@ -6,7 +6,7 @@ import org.eamonn.belegost.util.Location
 
 import java.awt.MenuItem
 
-case class NavMenu(itList: List[menuItem]) {
+case class NavMenu(var itList: List[menuItem]) {
   var selected = 0
 
   def up = { selected = (selected - 1) max 0 }
@@ -23,14 +23,15 @@ case class NavMenu(itList: List[menuItem]) {
     if (selected > length) {
       startDrawingAt = selected
     }
-
-    var listDrawn: List[menuItem] = List.empty
-    if (startDrawingAt > 0) {
-      listDrawn = itList.slice((startDrawingAt - 1), (length))
-    } else {
-
-      listDrawn = itList.take(length)
+    if (startDrawingAt > selected) {
+      startDrawingAt = selected + 1 - length
     }
+    if (selected > itList.length) {
+      selected = itList.length
+    }
+
+    var listDrawn: List[menuItem] =
+      itList.slice(startDrawingAt, startDrawingAt + length)
     batch.setColor(Color.BLACK)
     batch.draw(
       Belegost.Square,
@@ -58,10 +59,10 @@ case class NavMenu(itList: List[menuItem]) {
       Text.mediumFont.draw(
         batch,
         " " + item.name,
-        location.x * Belegost.screenUnit,
-        (location.y - index) * Belegost.screenUnit
+        (location.x - Belegost.translationX) * Belegost.screenUnit,
+        (location.y - index - Belegost.translationY) * Belegost.screenUnit
       )
     })
   }
 }
-case class menuItem(name: String, use: () => Unit) {}
+case class menuItem(var name: String, use: () => Unit) {}

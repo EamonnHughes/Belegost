@@ -74,7 +74,7 @@ object Menu {
 
     player.invMenu.draw(
       batch,
-      Location(1, (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 2),
+      Location(1, (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 1),
       6,
       (Geometry.ScreenWidth / Belegost.screenUnit).toInt - 2
     )

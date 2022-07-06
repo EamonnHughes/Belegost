@@ -211,7 +211,7 @@ case class Player(
   }
   var inInventory = false
   def update(delta: Float): Unit = {
-    invMenu = NavMenu({
+    invMenu.itList = {
       inventory
         .map({ case (num, ite) =>
           menuItem(
@@ -220,7 +220,7 @@ case class Player(
           )
         })
         .toList
-    })
+    }
 
     strength = baseStr + enchMod(0)
     dexterity = baseDex + enchMod(1)
@@ -258,22 +258,7 @@ case class Player(
       }
     })
     val prevdest = location
-    if (
-      !moved && game.keysPressed.contains(
-        Keys.ENTER
-      ) && inInventory
-    ) {
-      invMenu.used
-      val (count, item) = game.player.inventory(game.player.invMenu.selected)
-      item.use
-      if (count > 1) {
-        game.player.inventory
-          .update(game.player.invMenu.selected, (count - 1, item))
-      } else {
-        game.player.inventory.remove(game.player.invMenu.selected)
-      }
-      moved = true
-    }
+
     if (!moved) {
       var attackedEnemy = false
       destination = computeDestination
