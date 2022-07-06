@@ -255,12 +255,8 @@ case class Player(
         )
       })
     }
-    equipMenu = NavMenu(
-      List[menuItem](helm, chest, gls, foot, back, weap, liteS),
-      equipMenu.location,
-      7,
-      equipMenu.lX
-    )
+    equipMenu.itList = List[menuItem](helm, chest, gls, foot, back, weap, liteS)
+    equipMenu.length = 7
   }
   def draw(batch: PolygonSpriteBatch): Unit = {
     batch.setColor(1, 1, 1, 1)

@@ -9,7 +9,7 @@ import java.awt.MenuItem
 case class NavMenu(
     var itList: List[menuItem],
     location: Location,
-    length: Int,
+    var length: Int,
     lX: Int
 ) {
   var selected = 0
