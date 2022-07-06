@@ -30,14 +30,12 @@ case class NavMenu(
       startDrawingAt = selected
     }
     if (startDrawingAt > selected) {
-      startDrawingAt = selected - length + 1
+      startDrawingAt = (selected - length + 1) max 0
     }
 
     if (selected >= itList.length) {
       selected = itList.length - 1
     }
-
-    println(s"UPDATE: $selected vs ${itList.length}")
   }
 
   var startDrawingAt = 0

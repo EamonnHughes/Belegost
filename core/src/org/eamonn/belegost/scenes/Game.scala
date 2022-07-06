@@ -95,9 +95,9 @@ class Game(
   var eeEs = 1f
 
   override def update(delta: Float): Option[Scene] = {
-    if (player.inInventory) {
-      player.invMenu.update
-    }
+    player.invMenu.update()
+    player.equipMenu.update()
+    player.equipMenuUpdate()
 
     val statEnchants = player.equipped
       .flatMap(_.enchantments)
@@ -303,6 +303,8 @@ class Game(
       Menu.drawSpellBook(batch, player)
     } else if (player.inInventory) {
       Menu.drawInventory(batch, player)
+    } else if (player.inEquip) {
+      Menu.drawEquipment(batch, player)
     }
 
     Menu.drawStats(batch, player)

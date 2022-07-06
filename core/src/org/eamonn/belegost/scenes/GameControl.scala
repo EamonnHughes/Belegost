@@ -43,14 +43,22 @@ class GameControl(game: Game) extends InputAdapter {
     game.keysPressed = keycode :: game.keysPressed
     if (keycode == Keys.I) {
       game.player.inInventory = !game.player.inInventory
+
+      game.player.inEquip = false
+      game.player.inSpellList = false
+    }
+
+    if (keycode == Keys.E) {
+      game.player.inEquip = !game.player.inEquip
+      game.player.inInventory = false
+      game.player.inSpellList = false
     }
     if (keycode == Keys.M && game.player.playerClass.caster) {
       game.player.inSpellList = !game.player.inSpellList
+      game.player.inInventory = false
+      game.player.inEquip = false
     }
     if (game.player.inInventory && game.player.inventory.nonEmpty) {
-      println(
-        s"KEY: ${game.player.invMenu.selected} vs ${game.player.invMenu.itList.length}"
-      )
       if (keycode == Keys.UP) { game.player.invMenu.up() }
       if (keycode == Keys.DOWN) { game.player.invMenu.down() }
       if (keycode == Keys.ENTER) {
@@ -66,6 +74,18 @@ class GameControl(game: Game) extends InputAdapter {
         }
         game.player.moved = true
         game.player.setInvMenu()
+        game.player.equipMenuUpdate()
+      }
+    }
+    if (game.player.inEquip) {
+      if (keycode == Keys.UP) { game.player.equipMenu.up() }
+      if (keycode == Keys.DOWN) { game.player.equipMenu.down() }
+      if (keycode == Keys.ENTER) {
+        game.player.equipMenu.update()
+        game.player.equipMenu.used()
+        game.player.setInvMenu()
+        game.player.equipMenuUpdate()
+        game.player.moved = true
       }
     }
 

@@ -22,6 +22,7 @@ import org.eamonn.belegost.scenes.{Classes, Game, Races}
 import org.eamonn.belegost.util.{Delta, Location}
 import org.graalvm.compiler.word.Word
 
+import scala.::
 import scala.collection.mutable
 
 case class Player(
@@ -38,6 +39,7 @@ case class Player(
   var money = 0
   def speed: Int = 1 max ((dexterity - 10) / 2)
   var level = 1
+  var inEquip = false
   def lightDist: Int = {
     lightS match {
       case some: Some[LightSource] => some.head.output
@@ -87,6 +89,7 @@ case class Player(
     })
     eqBonus.toInt
   }
+
   var moved = false
   var maxHealth = health
   var inventory = mutable.ListBuffer[(Int, Item)](
@@ -136,6 +139,12 @@ case class Player(
     6,
     (Geometry.ScreenWidth / Belegost.screenUnit).toInt - 2
   )
+  var equipMenu = NavMenu(
+    List(menuItem(" ", () => {})),
+    Location(1, (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 1),
+    1,
+    (Geometry.ScreenWidth / Belegost.screenUnit).toInt - 2
+  )
   var currentSpell = 0
   var helmet: Option[Helmet] = None
   var bodyArmor: Option[BodyArmor] = None
@@ -145,6 +154,114 @@ case class Player(
   var lightS: Option[LightSource] = None
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
+  def equipMenuUpdate(): Unit = {
+    var helm: menuItem = menuItem("Helm: None", () => {})
+    if (helmet.nonEmpty) {
+      helmet.foreach(nHelm => {
+
+        helm = menuItem(
+          s"Helm: ${nHelm.name}",
+          () => {
+            inventory.addOne((1, nHelm))
+            helmet = None
+            setInvMenu()
+          }
+        )
+      })
+    }
+    var chest: menuItem = menuItem("Armor: None", () => {})
+    if (bodyArmor.nonEmpty) {
+      bodyArmor.foreach(bA => {
+
+        chest = menuItem(
+          s"Armor: ${bA.name}",
+          () => {
+            inventory.addOne((1, bA))
+            bodyArmor = None
+            setInvMenu()
+          }
+        )
+      })
+    }
+    var gls: menuItem = menuItem("Gloves: None", () => {})
+    if (gloves.nonEmpty) {
+      gloves.foreach(glov => {
+
+        gls = menuItem(
+          s"Gloves: ${glov.name}",
+          () => {
+            inventory.addOne((1, glov))
+            gloves = None
+            setInvMenu()
+          }
+        )
+      })
+    }
+    var foot: menuItem = menuItem("Boots: None", () => {})
+    if (boots.nonEmpty) {
+      boots.foreach(footwear => {
+
+        foot = menuItem(
+          s"Boots: ${footwear.name}",
+          () => {
+            inventory.addOne((1, footwear))
+            boots = None
+            setInvMenu()
+          }
+        )
+      })
+    }
+    var back: menuItem = menuItem("Cloak: None", () => {})
+    if (cloak.nonEmpty) {
+      cloak.foreach(clk => {
+
+        back = menuItem(
+          s"Cloak: ${clk.name}",
+          () => {
+            inventory.addOne((1, clk))
+            cloak = None
+            setInvMenu()
+          }
+        )
+      })
+    }
+    var weap: menuItem = menuItem("Weapon: None", () => {})
+    if (weapon.nonEmpty) {
+      weapon.foreach(wep => {
+
+        weap = menuItem(
+          s"Weapon: ${wep.name}",
+          () => {
+            inventory.addOne((1, wep))
+
+            weapon = None
+            setInvMenu()
+          }
+        )
+      })
+    }
+    var liteS: menuItem = menuItem("Light Source: None", () => {})
+    if (lightS.nonEmpty) {
+      lightS.foreach(light => {
+
+        liteS = menuItem(
+          s"Light Source: ${light.name}",
+          () => {
+            inventory.addOne((1, light))
+
+            lightS = None
+            setInvMenu()
+          }
+        )
+      })
+    }
+    equipMenu = NavMenu(
+      List[menuItem](helm, chest, gls, foot, back, weap, liteS),
+      equipMenu.location,
+      7,
+      equipMenu.lX
+    )
+  }
   def draw(batch: PolygonSpriteBatch): Unit = {
     batch.setColor(1, 1, 1, 1)
     if (playerRace == Races.Human) {
@@ -219,7 +336,7 @@ case class Player(
     invMenu.itList = inventory
       .map({ case (num, ite) =>
         menuItem(
-          s"x $num ${ite.name}",
+          s"x$num ${ite.name}",
           () => { ite.use() }
         )
       })
@@ -228,6 +345,7 @@ case class Player(
   def update(delta: Float): Unit = {
 
     invMenu.update()
+    equipMenu.update()
 
     strength = baseStr + enchMod(0)
     dexterity = baseDex + enchMod(1)
@@ -327,7 +445,7 @@ case class Player(
     } else { destination = location }
   }
   def computeDestination: Location = {
-    if (!inInventory) {
+    if (!inInventory && !inEquip && !inSpellList) {
       if (game.keysPressed.contains(19)) {
         if (game.keysPressed.contains(22)) {
           location + Delta(1, 1)

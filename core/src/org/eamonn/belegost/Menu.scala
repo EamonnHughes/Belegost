@@ -77,4 +77,9 @@ object Menu {
     )
 
   }
+  def drawEquipment(batch: PolygonSpriteBatch, player: Player): Unit = {
+    player.equipMenu.draw(
+      batch
+    )
+  }
 }
