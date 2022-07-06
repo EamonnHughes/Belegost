@@ -11,7 +11,12 @@ case class NavMenu(var itList: List[menuItem]) {
 
   def up = { selected = (selected - 1) max 0 }
   def down = { selected = (selected + 1) min itList.length - 1 }
-  def used = itList(selected).use
+  def used = {
+    if (itList.nonEmpty) {
+      itList(selected).use
+    }
+
+  }
 
   def draw(
       batch: PolygonSpriteBatch,
@@ -20,14 +25,12 @@ case class NavMenu(var itList: List[menuItem]) {
       lX: Int
   ): Unit = {
     var startDrawingAt = 0
-    if (selected > length) {
+    if (selected >= length + startDrawingAt) {
       startDrawingAt = selected
     }
-    if (startDrawingAt > selected) {
-      startDrawingAt = selected + 1 - length
-    }
-    if (selected > itList.length) {
-      selected = itList.length
+
+    if (selected >= itList.length) {
+      selected = itList.length - 1
     }
 
     var listDrawn: List[menuItem] =
