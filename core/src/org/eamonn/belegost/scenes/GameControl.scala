@@ -47,7 +47,7 @@ class GameControl(game: Game) extends InputAdapter {
     if (keycode == Keys.M && game.player.playerClass.caster) {
       game.player.inSpellList = !game.player.inSpellList
     }
-    if (game.player.inInventory) {
+    if (game.player.inInventory && game.player.inventory.nonEmpty) {
       if (keycode == Keys.UP) { game.player.invMenu.up }
       if (keycode == Keys.DOWN) { game.player.invMenu.down }
       if (keycode == Keys.ENTER) {

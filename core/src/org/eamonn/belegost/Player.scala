@@ -121,16 +121,21 @@ case class Player(
   def equipped: List[Equipment] = {
     helmet.toList ::: bodyArmor.toList ::: gloves.toList ::: boots.toList ::: cloak.toList
   }
-  var invMenu = NavMenu({
-    inventory
-      .map({ case (num, ite) =>
-        menuItem(
-          s"x $num ${ite.name}",
-          () => { ite.use }
-        )
-      })
-      .toList
-  })
+  var invMenu = NavMenu(
+    {
+      inventory
+        .map({ case (num, ite) =>
+          menuItem(
+            s"x $num ${ite.name}",
+            () => { ite.use }
+          )
+        })
+        .toList
+    },
+    Location(1, (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 1),
+    6,
+    (Geometry.ScreenWidth / Belegost.screenUnit).toInt - 2
+  )
   var currentSpell = 0
   var helmet: Option[Helmet] = None
   var bodyArmor: Option[BodyArmor] = None

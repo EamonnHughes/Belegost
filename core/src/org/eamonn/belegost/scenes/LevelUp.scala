@@ -79,7 +79,13 @@ class LevelUp(gameE: Game) extends Scene {
 
         }
       )
-    )
+    ),
+    Location(
+      ((Geometry.ScreenWidth / 2) / Belegost.screenUnit).toInt - 5,
+      (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 2
+    ),
+    6,
+    10
   )
   var game: Game = gameE
   var hRolls = 3
@@ -92,6 +98,7 @@ class LevelUp(gameE: Game) extends Scene {
   override def init(): InputAdapter = new LevelUpControl(this)
 
   override def update(delta: Float): Option[Scene] = {
+    statBonuses.update
     game.keysPressed = List.empty
     if (gameBegin) {
 
@@ -106,13 +113,7 @@ class LevelUp(gameE: Game) extends Scene {
   override def render(batch: PolygonSpriteBatch): Unit = {
 
     statBonuses.draw(
-      batch,
-      Location(
-        ((Geometry.ScreenWidth / 2) / Belegost.screenUnit).toInt - 5,
-        (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 2
-      ),
-      6,
-      10
+      batch
     )
 
     if (!statUpgrading) {

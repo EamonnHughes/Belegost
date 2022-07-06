@@ -95,6 +95,9 @@ class Game(
   var eeEs = 1f
 
   override def update(delta: Float): Option[Scene] = {
+    if (player.inInventory) {
+      player.invMenu.update
+    }
 
     val statEnchants = player.equipped
       .flatMap(_.enchantments)
