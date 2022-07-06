@@ -3,12 +3,86 @@ package org.eamonn.belegost.scenes
 import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import org.eamonn.belegost.{Belegost, Geometry, Scene, Text, d}
+import org.eamonn.belegost.util.Location
+import org.eamonn.belegost.{
+  Belegost,
+  Geometry,
+  NavMenu,
+  Scene,
+  Text,
+  d,
+  menuItem
+}
+
+import java.awt.MenuItem
 
 class LevelUp(gameE: Game) extends Scene {
-  var game = gameE
+  var statBonuses = NavMenu(
+    List(
+      menuItem(
+        "Strength",
+        () => {
+          game.player.baseStr += 1
+
+          statUpgrading = false
+          upgradingHealth = true
+
+        }
+      ),
+      menuItem(
+        "Dexterity",
+        () => {
+          game.player.baseDex += 1
+
+          statUpgrading = false
+          upgradingHealth = true
+
+        }
+      ),
+      menuItem(
+        "Constitution",
+        () => {
+          game.player.baseCon += 1
+
+          statUpgrading = false
+          upgradingHealth = true
+
+        }
+      ),
+      menuItem(
+        "Intelligence",
+        () => {
+          game.player.baseInt += 1
+
+          statUpgrading = false
+          upgradingHealth = true
+
+        }
+      ),
+      menuItem(
+        "Wisdom",
+        () => {
+          game.player.baseWis += 1
+
+          statUpgrading = false
+          upgradingHealth = true
+
+        }
+      ),
+      menuItem(
+        "Charisma",
+        () => {
+          game.player.baseCha += 1
+
+          statUpgrading = false
+          upgradingHealth = true
+
+        }
+      )
+    )
+  )
+  var game: Game = gameE
   var hRolls = 3
-  var upStat = 0
   var healthUpgrade = (game.player.playerClass.hitDie / 2) + 1
   var statUpgrading = true
   var upgradingHealth = false
@@ -20,47 +94,27 @@ class LevelUp(gameE: Game) extends Scene {
   override def update(delta: Float): Option[Scene] = {
     game.keysPressed = List.empty
     if (gameBegin) {
-      if (upStat == 0) {
-        game.player.baseStr += 1
-      } else if (upStat == 1) {
-        game.player.baseDex += 1
-      } else if (upStat == 2) {
-        game.player.baseCon += 1
-      } else if (upStat == 3) {
-        game.player.baseInt += 1
-      } else if (upStat == 4) {
-        game.player.baseWis += 1
-      } else if (upStat == 5) {
-        game.player.baseCha += 1
-      }
 
       game.player.level += 1
       game.player.maxHealth += healthUpgrade + ((game.player.constitution - 10) / 2)
       game.player.health += healthUpgrade + ((game.player.constitution - 10) / 2)
-      game.player.nextXP += (game.player.nextXP * 1.25).toInt
+      game.player.nextXP += (game.player.nextXP * (1 * (game.player.nextXP / 6))).toInt
       Some(game)
     } else { None }
   }
 
   override def render(batch: PolygonSpriteBatch): Unit = {
-    batch.setColor(Color.WHITE)
 
-    batch.draw(
-      Belegost.Square,
-      Geometry.ScreenWidth / 2 - Belegost.screenUnit * 7,
-      Geometry.ScreenHeight - ((Text.mediumFont.getLineHeight * (upStat + 2))),
-      Belegost.screenUnit / 2,
-      Text.mediumFont.getAscent + Text.mediumFont.getCapHeight - Text.mediumFont.getDescent
-    )
-
-    Text.mediumFont.setColor(Color.WHITE)
-    Text.mediumFont.draw(
+    statBonuses.draw(
       batch,
-      s" Strength: ${game.player.strength} \n Dexterity: ${game.player.dexterity} \n Constitution: ${game.player.constitution} \n " +
-        s"Intelligence: ${game.player.intelligence} \n Wisdom: ${game.player.wisdom} \n Charisma: ${game.player.charisma} \n Enter to confirm",
-      Geometry.ScreenWidth / 2 - Belegost.screenUnit * 6,
-      Geometry.ScreenHeight - Belegost.screenUnit
+      Location(
+        ((Geometry.ScreenWidth / 2) / Belegost.screenUnit).toInt - 5,
+        (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 2
+      ),
+      6,
+      10
     )
+
     if (!statUpgrading) {
       Text.mediumFont.draw(
         batch,

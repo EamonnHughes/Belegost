@@ -18,7 +18,7 @@ object Text {
     )
     val parameter = new FreeTypeFontGenerator.FreeTypeFontParameter
     parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS + CharExtras
-    parameter.size = 22
+    parameter.size = Belegost.screenUnit.toInt
     mediumFont = garbage.add(generator.generateFont(parameter))
     parameter.size = 16
     smallFont = garbage.add(generator.generateFont(parameter))

@@ -121,7 +121,16 @@ case class Player(
   def equipped: List[Equipment] = {
     helmet.toList ::: bodyArmor.toList ::: gloves.toList ::: boots.toList ::: cloak.toList
   }
-  var currentInventoryItem = 0
+  var invMenu = NavMenu({
+    inventory
+      .map({ case (num, ite) =>
+        menuItem(
+          s"x $num ${ite.name}",
+          () => { ite.use }
+        )
+      })
+      .toList
+  })
   var currentSpell = 0
   var helmet: Option[Helmet] = None
   var bodyArmor: Option[BodyArmor] = None
@@ -202,6 +211,16 @@ case class Player(
   }
   var inInventory = false
   def update(delta: Float): Unit = {
+    invMenu = NavMenu({
+      inventory
+        .map({ case (num, ite) =>
+          menuItem(
+            s"x $num ${ite.name}",
+            () => { ite.use }
+          )
+        })
+        .toList
+    })
 
     strength = baseStr + enchMod(0)
     dexterity = baseDex + enchMod(1)
@@ -242,14 +261,16 @@ case class Player(
     if (
       !moved && game.keysPressed.contains(
         Keys.ENTER
-      ) && inInventory && currentInventoryItem < inventory.length
+      ) && inInventory
     ) {
-      val (count, item) = inventory(currentInventoryItem)
+      invMenu.used
+      val (count, item) = game.player.inventory(game.player.invMenu.selected)
       item.use
       if (count > 1) {
-        inventory.update(currentInventoryItem, (count - 1, item))
+        game.player.inventory
+          .update(game.player.invMenu.selected, (count - 1, item))
       } else {
-        inventory.remove(currentInventoryItem)
+        game.player.inventory.remove(game.player.invMenu.selected)
       }
       moved = true
     }

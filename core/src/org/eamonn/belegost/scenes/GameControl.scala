@@ -3,7 +3,7 @@ package org.eamonn.belegost.scenes
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.InputAdapter
 import org.eamonn.belegost.Classes.FireBolt
-import org.eamonn.belegost.{Belegost, Click, Geometry}
+import org.eamonn.belegost.{Belegost, Click, Geometry, Menu}
 import org.eamonn.belegost.util.Location
 
 class GameControl(game: Game) extends InputAdapter {
@@ -48,15 +48,8 @@ class GameControl(game: Game) extends InputAdapter {
       game.player.inSpellList = !game.player.inSpellList
     }
     if (game.player.inInventory) {
-      if (keycode == Keys.UP) {
-        game.player.currentInventoryItem =
-          (game.player.currentInventoryItem - 1) max 0
-      }
-      if (keycode == Keys.DOWN) {
-
-        game.player.currentInventoryItem =
-          (game.player.currentInventoryItem + 1) min game.player.inventory.length - 1
-      }
+      if (keycode == Keys.UP) { game.player.invMenu.up }
+      if (keycode == Keys.DOWN) { game.player.invMenu.down }
     }
     if (game.player.inSpellList) {
       if (keycode == Keys.UP) {

@@ -16,12 +16,13 @@ class LevelUpControl(levelUp: LevelUp) extends InputAdapter {
   override def keyDown(keycode: Int): Boolean = {
     if (levelUp.statUpgrading) {
       if (keycode == Keys.UP) {
-        levelUp.upStat = (levelUp.upStat - 1) max 0
+        levelUp.statBonuses.up
       } else if (keycode == Keys.DOWN) {
-        levelUp.upStat = (levelUp.upStat + 1) min 5
+        levelUp.statBonuses.down
 
       }
       if (keycode == Keys.ENTER) {
+        levelUp.statBonuses.used
         levelUp.statUpgrading = false
         levelUp.upgradingHealth = true
       }
