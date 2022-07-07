@@ -20,9 +20,9 @@ object Text {
     parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS + CharExtras
     parameter.size = Belegost.screenUnit.toInt
     mediumFont = garbage.add(generator.generateFont(parameter))
-    parameter.size = 16
+    parameter.size = (Belegost.screenUnit / 1.5).toInt
     smallFont = garbage.add(generator.generateFont(parameter))
-    parameter.size = 10
+    parameter.size = (Belegost.screenUnit / 2).toInt
     tinyFont = garbage.add(generator.generateFont(parameter))
     generator.dispose()
   }
