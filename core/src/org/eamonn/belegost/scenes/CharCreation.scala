@@ -21,10 +21,12 @@ class CharCreation extends Scene {
   var stats: List[Int] = List.empty
   var done = false
   var quit = false
+  var name: String = ""
   var rolls = 3
   for (i <- 0 until 6) {
     tStats = d(3, 6) :: tStats
   }
+  var nameConfirmed = false
 
   override def init(): InputAdapter = new CharControl(this)
 
@@ -35,7 +37,8 @@ class CharCreation extends Scene {
         r <- race
         c <- pClass
         if (stats.nonEmpty)
-      } yield new Game(r, c, stats)
+        if (nameConfirmed)
+      } yield new Game(r, c, stats, name)
     }
 
   }
@@ -91,6 +94,12 @@ class CharCreation extends Scene {
       classOptions(classSelect.selected).desc,
       Belegost.screenUnit / 2,
       Belegost.screenUnit * 4
+    )
+    Text.mediumFont.draw(
+      batch,
+      "Name: " + name,
+      Belegost.screenUnit * 2,
+      Belegost.screenUnit * 12
     )
 
   }

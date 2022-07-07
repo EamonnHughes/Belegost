@@ -18,7 +18,7 @@ object Menu {
     Text.smallFont.setColor(Color.WHITE)
     Text.smallFont.draw(
       batch,
-      s" ${player.playerRace} ${player.playerClass} \n level: ${player.level} \n next: ${player.nextXP - player.XPvalue}" +
+      s" ${player.game.name} \n ${player.playerRace} ${player.playerClass} \n level: ${player.level} \n next: ${player.nextXP - player.XPvalue}" +
         s" \n str: ${player.strength} (${player.baseStr})\n dex: ${player.dexterity} (${player.baseDex})" +
         s"\n con: ${player.constitution} (${player.baseCon})\n int: ${player.intelligence} (${player.baseInt})" +
         s"\n wis: ${player.wisdom} (${player.baseWis})\n cha: ${player.charisma} (${player.baseCha})" +

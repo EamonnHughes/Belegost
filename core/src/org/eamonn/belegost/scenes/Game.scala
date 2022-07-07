@@ -31,8 +31,10 @@ import scala.collection.{GenMap, mutable}
 class Game(
     val pRace: playerRace,
     val pClass: playerClass,
-    val sStats: List[Int]
+    val sStats: List[Int],
+    val name: String
 ) extends Scene {
+  val pName = name
   var mx = 0
   var my = 0
   val visited = mutable.Map.empty[Location, Float]
