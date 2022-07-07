@@ -3,7 +3,16 @@ package org.eamonn.belegost.scenes
 import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
-import org.eamonn.belegost.{Belegost, Geometry, Scene, Text, d}
+import org.eamonn.belegost.util.Location
+import org.eamonn.belegost.{
+  Belegost,
+  Geometry,
+  NavMenu,
+  Scene,
+  Text,
+  d,
+  menuItem
+}
 
 class CharCreation extends Scene {
   var race: Option[playerRace] = None
@@ -31,47 +40,43 @@ class CharCreation extends Scene {
 
   }
 
+  var raceSelect = NavMenu(
+    List(
+      menuItem("Human", () => { race = Some(Races.Human) }),
+      menuItem("Dwarf", () => { race = Some(Races.Dwarf) }),
+      menuItem("Elf", () => { race = Some(Races.Elf) })
+    ),
+    Location(2, (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 2),
+    3,
+    6
+  )
+  var classSelect = NavMenu(
+    List(
+      menuItem("Fighter", () => { pClass = Some(Classes.Fighter) }),
+      menuItem("Wizard", () => { pClass = Some(Classes.Wizard) })
+    ),
+    Location(9, (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 2),
+    2,
+    6
+  )
+
   override def render(batch: PolygonSpriteBatch): Unit = {
+    raceSelect.draw(batch)
+    classSelect.draw(batch)
+    raceSelect.update()
+    classSelect.update()
+
     Text.mediumFont.setColor(Color.WHITE)
+    Text.mediumFont.draw(
+      batch,
+      s" ${tStats(0)} \n ${tStats(1)} \n ${tStats(2)} \n ${tStats(
+        3
+      )} \n ${tStats(4)} \n ${tStats(5)} \n ${if (rolls > 0) "r: reroll"
+      else "no more rerolls"} \n ENTER: confirm",
+      Belegost.screenUnit * 16,
+      Geometry.ScreenHeight - Belegost.screenUnit * 2
+    )
 
-    if (race.isEmpty) {
-      Text.mediumFont.setColor(Color.WHITE)
-      Text.mediumFont.draw(
-        batch,
-        " a: Human \n b: Dwarf \n c: Elf",
-        Belegost.screenUnit,
-        Geometry.ScreenHeight - Belegost.screenUnit
-      )
-    } else if (pClass.isEmpty) {
-
-      Text.mediumFont.setColor(Color.WHITE)
-      Text.mediumFont.draw(
-        batch,
-        " a: Fighter \n b: Wizard",
-        Belegost.screenUnit,
-        Geometry.ScreenHeight - Belegost.screenUnit
-      )
-    } else if (stats.isEmpty) {
-      Text.mediumFont.setColor(Color.WHITE)
-      Text.mediumFont.draw(
-        batch,
-        s" ${tStats(0)} \n ${tStats(1)} \n ${tStats(2)} \n ${tStats(
-          3
-        )} \n ${tStats(4)} \n ${tStats(5)} \n ${if (rolls > 0) "r: reroll"
-        else "no more rerolls"} \n y: confirm",
-        Belegost.screenUnit,
-        Geometry.ScreenHeight - Belegost.screenUnit
-      )
-    } else {
-
-      Text.mediumFont.setColor(Color.WHITE)
-      Text.mediumFont.draw(
-        batch,
-        " y: Begin \n n: Quit",
-        Belegost.screenUnit,
-        Geometry.ScreenHeight - Belegost.screenUnit
-      )
-    }
   }
 }
 sealed trait playerRace {

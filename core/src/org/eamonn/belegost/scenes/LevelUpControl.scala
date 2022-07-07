@@ -37,7 +37,7 @@ class LevelUpControl(levelUp: LevelUp) extends InputAdapter {
       }
     }
     if (
-      keycode == Keys.Y && !levelUp.upgradingHealth && !levelUp.statUpgrading
+      keycode == Keys.ENTER && !levelUp.upgradingHealth && !levelUp.statUpgrading
     ) {
       levelUp.gameBegin = true
     }

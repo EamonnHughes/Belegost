@@ -19,22 +19,25 @@ class CharControl(charCreation: CharCreation) extends InputAdapter {
   override def keyDown(keycode: Int): Boolean = {
     if (charCreation.race.isEmpty) {
 
-      if (keycode == Keys.A) {
-        charCreation.race = Some(Human)
-      }
-      if (keycode == Keys.B) {
-        charCreation.race = Some(Dwarf)
-      }
-      if (keycode == Keys.C) {
-        charCreation.race = Some(Elf)
+      if (keycode == Keys.UP) {
+        charCreation.raceSelect.up()
+        charCreation.raceSelect.update()
+      } else if (keycode == Keys.DOWN) {
+        charCreation.raceSelect.down()
+        charCreation.raceSelect.update()
+      } else if (keycode == Keys.ENTER) {
+        charCreation.raceSelect.used()
       }
     } else if (charCreation.pClass.isEmpty) {
 
-      if (keycode == Keys.A) {
-        charCreation.pClass = Some(Fighter)
-      }
-      if (keycode == Keys.B) {
-        charCreation.pClass = Some(Wizard)
+      if (keycode == Keys.UP) {
+        charCreation.classSelect.up()
+        charCreation.classSelect.update()
+      } else if (keycode == Keys.DOWN) {
+        charCreation.classSelect.down()
+        charCreation.classSelect.update()
+      } else if (keycode == Keys.ENTER) {
+        charCreation.classSelect.used()
       }
     } else if (charCreation.stats.isEmpty) {
 
@@ -46,7 +49,7 @@ class CharControl(charCreation: CharCreation) extends InputAdapter {
             List(d(6), d(6), d(6), d(6)).sorted.tail.sum :: charCreation.tStats
         }
       }
-      if (keycode == Keys.Y) {
+      if (keycode == Keys.ENTER) {
         charCreation.pClass.foreach(pC => {
           charCreation.tStats = charCreation.tStats.sorted.reverse
           if (pC == Classes.Fighter) {
@@ -69,15 +72,8 @@ class CharControl(charCreation: CharCreation) extends InputAdapter {
           }
         })
       }
-    } else {
-
-      if (keycode == Keys.Y) {
-        charCreation.done = true
-      }
-      if (keycode == Keys.N) {
-        charCreation.quit = true
-      }
     }
+
     true
   }
 }
