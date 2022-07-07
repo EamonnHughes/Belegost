@@ -7,7 +7,7 @@ import org.eamonn.belegost.util.Location
 
 object Menu {
   def drawStats(batch: PolygonSpriteBatch, player: Player): Unit = {
-    batch.setColor(Color.WHITE)
+    batch.setColor(Color.BLACK)
     batch.draw(
       Belegost.Square,
       -(Belegost.translationX) * Belegost.screenUnit,
@@ -15,7 +15,7 @@ object Menu {
       Belegost.screenUnit * 8,
       Belegost.screenUnit * 20
     )
-    Text.smallFont.setColor(Color.BLACK)
+    Text.smallFont.setColor(Color.WHITE)
     Text.smallFont.draw(
       batch,
       s" ${player.playerRace} ${player.playerClass} \n level: ${player.level} \n next: ${player.nextXP - player.XPvalue}" +

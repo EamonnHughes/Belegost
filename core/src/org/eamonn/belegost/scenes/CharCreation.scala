@@ -83,22 +83,29 @@ sealed trait playerRace {
   val name: String
   val xpMod: Float
   val statBonus: List[Int]
+  val desc: String
 }
 object Races {
   case object Human extends playerRace {
     val name = "Human"
     val xpMod = 1
     val statBonus = List(0, 0, 0, 0, 0, 0)
+    val desc =
+      "A human, one of the most diverse and widespread race in the lands. No bonuses to stats, but levels up faster than other races."
   }
   case object Dwarf extends playerRace {
     val name = "Dwarf"
     val xpMod = 1.2f
     val statBonus = List(2, -1, 3, -1, 1, -1)
+    val desc =
+      "A dwarf, of the sturdy race that lives deep within the mountains and harbors grudges for many years. Greatly increased strength and constitution and an increase to wisdom, with the reduction of all other stats."
   }
   case object Elf extends playerRace {
     val name = "Elf"
     val xpMod = 1.5f
     val statBonus = List(-2, 1, -3, 4, 2, 1)
+    val desc =
+      "An elf, born into those reclusive people that live far longer than any mortal race. increased dexterity, and charisma, greatly increased intelligence and wisdom, and severe drawbacks to constitution and charisma. They level up slower than other races."
   }
 }
 sealed trait playerClass {
@@ -106,6 +113,7 @@ sealed trait playerClass {
   val statBonus: List[Int]
   val caster: Boolean
   val hitDie: Int
+  val desc: String
 }
 object Classes {
   case object Fighter extends playerClass {
@@ -113,11 +121,13 @@ object Classes {
     val statBonus = List(2, 1, 1, -1, 0, 0)
     val caster = false
     val hitDie = 10
+    val desc = "A warrior trained in the use of many weapons."
   }
   case object Wizard extends playerClass {
     val name = "Wizard"
     val statBonus = List(-1, -1, -1, 3, 2, 1)
     val caster = true
     val hitDie = 5
+    val desc = "A scholar that has spent many years studying the arcane arts."
   }
 }
