@@ -73,15 +73,15 @@ class CharControl(charCreation: CharCreation) extends InputAdapter {
         })
       }
     } else if (!charCreation.nameConfirmed) {
-      if (
-        keycode == Keys.ENTER && charCreation.name.nonEmpty && charCreation.name.length < 20
-      ) {
+      if (keycode == Keys.ENTER && charCreation.name.nonEmpty) {
         charCreation.nameConfirmed = true
       } else if (keycode == Keys.BACKSPACE) {
         charCreation.name = charCreation.name.dropRight(1)
-      } else if (keycode == Keys.SPACE) {
+      } else if (keycode == Keys.SPACE && charCreation.name.length < 20) {
         charCreation.name = charCreation.name + " "
-      } else if (Keys.toString(keycode).length == 1) {
+      } else if (
+        Keys.toString(keycode).length == 1 && charCreation.name.length < 20
+      ) {
         charCreation.name = charCreation.name + Keys.toString(keycode)
 
       }

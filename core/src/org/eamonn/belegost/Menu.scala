@@ -12,7 +12,7 @@ object Menu {
       Belegost.Square,
       -(Belegost.translationX) * Belegost.screenUnit,
       -(Belegost.translationY) * Belegost.screenUnit + Belegost.screenUnit,
-      Belegost.screenUnit * 8,
+      Belegost.screenUnit * 12,
       Belegost.screenUnit * 20
     )
     Text.smallFont.setColor(Color.WHITE)
