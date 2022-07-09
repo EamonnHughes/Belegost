@@ -12,7 +12,7 @@ object Menu {
       Belegost.Square,
       -(Belegost.translationX) * Belegost.screenUnit,
       -(Belegost.translationY) * Belegost.screenUnit + Belegost.screenUnit,
-      Belegost.screenUnit * 8,
+      Belegost.screenUnit * 9,
       Belegost.screenUnit * 20
     )
     Text.smallFont.setColor(Color.WHITE)
@@ -27,11 +27,20 @@ object Menu {
         } else { "" }} \n AC: ${player.armorClass} " +
         s" \n speed: ${player.speed} \n GP: ${player.money} \n Light Level: ${player.lightDist} \n Fuel: ${if (player.lightS.nonEmpty) {
           player.lightS.head.mod
-        } else "None"}",
+        } else "None"}" +
+        s"${if (player.statusEffects.nonEmpty) {
+          player.statusEffects
+            .map(statE => {
+              s"\n ${statE.name} ${statE.duration}"
+            })
+            .mkString
+        } else ""}",
       -(Belegost.translationX) * Belegost.screenUnit + Belegost.screenUnit,
       -(Belegost.translationY) * Belegost.screenUnit + Belegost.screenUnit * 20
     )
+
   }
+
   def drawSpellBook(batch: PolygonSpriteBatch, player: Player): Unit = {
     batch.setColor(Color.WHITE)
     batch.draw(

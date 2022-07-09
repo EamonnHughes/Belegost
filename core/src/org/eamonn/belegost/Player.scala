@@ -30,6 +30,12 @@ case class Player(
     var destination: Location,
     var game: Game
 ) extends Entity {
+  var statusEffects =
+    List.empty[StatusEffect]
+  def applyEffect(effect: StatusEffect) = {
+    statusEffects = effect :: statusEffects
+    effect.initial()
+  }
   var accurateBonus = 0
   var evasiveBonus = 0
   def playerRace = game.pRace
@@ -429,6 +435,7 @@ case class Player(
         }
         if (location != prevdest || attackedEnemy) moved = true
         attackedEnemy = false
+
       }
     }
 

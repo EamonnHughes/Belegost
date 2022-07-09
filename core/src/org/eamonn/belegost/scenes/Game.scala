@@ -242,6 +242,14 @@ class Game(
               spellSlotTimer = 5
             }
           }
+          player.statusEffects.foreach(statEffect => {
+            statEffect.tick()
+            if (statEffect.duration <= 0) {
+              statEffect.end()
+              player.statusEffects =
+                player.statusEffects.filterNot(sE => sE eq statEffect)
+            }
+          })
 
           player.moved = false
         }
