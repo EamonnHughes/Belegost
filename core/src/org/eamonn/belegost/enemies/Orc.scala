@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost.items.{HealthPickup, Money}
 import org.eamonn.belegost.scenes.Game
 import org.eamonn.belegost.util.Location
-import org.eamonn.belegost.{Belegost, Entity, Navigation, Path, d}
+import org.eamonn.belegost.{Belegost, Entity, Navigation, Path, Poisoned, d}
 
 case class Orc(
     var location: Location,
@@ -61,8 +61,12 @@ case class Orc(
           var roll = d(20)
 
           if (roll == 20) game.player.health -= 2 * d(3)
-          else if (roll > game.player.armorClass + game.player.evasiveBonus)
+          else if (roll > game.player.armorClass + game.player.evasiveBonus) {
             game.player.health -= d(3)
+            if (d(30) > game.player.constitution) {
+              game.player.applyEffect(Poisoned(5, game.player, 1, 16))
+            }
+          }
         }
       } else if (!game.enemies.exists(enemy => enemy.location == nextLoc)) {
 
