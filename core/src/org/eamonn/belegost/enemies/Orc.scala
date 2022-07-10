@@ -64,7 +64,9 @@ case class Orc(
           else if (roll > game.player.armorClass + game.player.evasiveBonus) {
             game.player.health -= d(3)
             if (d(30) > game.player.constitution) {
-              game.player.applyEffect(Poisoned(5, game.player, 1, 16))
+              game.player.applyEffect(
+                Poisoned(game.player, 5, game.player, 1, 16)
+              )
             }
           }
         }
