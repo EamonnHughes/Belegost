@@ -30,12 +30,16 @@ case class Player(
     var destination: Location,
     var game: Game
 ) extends Entity {
+  var damDealtMod = 0
+  var starving = false
+  var damRecievedMod = 0
   var statusEffects =
     List.empty[StatusEffect]
   def applyEffect(effect: StatusEffect) = {
     statusEffects = effect :: statusEffects
     effect.initial()
   }
+  var hunger = 100
   var accurateBonus = 0
   var evasiveBonus = 0
   def playerRace = game.pRace
@@ -408,10 +412,10 @@ case class Player(
                   roll + weapon.mod + accurateBonus > enemy.armorClass
                 ) {
 
-                  enemy.health -= d(
+                  enemy.health -= (d(
                     weapon.dNum,
                     weapon.dAmt
-                  ) + weapon.mod.toInt + ((strength - 10) / 2)
+                  ) + weapon.mod.toInt + ((strength - 10) / 2) + damDealtMod) max 1
                 }
               })
 

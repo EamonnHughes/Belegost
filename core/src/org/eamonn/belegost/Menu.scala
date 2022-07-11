@@ -27,7 +27,7 @@ object Menu {
         } else { "" }} \n AC: ${player.armorClass} " +
         s" \n speed: ${player.speed} \n GP: ${player.money} \n Light Level: ${player.lightDist} \n Fuel: ${if (player.lightS.nonEmpty) {
           player.lightS.head.mod
-        } else "None"}" +
+        } else "None"} \n hunger: ${player.hunger}" +
         s"${if (player.statusEffects.nonEmpty) {
           player.statusEffects
             .map(statE => {

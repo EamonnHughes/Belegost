@@ -45,3 +45,38 @@ case class Burning(
 
   var name = "Burning " + damage
 }
+
+case class Starving(
+    var duration: Int,
+    player: Player
+) extends StatusEffect {
+  val target: Entity = player
+  var tier = 0
+  def tick(): Unit = {
+
+    player.damDealtMod += tier
+    player.damRecievedMod -= tier
+    duration += 1
+    if (duration % 5 == 0) {
+      tier += 1
+    }
+    player.damDealtMod -= tier
+    player.damRecievedMod += tier
+
+    if (player.hunger > 15) {
+      end
+      duration = 0
+    }
+    name = "Starving " + tier
+  }
+  def initial(): Unit = {
+    player.damDealtMod -= tier
+    player.damRecievedMod += tier
+  }
+  def end(): Unit = {
+    player.damDealtMod += tier
+    player.damRecievedMod -= tier
+  }
+
+  var name = "Starving " + tier
+}

@@ -21,6 +21,7 @@ import org.eamonn.belegost.{
   Scene,
   Spell,
   Spells,
+  Starving,
   d
 }
 import sun.jvm.hotspot.gc.z.ZGlobals
@@ -250,6 +251,11 @@ class Game(
                 player.statusEffects.filterNot(sE => sE eq statEffect)
             }
           })
+          player.hunger = (player.hunger - 1) max 0
+          if (player.hunger < 15 && !player.starving) {
+            player.applyEffect(Starving(1, player))
+            player.starving = true
+          }
 
           player.moved = false
         }
