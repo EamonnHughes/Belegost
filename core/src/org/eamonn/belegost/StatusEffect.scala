@@ -72,10 +72,22 @@ case class Starving(
   def initial(): Unit = {
     player.damDealtMod -= tier
     player.damRecievedMod += tier
+    player.baseStr -= 1
+    player.baseDex -= 1
+    player.baseCon -= 1
+    player.baseInt -= 1
+    player.baseWis -= 1
+    player.baseCha -= 1
   }
   def end(): Unit = {
     player.damDealtMod += tier
     player.damRecievedMod -= tier
+    player.baseStr += 1
+    player.baseDex += 1
+    player.baseCon += 1
+    player.baseInt += 1
+    player.baseWis += 1
+    player.baseCha += 1
   }
 
   var name = "Starving " + tier
