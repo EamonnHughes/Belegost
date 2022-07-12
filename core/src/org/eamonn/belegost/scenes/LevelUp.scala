@@ -106,6 +106,8 @@ class LevelUp(gameE: Game) extends Scene {
       game.player.maxHealth += healthUpgrade + ((game.player.constitution - 10) / 2)
       game.player.health += healthUpgrade + ((game.player.constitution - 10) / 2)
       game.player.nextXP += (game.player.nextXP * (1.33)).toInt
+      game.changingTranslationX = true
+      game.changingTranslationY = true
       Some(game)
     } else { None }
   }
