@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost
 import org.eamonn.belegost.enchantments.{ExpMod, StatEnchantment}
 import org.eamonn.belegost.enemies.Orc
-import org.eamonn.belegost.items.{HealthPickup, Money, PickUp}
+import org.eamonn.belegost.items.{HealthPickup, HealthPotion, Money, PickUp}
 import org.eamonn.belegost.util.Location
 import cats.instances._
 import cats.implicits._
@@ -28,6 +28,7 @@ import org.eamonn.belegost.{
 import sun.jvm.hotspot.gc.z.ZGlobals
 import sun.security.ec.point.ProjectivePoint.Mutable
 
+import scala.collection.mutable.ListBuffer
 import scala.collection.{GenMap, mutable}
 
 class Game(
@@ -59,6 +60,8 @@ class Game(
   var player = Player(Location(3, 3), Location(3, 3), this)
   var enemies = List.empty[Entity]
   var everything = List.empty[Entity]
+  var shops =
+    List[Shop](Shop(ListBuffer((10, HealthPotion(this))), Location(10, 10)))
 
   override def init(): InputAdapter = new GameControl(this)
 
@@ -286,6 +289,10 @@ class Game(
     everything.foreach(thing => {
       if (visible.contains(thing.location))
         thing.draw(batch)
+    })
+    shops.foreach(shop => {
+      if (visited.contains(shop.location))
+        shop.draw(batch)
     })
 
     for (

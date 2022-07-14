@@ -127,6 +127,7 @@ class GameControl(game: Game) extends InputAdapter {
             (1, shop.inventory(shop.invMenu.selected)._2)
           )
           game.player.money -= shop.inventory(shop.invMenu.selected)._1
+          game.player.setInvMenu()
         })
       }
     }

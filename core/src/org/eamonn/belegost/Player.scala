@@ -444,6 +444,11 @@ case class Player(
 
           pathToDest = path.tail
         }
+        game.shops.foreach(shop => {
+          if (shop.location == location) {
+            game.shopIn = Some(shop)
+          }
+        })
         if (location != prevdest || attackedEnemy) moved = true
         attackedEnemy = false
 

@@ -25,7 +25,7 @@ class Belegost extends ApplicationAdapter {
     batch = garbage.add(new PolygonSpriteBatch())
 
     Belegost.Square = TextureWrapper.load("Square.png")
-    Belegost.HomeScreen = TextureWrapper.load("HomeScreen.png")
+    Belegost.Door = TextureWrapper.load("Door.png")
     Belegost.HumanFighterPC = TextureWrapper.load("HumanFighter.png")
     Belegost.DwarfFighterPC = TextureWrapper.load("DwarfFighter.png")
     Belegost.ElfFighterPC = TextureWrapper.load("ElfFighter.png")
@@ -92,7 +92,7 @@ object Belegost {
   var Floor3: TextureWrapper = _
   var HealthPotion: TextureWrapper = _
   var Money1: TextureWrapper = _
-  var HomeScreen: TextureWrapper = _
+  var Door: TextureWrapper = _
 
   var sound: Sound = _
 
