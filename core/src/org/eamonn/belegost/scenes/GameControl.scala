@@ -114,6 +114,22 @@ class GameControl(game: Game) extends InputAdapter {
         }
       }
     }
+    if (game.shopIn.nonEmpty) {
+      if (keycode == Keys.UP) {
+        game.shopIn.foreach(shop => shop.invMenu.up())
+      }
+      if (keycode == Keys.DOWN) {
+        game.shopIn.foreach(shop => shop.invMenu.down())
+      }
+      if (keycode == Keys.ENTER) {
+        game.shopIn.foreach(shop => {
+          game.player.inventory.addOne(
+            (1, shop.inventory(shop.invMenu.selected)._2)
+          )
+          game.player.money -= shop.inventory(shop.invMenu.selected)._1
+        })
+      }
+    }
     true
   }
 

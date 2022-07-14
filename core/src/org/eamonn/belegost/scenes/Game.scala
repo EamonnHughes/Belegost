@@ -19,6 +19,7 @@ import org.eamonn.belegost.{
   Player,
   Room,
   Scene,
+  Shop,
   Spell,
   Spells,
   Starving,
@@ -36,6 +37,7 @@ class Game(
     val name: String
 ) extends Scene {
   val pName = name
+  var shopIn: Option[Shop] = None
   var mx = 0
   var my = 0
   val visited = mutable.Map.empty[Location, Float]
@@ -312,6 +314,9 @@ class Game(
           Belegost.screenUnit,
           Belegost.screenUnit
         )
+      }
+      if (shopIn.nonEmpty) {
+        shopIn.foreach(shop => Menu.drawShop(shop, batch))
       }
     }
 

@@ -6,6 +6,9 @@ import org.eamonn.belegost.items.Item
 import org.eamonn.belegost.util.Location
 
 object Menu {
+  def drawShop(shop: Shop, batch: PolygonSpriteBatch): Unit = {
+    shop.invMenu.draw(batch)
+  }
   def drawStats(batch: PolygonSpriteBatch, player: Player): Unit = {
     batch.setColor(Color.BLACK)
     batch.draw(
