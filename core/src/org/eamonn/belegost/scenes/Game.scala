@@ -38,6 +38,7 @@ class Game(
     val name: String
 ) extends Scene {
   val pName = name
+  var shopped = true
   var shopIn: Option[Shop] = None
   var mx = 0
   var my = 0
@@ -61,7 +62,7 @@ class Game(
   var enemies = List.empty[Entity]
   var everything = List.empty[Entity]
   var shops =
-    List[Shop](Shop(ListBuffer((10, HealthPotion(this))), Location(10, 10)))
+    List[Shop](Shop(ListBuffer((10, HealthPotion(this))), Location(6, 10)))
 
   override def init(): InputAdapter = new GameControl(this)
 
@@ -266,6 +267,9 @@ class Game(
         }
       }
     }
+    if (player.inEquip || player.inInventory || player.inSpellList) {
+      shopIn = None
+    }
     everything = player :: enemies
     if (player.XPvalue >= player.nextXP) {
       Some(new LevelUp(this))
@@ -286,13 +290,13 @@ class Game(
     MoneyInDungeon.foreach(Money => Money.draw(batch))
     pickups.foreach(pickup => pickup.draw(batch))
 
-    everything.foreach(thing => {
-      if (visible.contains(thing.location))
-        thing.draw(batch)
-    })
     shops.foreach(shop => {
       if (visited.contains(shop.location))
         shop.draw(batch)
+    })
+    everything.foreach(thing => {
+      if (visible.contains(thing.location))
+        thing.draw(batch)
     })
 
     for (

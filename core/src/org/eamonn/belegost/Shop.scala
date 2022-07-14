@@ -1,5 +1,6 @@
 package org.eamonn.belegost
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.{Batch, PolygonSpriteBatch}
 import org.eamonn.belegost.items.Item
 import org.eamonn.belegost.util.Location
@@ -26,6 +27,7 @@ case class Shop(
     (Geometry.ScreenWidth / Belegost.screenUnit).toInt - 2
   )
   def draw(batch: PolygonSpriteBatch): Unit = {
+    batch.setColor(Color.WHITE)
     batch.draw(
       Belegost.Door,
       location.x * Belegost.screenUnit,

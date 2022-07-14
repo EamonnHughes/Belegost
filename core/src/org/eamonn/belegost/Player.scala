@@ -445,10 +445,14 @@ case class Player(
           pathToDest = path.tail
         }
         game.shops.foreach(shop => {
-          if (shop.location == location) {
+          if (shop.location == location && !game.shopped) {
             game.shopIn = Some(shop)
+            game.shopped = true
           }
         })
+        if (game.shops.forall(shop => shop.location != location)) {
+          game.shopped = false
+        }
         if (location != prevdest || attackedEnemy) moved = true
         attackedEnemy = false
 
@@ -464,7 +468,7 @@ case class Player(
     } else { destination = location }
   }
   def computeDestination: Location = {
-    if (!inInventory && !inEquip && !inSpellList) {
+    if (!inInventory && !inEquip && !inSpellList && game.shopIn.isEmpty) {
       if (game.keysPressed.contains(19)) {
         if (game.keysPressed.contains(22)) {
           location + Delta(1, 1)

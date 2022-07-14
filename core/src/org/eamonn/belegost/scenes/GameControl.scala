@@ -130,6 +130,9 @@ class GameControl(game: Game) extends InputAdapter {
           game.player.setInvMenu()
         })
       }
+      if (keycode == Keys.ESCAPE) {
+        game.shopIn = None
+      }
     }
     true
   }
