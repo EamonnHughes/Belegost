@@ -124,9 +124,22 @@ class GameControl(game: Game) extends InputAdapter {
       if (keycode == Keys.ENTER) {
         game.shopIn.foreach(shop => {
           if (game.player.money >= shop.inventory(shop.invMenu.selected)._1) {
-            game.player.inventory.addOne(
-              (1, shop.inventory(shop.invMenu.selected)._2)
-            )
+            val index = game.player.inventory.indexWhere({ case (count, item) =>
+              if (
+                item == shop.inventory(shop.invMenu.selected)._2 && count < 40
+              ) true
+              else false
+            })
+            if (index < 0) {
+
+              game.player.inventory
+                .addOne((1, shop.inventory(shop.invMenu.selected)._2))
+            } else {
+              game.player.inventory(index) = (
+                game.player.inventory(index)._1 + 1,
+                game.player.inventory(index)._2
+              )
+            }
             game.player.money -= shop.inventory(shop.invMenu.selected)._1
             game.player.setInvMenu()
           }
