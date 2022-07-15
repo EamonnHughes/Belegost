@@ -3,6 +3,7 @@ package org.eamonn
 import com.badlogic.gdx.Gdx.input
 import com.badlogic.gdx.Input.Peripheral
 import com.badlogic.gdx.graphics.Color
+import org.eamonn.belegost.util.Location
 
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.FiniteDuration
@@ -15,6 +16,30 @@ package object belegost {
     var amt = 0
     for (i <- 0 until (nOd)) { amt += Random.nextInt(die) + 1 }
     amt
+  }
+
+  def where(predicate: (Location) => Boolean): List[Location] = {
+    var loc: List[Location] = List.empty
+    for (x <- 0 until (Geometry.ScreenWidth / Belegost.screenUnit).toInt) {
+      for (y <- 0 until (Geometry.ScreenHeight / Belegost.screenUnit).toInt) {
+        if (predicate(Location(x, y))) {
+          loc = Location(x, y) :: loc
+        }
+      }
+    }
+    loc
+
+  }
+
+  def where2(predicate: (Location) => Boolean): List[Location] = {
+    val locs = for {
+      x <- 0 until (Geometry.ScreenWidth / Belegost.screenUnit).toInt
+      y <- 0 until (Geometry.ScreenHeight / Belegost.screenUnit).toInt
+      loc = Location(x, y)
+      if predicate(loc)
+    } yield loc
+
+    locs.toList
   }
 
   def compassAvailable: Boolean =

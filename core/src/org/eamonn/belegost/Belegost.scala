@@ -36,6 +36,8 @@ class Belegost extends ApplicationAdapter {
     Belegost.Wall2 = TextureWrapper.load("Wall2.png")
     Belegost.Wall3 = TextureWrapper.load("Wall3.png")
     Belegost.Orc = TextureWrapper.load("Orc.png")
+    Belegost.OrcArcher = TextureWrapper.load("OrcArcher.png")
+
     Belegost.Floor = TextureWrapper.load("Floor.png")
     Belegost.Floor2 = TextureWrapper.load("Floor2.png")
     Belegost.Floor3 = TextureWrapper.load("Floor3.png")
@@ -87,6 +89,8 @@ object Belegost {
   var Wall2: TextureWrapper = _
   var Wall3: TextureWrapper = _
   var Orc: TextureWrapper = _
+  var OrcArcher: TextureWrapper = _
+
   var Floor: TextureWrapper = _
   var Floor2: TextureWrapper = _
   var Floor3: TextureWrapper = _

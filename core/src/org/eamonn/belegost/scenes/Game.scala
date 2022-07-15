@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost
 import org.eamonn.belegost.enchantments.{ExpMod, StatEnchantment}
-import org.eamonn.belegost.enemies.Orc
+import org.eamonn.belegost.enemies.{Enemy, Orc}
 import org.eamonn.belegost.items.{HealthPickup, HealthPotion, Money, PickUp}
 import org.eamonn.belegost.util.Location
 import cats.instances._
@@ -59,7 +59,7 @@ class Game(
   var healthTimer = 5
   var spellSlotTimer = 5
   var player = Player(Location(3, 3), Location(3, 3), this)
-  var enemies = List.empty[Entity]
+  var enemies = List.empty[Enemy]
   var everything = List.empty[Entity]
   var shops =
     List[Shop](Shop(ListBuffer((10, HealthPotion(this))), Location(6, 10)))
@@ -217,13 +217,11 @@ class Game(
           enemies = Orc(
             Location(13, 13),
             Location(13, 13),
-            this,
-            10
-          ) :: belegost.enemies.Orc(
+            this
+          ) :: belegost.enemies.OrcArcher(
             Location(10, 10),
             Location(10, 10),
-            this,
-            10
+            this
           ) :: enemies
         }
         if (player.moved) {
