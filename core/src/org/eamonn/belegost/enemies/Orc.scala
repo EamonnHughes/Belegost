@@ -14,10 +14,10 @@ case class Orc(
 ) extends Enemy {
   var pathToDest = Option.empty[Path]
   var XPvalue = 10
-  val maxHealth = health
   def armorClass = 12
   def speed = 1
   var health: Int = 12
+  val maxHealth = health
 
   def attack(): Unit = {
     for (i <- 0 until speed) {

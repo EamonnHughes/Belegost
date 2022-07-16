@@ -22,6 +22,7 @@ case class OrcArcher(
 ) extends Enemy {
   var pathToDest = Option.empty[Path]
   var health: Int = 10
+  var shot = false
 
   var XPvalue = 12
   val maxHealth = health
@@ -29,18 +30,18 @@ case class OrcArcher(
   def speed = 1
   def attack(): Unit = {
     for (i <- 0 until speed) {
-      var roll = d(20)
+      var roll = d(25)
 
-      if (roll == 20) {
-        game.player.health -= d(7) + game.player.damRecievedMod * 2
+      if (roll == 25) {
+        game.player.health -= d(5) + game.player.damRecievedMod * 2
         game.player.applyEffect(
-          Poisoned(game.player, 3, game.player, 3, 17)
+          Poisoned(game.player, 2, game.player, 2, 17)
         )
-      } else if (roll > game.player.armorClass + game.player.evasiveBonus) {
+      } else if (roll > game.player.armorClass + game.player.evasiveBonus + 5) {
         game.player.health -= d(4) + game.player.damRecievedMod
         if (d(30) > game.player.constitution) {
           game.player.applyEffect(
-            Poisoned(game.player, 4, game.player, 2, 16)
+            Poisoned(game.player, 2, game.player, 2, 16)
           )
         }
       }
@@ -88,9 +89,10 @@ case class OrcArcher(
       val nextLoc = path.getHead
       if (
         location.distanceFrom(game.player.location) > 4 || location
-          .distanceFrom(game.player.location) < 7
+          .distanceFrom(game.player.location) < 7 && !shot
       ) {
         attack()
+        shot = true
       } else {
         if (game.player.location == nextLoc) {
           attack()
@@ -98,6 +100,7 @@ case class OrcArcher(
 
           location = nextLoc
           pathToDest = path.tail
+          shot = false
         }
       }
     }
