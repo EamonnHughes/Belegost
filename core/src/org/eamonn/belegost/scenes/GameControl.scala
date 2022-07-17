@@ -149,6 +149,9 @@ class GameControl(game: Game) extends InputAdapter {
         game.shopIn = None
       }
     }
+    if (!game.player.moved && keycode == Keys.S) {
+      game.player.target
+    }
     true
   }
 

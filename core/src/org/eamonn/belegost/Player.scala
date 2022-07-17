@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost.Classes.FireBolt
+import org.eamonn.belegost.enemies.Enemy
 import org.eamonn.belegost.equipment.{
   ArmorType,
   BodyArmor,
@@ -37,6 +38,7 @@ case class Player(
     var game: Game
 ) extends Entity {
   var damDealtMod = 0
+  var target: Option[Enemy] = None
   var starving = false
   var damRecievedMod = 0
   var statusEffects =
@@ -134,6 +136,18 @@ case class Player(
         (1, Boots(game, ArmorType.Cloth)),
         (1, Cloak(game, ArmorType.Cloth)),
         (1, Weapon(game, WeaponType.Staff)),
+        (1, LightSource(game, lightType.Lamp))
+      )
+    )
+  } else if (playerClass == Classes.Ranger) {
+    inventory = inventory.addAll(
+      mutable.ListBuffer[(Int, Item)](
+        (1, Helmet(game, ArmorType.Leather)),
+        (1, BodyArmor(game, ArmorType.Leather)),
+        (1, Gloves(game, ArmorType.Leather)),
+        (1, Boots(game, ArmorType.Leather)),
+        (1, Cloak(game, ArmorType.Leather)),
+        (1, Weapon(game, WeaponType.Shortbow)),
         (1, LightSource(game, lightType.Lamp))
       )
     )
