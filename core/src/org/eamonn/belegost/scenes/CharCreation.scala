@@ -59,6 +59,7 @@ class CharCreation extends Scene {
   var classSelect = NavMenu(
     List(
       menuItem("Fighter", () => { pClass = Some(Classes.Fighter) }),
+      menuItem("Ranger", () => { pClass = Some(Classes.Ranger) }),
       menuItem("Wizard", () => { pClass = Some(Classes.Wizard) })
     ),
     Location(9, (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 2),
@@ -147,6 +148,13 @@ object Classes {
     val caster = false
     val hitDie = 10
     val desc = "A warrior trained in the use of many weapons."
+  }
+  case object Ranger extends playerClass {
+    val name = "Ranger"
+    val statBonus = List(1, 2, 1, 0, 1, -2)
+    val caster = false
+    val hitDie = 10
+    val desc = "A trained survivalist, tracker, warrior, and huntsman."
   }
   case object Wizard extends playerClass {
     val name = "Wizard"

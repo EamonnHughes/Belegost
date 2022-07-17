@@ -28,17 +28,26 @@ sealed trait WeaponType {
   val name: String
   var diceNum: Int
   var diceAmount: Int
+  var range: Int
 }
 object WeaponType {
   case object ShortSword extends WeaponType {
     val name = "Shortsword"
     var diceNum = 1
     var diceAmount = 6
+    var range = 0
   }
   case object Staff extends WeaponType {
     val name = "Staff"
     var diceNum = 2
     var diceAmount = 2
+    var range = 0
+  }
+  case object Shortbow extends WeaponType {
+    val name = "Shortbow"
+    var diceNum = 1
+    var diceAmount = 5
+    var range = 3
   }
 }
 
