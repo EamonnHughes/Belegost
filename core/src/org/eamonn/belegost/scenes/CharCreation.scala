@@ -87,18 +87,14 @@ class CharCreation extends Scene {
       Belegost.screenUnit * 16,
       Geometry.ScreenHeight - Belegost.screenUnit * 2
     )
-    Text.smallFont.setColor(Color.WHITE)
-    Text.smallFont.draw(
+    Text.mediumFont.setColor(Color.WHITE)
+    Text.mediumFont.draw(
       batch,
-      raceOptions(raceSelect.selected).desc,
+      raceOptions(raceSelect.selected).desc + " " + classOptions(
+        classSelect.selected
+      ).desc,
       Belegost.screenUnit / 2,
-      Belegost.screenUnit * 6
-    )
-    Text.smallFont.draw(
-      batch,
-      classOptions(classSelect.selected).desc,
-      Belegost.screenUnit / 2,
-      Belegost.screenUnit * 4
+      Belegost.screenUnit * 10
     )
     Text.mediumFont.draw(
       batch,
