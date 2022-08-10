@@ -32,11 +32,15 @@ class Belegost extends ApplicationAdapter {
     Belegost.HumanWizardPC = TextureWrapper.load("HumanWizard.png")
     Belegost.DwarfWizardPC = TextureWrapper.load("DwarfWizard.png")
     Belegost.ElfWizardPC = TextureWrapper.load("ElfWizard.png")
+    Belegost.HumanRangerPC = TextureWrapper.load("HumanRanger.png")
+    Belegost.DwarfRangerPC = TextureWrapper.load("DwarfRanger.png")
+    Belegost.ElfRangerPC = TextureWrapper.load("ElfRanger.png")
     Belegost.Wall = TextureWrapper.load("Wall.png")
     Belegost.Wall2 = TextureWrapper.load("Wall2.png")
     Belegost.Wall3 = TextureWrapper.load("Wall3.png")
     Belegost.Orc = TextureWrapper.load("Orc.png")
     Belegost.OrcArcher = TextureWrapper.load("OrcArcher.png")
+    Belegost.Entity = TextureWrapper.load("Entity.png")
 
     Belegost.Floor = TextureWrapper.load("Floor.png")
     Belegost.Floor2 = TextureWrapper.load("Floor2.png")
@@ -85,6 +89,9 @@ object Belegost {
   var HumanWizardPC: TextureWrapper = _
   var DwarfWizardPC: TextureWrapper = _
   var ElfWizardPC: TextureWrapper = _
+  var HumanRangerPC: TextureWrapper = _
+  var DwarfRangerPC: TextureWrapper = _
+  var ElfRangerPC: TextureWrapper = _
   var Wall: TextureWrapper = _
   var Wall2: TextureWrapper = _
   var Wall3: TextureWrapper = _
@@ -97,6 +104,7 @@ object Belegost {
   var HealthPotion: TextureWrapper = _
   var Money1: TextureWrapper = _
   var Door: TextureWrapper = _
+  var Entity: TextureWrapper = _
 
   var sound: Sound = _
 

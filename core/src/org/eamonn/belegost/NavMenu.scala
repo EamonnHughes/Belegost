@@ -74,7 +74,7 @@ case class NavMenu(
           batch,
           " " + item.name,
           (location.x - Belegost.translationX) * Belegost.screenUnit,
-          (location.y - index - Belegost.translationY) * Belegost.screenUnit
+          (location.y - index - Belegost.translationY) * Belegost.screenUnit - Belegost.screenUnit / 2 - Text.mediumFont.getDescent
         )
       })
     }

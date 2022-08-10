@@ -14,6 +14,7 @@ case class Orc(
 ) extends Enemy {
   var pathToDest = Option.empty[Path]
   var XPvalue = 10
+  var name = "Orc Warrior"
   def armorClass = 12
   def speed = 1
   var health: Int = 12

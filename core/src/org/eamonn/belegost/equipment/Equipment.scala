@@ -49,6 +49,12 @@ object WeaponType {
     var diceAmount = 5
     var range = 3
   }
+  case object Rod extends WeaponType {
+    val name = "Stellar Rod"
+    var diceNum = 10
+    var diceAmount = 10
+    var range = 10
+  }
 }
 
 sealed trait lightType {
@@ -59,5 +65,9 @@ object lightType {
   case object Lamp extends lightType {
     val name = "Lamp"
     var mod = 2000f
+  }
+  case object Star extends lightType {
+    val name = "Star"
+    var mod = 350000f
   }
 }

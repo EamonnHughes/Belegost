@@ -329,7 +329,9 @@ class Game(
       }
     }
 
-    if (player.inSpellList) {
+    if (player.inRange.itList.nonEmpty) {
+      Menu.drawInRange(batch, player)
+    } else if (player.inSpellList) {
       Menu.drawSpellBook(batch, player)
     } else if (player.inInventory) {
       Menu.drawInventory(batch, player)

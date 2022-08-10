@@ -30,7 +30,7 @@ object Menu {
         } else { "" }} \n AC: ${player.armorClass} " +
         s" \n speed: ${player.speed} \n GP: ${player.money} \n Light Level: ${player.lightDist} \n Fuel: ${if (player.lightS.nonEmpty) {
           player.lightS.head.mod
-        } else "None"} \n Hunger: %${player.hunger / 250}" +
+        } else "None"} \n Hunger: %${player.hunger / 2.5}" +
         s"${if (player.statusEffects.nonEmpty) {
           player.statusEffects
             .map(statE => {
@@ -43,7 +43,9 @@ object Menu {
     )
 
   }
-
+  def drawInRange(batch: PolygonSpriteBatch, player: Player): Unit = {
+    player.inRange.draw(batch)
+  }
   def drawSpellBook(batch: PolygonSpriteBatch, player: Player): Unit = {
     batch.setColor(Color.WHITE)
     batch.draw(

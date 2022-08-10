@@ -36,34 +36,38 @@ class CharCreation extends Scene {
       for {
         r <- race
         c <- pClass
-        if (stats.nonEmpty)
-        if (nameConfirmed)
+        if stats.nonEmpty
+        if nameConfirmed
       } yield new Game(r, c, stats, name)
     }
 
   }
 
-  var classOptions: List[playerClass] = List(Classes.Fighter, Classes.Wizard)
-  var raceOptions: List[playerRace] = List(Races.Human, Races.Dwarf, Races.Elf)
+  var classOptions: List[playerClass] =
+    List(Classes.Fighter, Classes.Ranger, Classes.Wizard, Classes.Dev)
+  var raceOptions: List[playerRace] =
+    List(Races.Human, Races.Dwarf, Races.Elf, Races.Dev)
 
-  var raceSelect = NavMenu(
+  var raceSelect: NavMenu = NavMenu(
     List(
       menuItem("Human", () => { race = Some(Races.Human) }),
       menuItem("Dwarf", () => { race = Some(Races.Dwarf) }),
-      menuItem("Elf", () => { race = Some(Races.Elf) })
+      menuItem("Elf", () => { race = Some(Races.Elf) }),
+      menuItem("", () => { race = Some(Races.Dev) })
     ),
     Location(2, (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 2),
     3,
     6
   )
-  var classSelect = NavMenu(
+  var classSelect: NavMenu = NavMenu(
     List(
       menuItem("Fighter", () => { pClass = Some(Classes.Fighter) }),
       menuItem("Ranger", () => { pClass = Some(Classes.Ranger) }),
-      menuItem("Wizard", () => { pClass = Some(Classes.Wizard) })
+      menuItem("Wizard", () => { pClass = Some(Classes.Wizard) }),
+      menuItem("", () => { pClass = Some(Classes.Dev) })
     ),
     Location(9, (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 2),
-    2,
+    3,
     6
   )
 
@@ -76,7 +80,7 @@ class CharCreation extends Scene {
     Text.mediumFont.setColor(Color.WHITE)
     Text.mediumFont.draw(
       batch,
-      s" ${tStats(0)} \n ${tStats(1)} \n ${tStats(2)} \n ${tStats(
+      s" ${tStats.head} \n ${tStats(1)} \n ${tStats(2)} \n ${tStats(
         3
       )} \n ${tStats(4)} \n ${tStats(5)} \n ${if (rolls > 0) "r: reroll"
       else "no more rerolls"} \n ENTER: confirm",
@@ -133,6 +137,13 @@ object Races {
     val desc =
       "An elf, born into those reclusive people that live far longer than any mortal race. increased dexterity, \nand charisma, greatly increased intelligence and wisdom, and severe drawbacks to constitution and strength. \nThey level up slower than other races."
   }
+  case object Dev extends playerRace {
+    val name = "Entity"
+    val xpMod = 1f
+    val statBonus = List(50, 50, 50, 50, 50, 50)
+    val desc =
+      "An Entity from another universe."
+  }
 }
 sealed trait playerClass {
   val name: String
@@ -162,5 +173,12 @@ object Classes {
     val caster = true
     val hitDie = 5
     val desc = "A scholar that has spent many years studying the arcane arts."
+  }
+  case object Dev extends playerClass {
+    val name = "Entity"
+    val statBonus = List(50, 50, 50, 50, 50, 50)
+    val caster = true
+    val hitDie = 50
+    val desc = "An Unknowable force from beyond."
   }
 }

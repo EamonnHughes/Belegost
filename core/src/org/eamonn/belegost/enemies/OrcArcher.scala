@@ -23,6 +23,7 @@ case class OrcArcher(
   var pathToDest = Option.empty[Path]
   var health: Int = 10
   var shot = false
+  var name = "Orc Archer"
 
   var XPvalue = 12
   val maxHealth = health

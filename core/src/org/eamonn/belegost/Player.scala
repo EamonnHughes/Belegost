@@ -29,6 +29,7 @@ import org.eamonn.belegost.scenes.{Classes, Game, Races}
 import org.eamonn.belegost.util.{Delta, Location}
 import org.graalvm.compiler.word.Word
 
+import java.awt.MenuItem
 import scala.::
 import scala.collection.mutable
 
@@ -151,6 +152,13 @@ case class Player(
         (1, LightSource(game, lightType.Lamp))
       )
     )
+  } else if (playerClass == Classes.Dev) {
+    inventory = inventory.addAll(
+      mutable.ListBuffer[(Int, Item)](
+        (1, Weapon(game, WeaponType.Rod)),
+        (1, LightSource(game, lightType.Star))
+      )
+    )
   }
   def equipped: List[Equipment] = {
     helmet.toList ::: bodyArmor.toList ::: gloves.toList ::: boots.toList ::: cloak.toList
@@ -176,6 +184,7 @@ case class Player(
     1,
     (Geometry.ScreenWidth / Belegost.screenUnit).toInt - 2
   )
+  var targeted = false
   var currentSpell = 0
   var helmet: Option[Helmet] = None
   var bodyArmor: Option[BodyArmor] = None
@@ -308,6 +317,14 @@ case class Player(
           Belegost.screenUnit,
           Belegost.screenUnit
         )
+      } else if (playerClass == Classes.Ranger) {
+        batch.draw(
+          Belegost.HumanRangerPC,
+          location.x * Belegost.screenUnit,
+          location.y * Belegost.screenUnit,
+          Belegost.screenUnit,
+          Belegost.screenUnit
+        )
       }
     }
     if (playerRace == Races.Dwarf) {
@@ -322,6 +339,14 @@ case class Player(
       } else if (playerClass == Classes.Wizard) {
         batch.draw(
           Belegost.DwarfWizardPC,
+          location.x * Belegost.screenUnit,
+          location.y * Belegost.screenUnit,
+          Belegost.screenUnit,
+          Belegost.screenUnit
+        )
+      } else if (playerClass == Classes.Ranger) {
+        batch.draw(
+          Belegost.DwarfRangerPC,
           location.x * Belegost.screenUnit,
           location.y * Belegost.screenUnit,
           Belegost.screenUnit,
@@ -346,7 +371,23 @@ case class Player(
           Belegost.screenUnit,
           Belegost.screenUnit
         )
+      } else if (playerClass == Classes.Ranger) {
+        batch.draw(
+          Belegost.ElfRangerPC,
+          location.x * Belegost.screenUnit,
+          location.y * Belegost.screenUnit,
+          Belegost.screenUnit,
+          Belegost.screenUnit
+        )
       }
+    } else if (playerRace == Races.Dev) {
+      batch.draw(
+        Belegost.Entity,
+        location.x * Belegost.screenUnit,
+        location.y * Belegost.screenUnit,
+        Belegost.screenUnit,
+        Belegost.screenUnit
+      )
     }
 
     batch.setColor(1, 0, 0, 0.5f)
@@ -369,6 +410,40 @@ case class Player(
       })
       .toList
   }
+  def attack(enemy: Enemy): Unit = {
+    for (i <- 0 until speed) {
+      weapon.foreach(weapon => {
+        val roll = d(20)
+        if (roll == 20) {
+          enemy.health -= (d(
+            weapon.dNum,
+            weapon.dAmt
+          ) + weapon.mod.toInt + ((strength - 10) / 2)) * 2
+        } else if (roll + weapon.mod + accurateBonus > enemy.armorClass) {
+
+          enemy.health -= (d(
+            weapon.dNum,
+            weapon.dAmt
+          ) + weapon.mod.toInt + ((strength - 10) / 2) + damDealtMod) max 1
+        }
+      })
+
+      if (weapon.isEmpty) {
+        val roll = d(20)
+
+        if (roll == 20) {
+          enemy.health -= (d(2) + ((strength - 10) / 2)) * 2
+        } else if (roll > enemy.armorClass)
+          enemy.health -= d(2) + ((strength - 10) / 2)
+      }
+    }
+  }
+  var inRange = NavMenu(
+    List.empty[menuItem],
+    Location(1, (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 1),
+    0,
+    (Geometry.ScreenWidth / Belegost.screenUnit).toInt - 2
+  )
   def update(delta: Float): Unit = {
 
     invMenu.update()
@@ -409,46 +484,44 @@ case class Player(
 
       }
     })
+    if (game.keysPressed.contains(Keys.S)) {
+
+      game.enemies.foreach(e => {
+        weapon.foreach(w => {
+          if (
+            e.location.distanceFrom(location) <= w.weapType.range && !targeted
+          ) {
+            inRange.itList = menuItem(
+              s"${e.name} ${e.health}",
+              () => {
+                attack(e)
+                moved = true
+                inRange.itList = List.empty[menuItem]
+                targeted = false
+                inRange.selected = 0
+              }
+            ) :: inRange.itList
+          }
+        })
+      })
+      targeted = true
+      inRange.length = inRange.itList.length
+    }
     val prevdest = location
 
     if (!moved) {
       var attackedEnemy = false
       destination = computeDestination
       navTo
+
       for {
         path <- pathToDest
       } {
         val nextLoc = path.getHead
+
         game.enemies.foreach(enemy => {
-          if (enemy.location == nextLoc) {
-            for (i <- 0 until speed) {
-              weapon.foreach(weapon => {
-                val roll = d(20)
-                if (roll == 20) {
-                  enemy.health -= (d(
-                    weapon.dNum,
-                    weapon.dAmt
-                  ) + weapon.mod.toInt + ((strength - 10) / 2)) * 2
-                } else if (
-                  roll + weapon.mod + accurateBonus > enemy.armorClass
-                ) {
-
-                  enemy.health -= (d(
-                    weapon.dNum,
-                    weapon.dAmt
-                  ) + weapon.mod.toInt + ((strength - 10) / 2) + damDealtMod) max 1
-                }
-              })
-
-              if (weapon.isEmpty) {
-                val roll = d(20)
-
-                if (roll == 20) {
-                  enemy.health -= (d(2) + ((strength - 10) / 2)) * 2
-                } else if (roll > enemy.armorClass)
-                  enemy.health -= d(2) + ((strength - 10) / 2)
-              }
-            }
+          if (enemy.location == nextLoc && !attackedEnemy) {
+            attack(enemy)
             attackedEnemy = true
             destination = location
           }
@@ -482,7 +555,9 @@ case class Player(
     } else { destination = location }
   }
   def computeDestination: Location = {
-    if (!inInventory && !inEquip && !inSpellList && game.shopIn.isEmpty) {
+    if (
+      !inInventory && !inEquip && !inSpellList && game.shopIn.isEmpty && inRange.itList.isEmpty
+    ) {
       if (game.keysPressed.contains(19)) {
         if (game.keysPressed.contains(22)) {
           location + Delta(1, 1)
@@ -507,9 +582,7 @@ case class Player(
       } else if (game.keysPressed.contains(22)) {
         location + (Delta(1, 0))
 
-      } else {
-        destination
-      }
+      } else { destination }
     } else {
       destination
     }

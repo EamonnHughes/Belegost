@@ -14,7 +14,7 @@ import org.eamonn.belegost.util.GarbageCan
 object Text {
   def loadFonts()(implicit garbage: GarbageCan): Unit = {
     val generator = new FreeTypeFontGenerator(
-      Gdx.files.internal("BIZUDGothic-Regular.ttf")
+      Gdx.files.internal("dpcomic.ttf")
     )
     val parameter = new FreeTypeFontGenerator.FreeTypeFontParameter
     parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS + CharExtras

@@ -25,7 +25,7 @@ class CharControl(charCreation: CharCreation) extends InputAdapter {
       } else if (keycode == Keys.DOWN) {
         charCreation.raceSelect.down()
         charCreation.raceSelect.update()
-      } else if (keycode == Keys.ENTER) {
+      } else if (keycode == Keys.ENTER || keycode == Keys.RIGHT) {
         charCreation.raceSelect.used()
       }
     } else if (charCreation.pClass.isEmpty) {
@@ -36,7 +36,7 @@ class CharControl(charCreation: CharCreation) extends InputAdapter {
       } else if (keycode == Keys.DOWN) {
         charCreation.classSelect.down()
         charCreation.classSelect.update()
-      } else if (keycode == Keys.ENTER) {
+      } else if (keycode == Keys.ENTER || keycode == Keys.RIGHT) {
         charCreation.classSelect.used()
       }
     } else if (charCreation.stats.isEmpty) {
@@ -53,20 +53,46 @@ class CharControl(charCreation: CharCreation) extends InputAdapter {
         charCreation.pClass.foreach(pC => {
           charCreation.tStats = charCreation.tStats.sorted.reverse
           if (pC == Classes.Fighter) {
-            charCreation.stats = charCreation.tStats(3) :: charCreation.stats
-            charCreation.stats = charCreation.tStats(4) :: charCreation.stats
-            charCreation.stats = charCreation.tStats(5) :: charCreation.stats
-            charCreation.stats = charCreation.tStats(1) :: charCreation.stats
-            charCreation.stats = charCreation.tStats(2) :: charCreation.stats
-            charCreation.stats = charCreation.tStats(0) :: charCreation.stats
+            charCreation.stats =
+              charCreation.tStats(3) :: charCreation.stats //cha
+            charCreation.stats =
+              charCreation.tStats(4) :: charCreation.stats //wis
+            charCreation.stats =
+              charCreation.tStats(5) :: charCreation.stats //int
+            charCreation.stats =
+              charCreation.tStats(1) :: charCreation.stats //con
+            charCreation.stats =
+              charCreation.tStats(2) :: charCreation.stats //dex
+            charCreation.stats =
+              charCreation.tStats.head :: charCreation.stats //str
           } else if (pC == Classes.Wizard) {
 
-            charCreation.stats = charCreation.tStats(3) :: charCreation.stats
-            charCreation.stats = charCreation.tStats(1) :: charCreation.stats
-            charCreation.stats = charCreation.tStats(0) :: charCreation.stats
-            charCreation.stats = charCreation.tStats(2) :: charCreation.stats
-            charCreation.stats = charCreation.tStats(4) :: charCreation.stats
-            charCreation.stats = charCreation.tStats(5) :: charCreation.stats
+            charCreation.stats =
+              charCreation.tStats(3) :: charCreation.stats //cha
+            charCreation.stats =
+              charCreation.tStats(1) :: charCreation.stats //wis
+            charCreation.stats =
+              charCreation.tStats.head :: charCreation.stats //int
+            charCreation.stats =
+              charCreation.tStats(2) :: charCreation.stats //con
+            charCreation.stats =
+              charCreation.tStats(4) :: charCreation.stats //dex
+            charCreation.stats =
+              charCreation.tStats(5) :: charCreation.stats //str
+          } else if (pC == Classes.Ranger) {
+
+            charCreation.stats =
+              charCreation.tStats(4) :: charCreation.stats //cha
+            charCreation.stats =
+              charCreation.tStats(3) :: charCreation.stats //wis
+            charCreation.stats =
+              charCreation.tStats(5) :: charCreation.stats //int
+            charCreation.stats =
+              charCreation.tStats(2) :: charCreation.stats //con
+            charCreation.stats =
+              charCreation.tStats.head :: charCreation.stats //dex
+            charCreation.stats =
+              charCreation.tStats(1) :: charCreation.stats //str
           } else {
             charCreation.stats = charCreation.tStats
           }
