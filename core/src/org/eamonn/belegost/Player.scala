@@ -534,7 +534,6 @@ case class Player(
         game.shops.foreach(shop => {
           if (shop.location == location && !game.shopped) {
             game.shopIn = Some(shop)
-            game.shopped = true
           }
         })
         if (game.shops.forall(shop => shop.location != location)) {
@@ -545,7 +544,9 @@ case class Player(
 
       }
     }
-
+    if (game.shopped) {
+      game.shopIn = None
+    }
   }
   def navTo: Unit = {
     if (game.roomList.exists(room => room.isInRoom(destination))) {

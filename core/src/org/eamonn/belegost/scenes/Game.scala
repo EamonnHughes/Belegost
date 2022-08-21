@@ -324,7 +324,7 @@ class Game(
           Belegost.screenUnit
         )
       }
-      if (shopIn.nonEmpty) {
+      if (shopIn.nonEmpty && !shopped) {
         shopIn.foreach(shop => Menu.drawShop(shop, batch))
       }
     }

@@ -171,6 +171,11 @@ class GameControl(game: Game) extends InputAdapter {
             })
           }
           if (keycode == Keys.ESCAPE) {
+            game.shopped = true
+            game.shopIn = None
+          }
+          if (!game.shops.exists(s => game.player.location == s.location)) {
+            game.shopped = false
             game.shopIn = None
           }
         }
