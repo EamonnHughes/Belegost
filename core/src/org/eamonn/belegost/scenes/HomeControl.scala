@@ -18,11 +18,6 @@ class HomeControl(home: Home) extends InputAdapter {
     if (keycode == Keys.N) {
       home.gameBegin = true
     }
-    if (keycode == Keys.P) {
-    var jsonP = JsonPlayer("joe", 3)
-      jsonP.save()
-      println(JsonPlayer.load())
-    }
     true
   }
 }
