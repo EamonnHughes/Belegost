@@ -47,7 +47,7 @@ object WeaponType {
     val name = "Shortbow"
     var diceNum = 1
     var diceAmount = 5
-    var range = 3
+    var range = 6
   }
   case object Rod extends WeaponType {
     val name = "Stellar Rod"

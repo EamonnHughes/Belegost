@@ -1,33 +1,15 @@
 package org.eamonn.belegost
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost.Classes.FireBolt
 import org.eamonn.belegost.enemies.Enemy
-import org.eamonn.belegost.equipment.{
-  ArmorType,
-  BodyArmor,
-  Boots,
-  Cloak,
-  Equipment,
-  Gloves,
-  Helmet,
-  LightSource,
-  Weapon,
-  WeaponType,
-  lightType
-}
-import org.eamonn.belegost.items.{
-  EmptyBottle,
-  Fuel,
-  HealthPotion,
-  Item,
-  Rations
-}
+import org.eamonn.belegost.equipment.{ArmorType, BodyArmor, Boots, Cloak, Equipment, Gloves, Helmet, LightSource, Weapon, WeaponType, lightType}
+import org.eamonn.belegost.items.{EmptyBottle, Fuel, HealthPotion, Item, Rations}
 import org.eamonn.belegost.scenes.{Classes, Game, Races}
 import org.eamonn.belegost.util.{Delta, Location}
-import org.graalvm.compiler.word.Word
 
 import java.awt.MenuItem
 import scala.::
@@ -44,27 +26,36 @@ case class Player(
   var damRecievedMod = 0
   var statusEffects =
     List.empty[StatusEffect]
+
   def applyEffect(effect: StatusEffect) = {
     statusEffects = effect :: statusEffects
     effect.initial()
   }
+
   var hunger = 250
   var accurateBonus = 0
   var evasiveBonus = 0
+
   def playerRace = game.pRace
+
   def playerClass = game.pClass
+
   var XPvalue = 0
   var nextXP: Int = (10 * playerRace.xpMod).toInt
   var money = 0
+
   def speed: Int = 1 max ((dexterity - 10) / 2)
+
   var level = 1
   var inEquip = false
+
   def lightDist: Int = {
     lightS match {
       case some: Some[LightSource] => some.head.output
-      case None                    => 1
+      case None => 1
     }
   }
+
   var stats = game.sStats
   var strength: Int =
     stats.head + playerRace.statBonus(0) + playerClass.statBonus(0)
@@ -99,8 +90,11 @@ case class Player(
   if (playerClass.caster) {
     spellList = List(FireBolt)
   }
+
   def armorClass = baseAC + acMod + ((dexterity - 10) / 2)
+
   var weapon: Option[Weapon] = None
+
   def acMod: Int = {
     var eqBonus: Float = 0
     equipped.foreach(equip => {
@@ -160,16 +154,20 @@ case class Player(
       )
     )
   }
+
   def equipped: List[Equipment] = {
     helmet.toList ::: bodyArmor.toList ::: gloves.toList ::: boots.toList ::: cloak.toList
   }
+
   var invMenu = NavMenu(
     {
       inventory
         .map({ case (num, ite) =>
           menuItem(
             s"x $num ${ite.name}",
-            () => { ite.use }
+            () => {
+              ite.use
+            }
           )
         })
         .toList
@@ -194,6 +192,7 @@ case class Player(
   var lightS: Option[LightSource] = None
   var pathToDest = Option.empty[Path]
   var clickedDest: Location = location
+
   def equipMenuUpdate(): Unit = {
     var helm: menuItem = menuItem("Helm: None", () => {})
     if (helmet.nonEmpty) {
@@ -298,6 +297,7 @@ case class Player(
     equipMenu.itList = List[menuItem](helm, chest, gls, foot, back, weap, liteS)
     equipMenu.length = 7
   }
+
   def draw(batch: PolygonSpriteBatch): Unit = {
     batch.setColor(1, 1, 1, 1)
     if (playerRace == Races.Human) {
@@ -399,17 +399,22 @@ case class Player(
       Belegost.screenUnit / 10
     )
   }
+
   var inInventory = false
+
   def setInvMenu(): Unit = {
     invMenu.itList = inventory
       .map({ case (num, ite) =>
         menuItem(
           s"x$num ${ite.name}",
-          () => { ite.use() }
+          () => {
+            ite.use()
+          }
         )
       })
       .toList
   }
+
   def attack(enemy: Enemy): Unit = {
     for (i <- 0 until speed) {
       weapon.foreach(weapon => {
@@ -438,12 +443,14 @@ case class Player(
       }
     }
   }
+
   var inRange = NavMenu(
     List.empty[menuItem],
     Location(1, (Geometry.ScreenHeight / Belegost.screenUnit).toInt - 1),
     0,
     (Geometry.ScreenWidth / Belegost.screenUnit).toInt - 2
   )
+
   def update(delta: Float): Unit = {
 
     invMenu.update()
@@ -459,7 +466,9 @@ case class Player(
     if (
       game.keysPressed
         .contains(Keys.SPACE)
-    ) { moved = true }
+    ) {
+      moved = true
+    }
     game.MoneyInDungeon.foreach(pUp => {
       if (location == pUp.location) {
         money += pUp.amount
@@ -548,13 +557,17 @@ case class Player(
       game.shopIn = None
     }
   }
+
   def navTo: Unit = {
     if (game.roomList.exists(room => room.isInRoom(destination))) {
       pathToDest = Navigation
         .findPath(destination, location, game)
         .flatMap(path => path.tail)
-    } else { destination = location }
+    } else {
+      destination = location
+    }
   }
+
   def computeDestination: Location = {
     if (
       !inInventory && !inEquip && !inSpellList && game.shopIn.isEmpty && inRange.itList.isEmpty
@@ -583,10 +596,35 @@ case class Player(
       } else if (game.keysPressed.contains(22)) {
         location + (Delta(1, 0))
 
-      } else { destination }
+      } else {
+        destination
+      }
     } else {
       destination
     }
   }
+}
 
+import io.circe.generic.auto._
+import io.circe.parser._
+import io.circe._
+import io.circe.syntax._
+
+case class JsonPlayer(
+                     name: String,
+                     age: Int
+                     ) {
+  def save(): Unit = {
+    val str = this.asJson.spaces2
+    Gdx.files.local(s"saves/player.json").writeString(str, false, "UTF-8")
+  }
+
+}
+
+
+object JsonPlayer {
+  def load(): JsonPlayer = {
+    val json = Gdx.files.local(s"saves/player.json").readString("UTF-8")
+    decode[JsonPlayer](json).toTry.get
+  }
 }

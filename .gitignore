@@ -6,6 +6,7 @@
 hs_err_pid*
 *.jks
 .java-version
+*.keystore
 
 ## Robovm
 /ios/robovm-build/
