@@ -2,7 +2,6 @@ package org.eamonn.belegost.scenes
 
 import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.InputAdapter
-import org.eamonn.belegost.JsonPlayer
 class HomeControl(home: Home) extends InputAdapter {
   override def touchDown(
       screenX: Int,

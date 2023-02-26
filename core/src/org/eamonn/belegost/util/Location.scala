@@ -1,5 +1,5 @@
 package org.eamonn.belegost.util
-case class Location(x: Int, y: Int) {
+case class Location(var x: Int, var y: Int) {
   def findAdjacents: List[Location] = {
     val adj = List(
       Location(x, y - 1),

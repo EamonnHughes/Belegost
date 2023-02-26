@@ -13,7 +13,7 @@ class Home extends Scene {
 
   override def update(delta: Float): Option[Scene] = {
     if (gameBegin) {
-None
+    Some(new Game)
     } else { None }
   }
 

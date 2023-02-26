@@ -25,28 +25,6 @@ class Belegost extends ApplicationAdapter {
     batch = garbage.add(new PolygonSpriteBatch())
 
     Belegost.Square = TextureWrapper.load("Square.png")
-    Belegost.Door = TextureWrapper.load("Door.png")
-    Belegost.HumanFighterPC = TextureWrapper.load("HumanFighter.png")
-    Belegost.DwarfFighterPC = TextureWrapper.load("DwarfFighter.png")
-    Belegost.ElfFighterPC = TextureWrapper.load("ElfFighter.png")
-    Belegost.HumanWizardPC = TextureWrapper.load("HumanWizard.png")
-    Belegost.DwarfWizardPC = TextureWrapper.load("DwarfWizard.png")
-    Belegost.ElfWizardPC = TextureWrapper.load("ElfWizard.png")
-    Belegost.HumanRangerPC = TextureWrapper.load("HumanRanger.png")
-    Belegost.DwarfRangerPC = TextureWrapper.load("DwarfRanger.png")
-    Belegost.ElfRangerPC = TextureWrapper.load("ElfRanger.png")
-    Belegost.Wall = TextureWrapper.load("Wall.png")
-    Belegost.Wall2 = TextureWrapper.load("Wall2.png")
-    Belegost.Wall3 = TextureWrapper.load("Wall3.png")
-    Belegost.Orc = TextureWrapper.load("Orc.png")
-    Belegost.OrcArcher = TextureWrapper.load("OrcArcher.png")
-    Belegost.Entity = TextureWrapper.load("Entity.png")
-
-    Belegost.Floor = TextureWrapper.load("Floor.png")
-    Belegost.Floor2 = TextureWrapper.load("Floor2.png")
-    Belegost.Floor3 = TextureWrapper.load("Floor3.png")
-    Belegost.HealthPotion = TextureWrapper.load("HealthPotion.png")
-    Belegost.Money1 = TextureWrapper.load("Money1.png")
 
     //    CarnDum.sound = CarnDum.loadSound("triangle.mp3")
 
@@ -81,30 +59,9 @@ object Belegost {
   var translationX = 0
   var translationY = 0
 
-  def screenUnit = (Geometry.ScreenWidth min Geometry.ScreenHeight) / 50
+  def screenUnit = (Geometry.ScreenWidth min Geometry.ScreenHeight) / 25
   var Square: TextureWrapper = _
-  var HumanFighterPC: TextureWrapper = _
-  var DwarfFighterPC: TextureWrapper = _
-  var ElfFighterPC: TextureWrapper = _
-  var HumanWizardPC: TextureWrapper = _
-  var DwarfWizardPC: TextureWrapper = _
-  var ElfWizardPC: TextureWrapper = _
-  var HumanRangerPC: TextureWrapper = _
-  var DwarfRangerPC: TextureWrapper = _
-  var ElfRangerPC: TextureWrapper = _
-  var Wall: TextureWrapper = _
-  var Wall2: TextureWrapper = _
-  var Wall3: TextureWrapper = _
-  var Orc: TextureWrapper = _
-  var OrcArcher: TextureWrapper = _
 
-  var Floor: TextureWrapper = _
-  var Floor2: TextureWrapper = _
-  var Floor3: TextureWrapper = _
-  var HealthPotion: TextureWrapper = _
-  var Money1: TextureWrapper = _
-  var Door: TextureWrapper = _
-  var Entity: TextureWrapper = _
 
   var sound: Sound = _
 
