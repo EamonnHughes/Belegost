@@ -2,7 +2,7 @@ package org.eamonn.belegost
 
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import org.eamonn.belegost.doers.gameRenderer
-import org.eamonn.belegost.model.{Player, Wall}
+import org.eamonn.belegost.model.{Enemy, Player, Wall}
 import org.eamonn.belegost.util.Location
 
 case class GameState() {
@@ -12,6 +12,7 @@ case class GameState() {
   walls.foreach(wall => {
     Wall.walls.put(wall, Wall(wall))
   })
+  var enemies: List[Enemy] = List.empty
 
   var player = new Player
 }
