@@ -4,6 +4,7 @@ import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch
 import com.badlogic.gdx.math.Matrix4
+import org.eamonn.belegost.doers.gameController.movePlayer
 import org.eamonn.belegost.doers.{gameController, gameRenderer}
 import org.eamonn.belegost.{Belegost, GameState, Geometry, Scene, Text}
 
@@ -17,6 +18,9 @@ class Game extends Scene {
   override def update(delta: Float): Option[Scene] = {
     tick += delta
     if(tick >= .2f){
+      state.player.moved = movePlayer(state)
+    }
+    if(tick >= .2f && state.player.moved){
       gameController.updateOnTick(state)
       tick = 0f
     }

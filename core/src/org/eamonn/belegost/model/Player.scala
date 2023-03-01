@@ -8,6 +8,7 @@ import org.eamonn.belegost.util.Location
 case class Player() {
   var loc = Location(0, 0)
   var destination = loc.copy()
+  var moved = false
   var path: Option[Path] = None
 
   def draw(batch: PolygonSpriteBatch): Unit = {
